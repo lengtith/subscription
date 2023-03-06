@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @livewireStyles
 </head>
-<body>
+<body style="background-color: #F4F6F8">
     <livewire:components.navbar/>
 
     {{ $slot }}

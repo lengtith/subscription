@@ -11,7 +11,8 @@ class SubscriptionForm extends Component
 {
     public $khmer_name, $english_name, $email, $dob, $investor_type, $khmer_trading_name, $english_trading_name, $investor_id, $trading_acc_number, $trading_acc_security_firm, $contact, $legal_entity_signature, $subscriber_status, $comment, $user_id;
 
-    public $khr_acc_num_for_deposit, $khr_acc_name_for_deposit, $usd_acc_num_for_deposit, $usd_acc_name_for_deposit, $currency, $unit_price, $quantity, $amount, $actual_deposit,  $status;
+    public $khr_acc_num_for_deposit, $khr_acc_name_for_deposit, $usd_acc_num_for_deposit, $usd_acc_name_for_deposit, $unit_price, $quantity, $amount, $actual_deposit,  $status;
+    public $currency = 'khr';
     public $company_id;
     public $subscription_id;
     public $payment_method_id;
@@ -40,7 +41,8 @@ class SubscriptionForm extends Component
     }
 
     public function render()
-    {
+    {   
+        $this->currency = 'KHR';
         $this->company = Company::latest()->first();
         $this->payment_method = PaymentMethod::all();
         $this->refund_method = RefundMethod::all();

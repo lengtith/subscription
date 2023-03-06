@@ -45,33 +45,28 @@ class SubscriberResource extends Resource
                 Grid::make(3)->schema([
                     Grid::make()->schema([
                         Card::make()->schema([
+                            Radio::make('investor_type')
+                                ->options([
+                                    'individual' => 'Individual',
+                                    'legal_entity' => ' Legal Entity',
+                                ])->columnSpan(2),
                             Select::make('register_id')
                                 ->label('Register Name')
                                 ->options(Register::all()->pluck('name', 'id'))
                                 ->searchable(),
                             TextInput::make('investor_id')->required()->numeric()->unique(ignoreRecord: true),
-                            TextInput::make('trade_acc_number')->required()->numeric()->unique(ignoreRecord: true),
-                            TextInput::make('khmer_name')->required(),
-                            TextInput::make('english_name')->required(),
-                            TextInput::make('email')->required()->email(),
-                            DatePicker::make('dob')->required(),
-                            Radio::make('investor_type')
-                                ->options([
-                                    '1' => 'Individual',
-                                    '2' => ' Legal Entity',
-                                ]),
+                            TextInput::make('trading_acc_number')->required()->numeric()->unique(ignoreRecord: true),
                             TextInput::make('khmer_trading_name')->required(),
                             TextInput::make('english_trading_name')->required(),
-                            TextInput::make('trading_acc_security_firm')->required(),
+                            TextInput::make('security_firm_name')->required(),
                             TextInput::make('contact')->required(),
+                            TextInput::make('email')->required()->email(),
 
                         ])->columns(2),
                         Section::make('Image')
                             ->schema([
-                                FileUpload::make('legal_entity_signature')
-                                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                                        return (string) str($file->getClientOriginalName());
-                                    })->enableOpen()->enableDownload(),
+                                FileUpload::make('legal_entity_signature')->label('Image')
+                                    ->image()->enableOpen()->enableDownload(),
                             ]),
                     ])->columnSpan(2),
                     Grid::make()->schema([

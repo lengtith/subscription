@@ -32,7 +32,6 @@
                                     {{ $error }}
                                 </div>
                                 @endif
-                                {{ $name }}
 
                                 <form wire:submit.prevent="handleSubmit">
 

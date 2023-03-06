@@ -16,20 +16,17 @@ return new class extends Migration
     {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('register_id')->constrained()->cascadeOnDelete();    
-            $table->string('khmer_name');
-            $table->string('english_name');
-            $table->string('email');
-            $table->string('dob');
+            $table->foreignId('register_id')->constrained()->cascadeOnDelete();
             $table->string('investor_type');
             $table->string('khmer_trading_name');
             $table->string('english_trading_name');
+            $table->string('trading_acc_number')->unique();
             $table->string('investor_id')->unique();
-            $table->string('trade_acc_number')->unique();
-            $table->string('trading_acc_security_firm');
+            $table->string('security_firm_name');
             $table->string('contact');
+            $table->string('email');
             $table->string('legal_entity_signature')->nullable();
-            $table->string('subscriber_status');
+            $table->string('subscriber_status')->default(1);
             $table->text('comment')->nullable();
             $table->string('user_id')->nullable();
             $table->timestamps();

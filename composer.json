@@ -15,6 +15,7 @@
         "laravel/ui": "^4.2",
         "mpdf/mpdf": "^8.1",
         "psr/log": "2.0",
+        "ryangjchandler/filament-profile": "^0.2.2",
         "spatie/laravel-permission": "^5.9"
     },
     "require-dev": {
