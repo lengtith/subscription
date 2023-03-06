@@ -27,7 +27,7 @@ class RefundMethodResource extends Resource
 {
     protected static ?string $model = RefundMethod::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-refresh';
 
     protected static ?string $navigationGroup = 'Configuration';
 

@@ -1,5 +1,8 @@
 <?php
 
+use App\Filament\Resources\CardResource\Widgets\CustomDashboard;
+use App\Filament\Resources\RegisterLineChardResource\Widgets\LatestMonth as RegistersLastMonth;
+use App\Filament\Resources\SubscriberLineChardResource\Widgets\LatestMonth as SubscriberLastMonth;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
@@ -140,7 +143,10 @@ return [
         'path' => app_path('Filament/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
-            Widgets\FilamentInfoWidget::class,
+            // Widgets\FilamentInfoWidget::class,
+            CustomDashboard::class,
+            RegistersLastMonth::class,
+            SubscriberLastMonth::class,
         ],
     ],
 
