@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\RegisterLineChardResource\Widgets;
 
+use App\Models\Register;
 use Filament\Widgets\LineChartWidget;
+use Flowframe\Trend\Trend;
+use Flowframe\Trend\TrendValue;
 
 class LatestMonth extends LineChartWidget
 {
@@ -10,14 +13,23 @@ class LatestMonth extends LineChartWidget
 
     protected function getData(): array
     {
+        $data = Trend::model(Register::class)
+        ->between(
+            start: now()->startOfYear(),
+            end: now()->endOfYear(),
+        )
+        ->perMonth()
+        ->count();
         return [
             'datasets' => [
                 [
-                    'label' => 'Blog posts created',
-                    'data' => [0, 10, 5, 2, 21, 32, 45, 74, 65, 45, 77, 89],
+                    'label' => 'Register',
+                    'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],
-            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'labels' => $data->map(fn (TrendValue $value) =>(
+              date_format(date_create($value->date),'M')
+            )),
         ];
     }
 }
