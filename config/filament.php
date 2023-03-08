@@ -242,7 +242,7 @@ return [
             'have_inline_labels' => false,
         ],
         'footer' => [
-            'should_show_logo' => true,
+            'should_show_logo' => false,
         ],
         'max_content_width' => null,
         'notifications' => [
@@ -268,7 +268,7 @@ return [
     |
     */
 
-    'favicon' => null,
+    'favicon' =>'https://www.careerchoicecambodia.com/assets/employer/20200416101711.png' ,
 
     /*
     |--------------------------------------------------------------------------
