@@ -220,7 +220,7 @@
                                     <br>
                                     <span>ថ្លៃលក់ក្នុងមួយឯកតាភាគហ៊ុនបោះផ្សាយលក់</span>
                                 </label>
-                                @if ('KHR')
+                                @if ($currency == 'KHR')
                                 <div class="input-group mb-3">
                                     <input disabled type="text" class="form-control" value="{{ $company->khr_price }}"
                                         aria-describedby="currency1">
@@ -241,7 +241,7 @@
                                     <br>
                                     <span>ចំនួនភាគហ៊ុនបោះផ្សាយលក់សរុបដែលស្នើសុំធ្វើបរិវិសកម្ម</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="quantity">
+                                <input type="number" class="form-control" wire:model="quantity">
                                 <span class="text-danger">
                                     @error('quantity')
                                     {{ $message }}
@@ -259,12 +259,12 @@
                                 </label>
                                 @if ($currency == 'KHR')
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" wire:model="amount" aria-describedby="KHR">
+                                    <input type="number" class="form-control" wire:model="amount" aria-describedby="KHR">
                                     <span class="input-group-text" id="KHR">៛</span>
                                 </div>
                                 @else
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" wire:model="amount" aria-describedby="USD">
+                                    <input type="number" class="form-control" wire:model="amount" aria-describedby="USD">
                                     <span class="input-group-text" id="USD">$</span>
                                 </div>
                                 @endif
@@ -281,7 +281,7 @@
                                     <br>
                                     <span>ចំនួនទឹកប្រាក់តម្កល់ជាក់ស្ដែងសម្រាប់ការស្នើសុំធ្វើបរិវិសកម្ម</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="actual_deposit">
+                                <input type="number" class="form-control" wire:model="actual_deposit">
                                 <span class="text-danger">
                                     @error('actual_deposit')
                                     {{ $message }}
@@ -356,7 +356,7 @@
                                                     <span> / ឈ្មោះធនាគារ</span>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="text" readonly class="form-control"
+                                                    <input type="text" class="form-control"
                                                         wire:model="bank_name">
                                                 </div>
                                             </div>
@@ -367,7 +367,7 @@
                                                     <span> / ឈ្មោះគណនី</span>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="text" readonly class="form-control"
+                                                    <input type="text" class="form-control"
                                                         wire:model="bank_acc_name">
                                                 </div>
                                             </div>
@@ -378,7 +378,7 @@
                                                     <span> / លេខគណនី</span>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="text" readonly class="form-control"
+                                                    <input type="text" class="form-control"
                                                         wire:model="bank_acc_number">
                                                 </div>
                                             </div>
@@ -390,7 +390,7 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="text" readonly class="form-control"
+                                                    <input type="text" class="form-control"
                                                         wire:model="bank_acc_currency">
                                                 </div>
                                             </div>

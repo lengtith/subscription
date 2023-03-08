@@ -33,6 +33,10 @@ class Subscriber extends Model
     {
         return $this->hasMany(SubscriptionId::class);
     }
+    public function register()
+    {
+        return $this->belongsTo(Register::class);
+    }
 
     // public function getFullNameAttribute()
     // {

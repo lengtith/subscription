@@ -179,7 +179,7 @@
                 //--------------------------------------------------------------
                 --}}
 
-                <div class="card p-0">
+                {{-- <div class="card p-0">
                     <div class="h6 card-header text-uppercase">
                         Subscription Offer For Investors
                         <br>
@@ -196,7 +196,7 @@
                                 </label>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="currencyType"
+                                        <input disabled class="form-check-input" type="radio" name="currencyType"
                                             wire:model="currency" value="KHR">
                                         KHR
                                     </label>
@@ -204,7 +204,7 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="currencyType"
+                                        <input disabled class="form-check-input" type="radio" name="currencyType"
                                             wire:model="currency" value="USD">
                                         USD
                                     </label>
@@ -241,7 +241,7 @@
                                     <br>
                                     <span>ចំនួនភាគហ៊ុនបោះផ្សាយលក់សរុបដែលស្នើសុំធ្វើបរិវិសកម្ម</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="quantity">
+                                <input disabled type="text" class="form-control" wire:model="quantity">
                                 <span class="text-danger">
                                     @error('quantity')
                                     {{ $message }}
@@ -259,12 +259,12 @@
                                 </label>
                                 @if ($currency == 'KHR')
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" wire:model="amount" aria-describedby="KHR">
+                                    <input disabled type="text" class="form-control" wire:model="amount" aria-describedby="KHR">
                                     <span class="input-group-text" id="KHR">៛</span>
                                 </div>
                                 @else
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" wire:model="amount" aria-describedby="USD">
+                                    <input disabled type="text" class="form-control" wire:model="amount" aria-describedby="USD">
                                     <span class="input-group-text" id="USD">$</span>
                                 </div>
                                 @endif
@@ -281,7 +281,7 @@
                                     <br>
                                     <span>ចំនួនទឹកប្រាក់តម្កល់ជាក់ស្ដែងសម្រាប់ការស្នើសុំធ្វើបរិវិសកម្ម</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="actual_deposit">
+                                <input disabled type="text" class="form-control" wire:model="actual_deposit">
                                 <span class="text-danger">
                                     @error('actual_deposit')
                                     {{ $message }}
@@ -310,13 +310,13 @@
                                         <span>{{ $method->description }}</span>
                                     </div>
                                     @endforeach
-                                    <input type="file" class="form-control" wire:model="payment_attach">
+                                    <input disabled type="file" class="form-control" wire:model="payment_attach">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div>
+                </div> --}}
 
                 {{--
                 //--------------------------------------------------------------
@@ -324,7 +324,7 @@
                 // ព័ត៌មានពាក់ព័ន្ធនឹងការផ្ទេរប្រាក់
                 //--------------------------------------------------------------
                 --}}
-                <div class="card p-0">
+                {{-- <div class="card p-0">
                     <div class="h6 card-header text-uppercase">
                         Refund Information
                         <br>
@@ -400,7 +400,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="card p-0">
                     <div class="h6 card-header text-uppercase">

@@ -26,7 +26,8 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Livewire\TemporaryUploadedFile;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class SubscriberResource extends Resource
 {
@@ -97,8 +98,9 @@ class SubscriberResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('investor_id'),
-                TextColumn::make('trade_id'),
+                TextColumn::make('register.name'),
+                TextColumn::make('english_trading_name'),
+                TextColumn::make('khmer_trading_name'),
                 BadgeColumn::make('subscriber_status')
                     ->colors([
                         'warning' => static fn ($state): bool => $state === 'New',
@@ -115,6 +117,7 @@ class SubscriberResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make()
             ]);
     }
 

@@ -36,7 +36,7 @@ class SubscriptionIdResource extends Resource
             ->schema([
                 Select::make('subscriber_id')
                     ->label('Subscriber Name')
-                    ->options(Subscriber::all()->pluck('first_name', 'id'))
+                    ->options(Subscriber::all()->pluck('english_trading_name', 'id'))
                     ->searchable(),
                 Select::make('company_id')
                     ->label('Company Name')
@@ -52,7 +52,7 @@ class SubscriptionIdResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('subscriber.first_name'),
+                TextColumn::make('subscriber.english_trading_name'),
                 TextColumn::make('company.name'),
                 TextColumn::make('code'),
             ])

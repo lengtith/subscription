@@ -19,6 +19,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\TemporaryUploadedFile;
@@ -38,7 +39,7 @@ class PaymentResource extends Resource
         return $form
             ->schema([
                 Select::make('subscriber_id')
-                ->options(Subscriber::all()->pluck('english_name', 'id'))
+                ->options(Subscriber::all()->pluck('english_trading_name', 'id'))
                 ->searchable(),
                 TextInput::make('unit_price'),
                 TextInput::make('quantity'),
@@ -65,7 +66,12 @@ class PaymentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('subscriber.english_trading_name'),
+                TextColumn::make('unit_price'),
+                TextColumn::make('quantity'),
+                TextColumn::make('payment_method_id'),
+                TextColumn::make('refund_method_id'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

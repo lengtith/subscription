@@ -34,7 +34,6 @@
                                 @endif
 
                                 <form wire:submit.prevent="handleSubmit">
-
                                     <div class="form-floating mb-3 mt-3">
                                         <input type="text" class="form-control" id="name" wire:model="name"
                                             required="required" autofocus>
@@ -56,7 +55,7 @@
                                         </span>
                                     </div>
 
-                                    <div class="form-floating mb-3 mt-3">
+                                    {{-- <div class="form-floating mb-3 mt-3">
                                         <input type="password" class="form-control" id="password" p
                                             wire:model="password" required>
                                         <label for="password">Password</label>
@@ -65,7 +64,7 @@
                                             {{ $message }}
                                             @enderror
                                         </span>
-                                    </div>
+                                    </div> --}}
 
                                     <button type="submit" class="btn btn-theme mb-3 mt-3">Register</button>
                                 </form>

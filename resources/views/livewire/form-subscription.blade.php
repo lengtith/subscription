@@ -42,14 +42,14 @@
                                 </label>
                                 <div class="d-flex">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="investorType"
+                                        <input disabled class="form-check-input" type="radio" name="investorType"
                                             id="investorType1" value="individual" wire:model="investor_type">
                                         <label class="form-check-label" for="investorType1">Individual</label>
                                         <br>
                                         <span>វិនិយោគិនជារូបវន្តបុគ្គល</span>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="investorType"
+                                        <input disabled class="form-check-input" type="radio" name="investorType"
                                             id="investorType2" value="legal_entity" wire:model="investor_type">
                                         <label class="form-check-label" for="investorType2">Legal Entity</label>
                                         <br>
@@ -71,7 +71,7 @@
                                     <br>
                                     <span>ឈ្មោះគណនីជួញដូរ (ខ្មែរ)</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="khmer_trading_name">
+                                <input disabled type="text" class="form-control" wire:model="khmer_trading_name">
                                 <span class="text-danger">
                                     @error('khmer_trading_name')
                                     {{ $message }}
@@ -85,7 +85,7 @@
                                     <br>
                                     <span>ឈ្មោះគណនីជួញដូរ (អង់គ្លេស)</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="english_trading_name">
+                                <input disabled type="text" class="form-control" wire:model="english_trading_name">
                                 <span class="text-danger">
                                     @error('english_trading_name')
                                     {{ $message }}
@@ -101,7 +101,7 @@
                                     <br>
                                     <span>លេខគណនីជួញដូរ</span>
                                 </label>
-                                <input type="number" class="form-control" wire:model="trading_acc_number">
+                                <input disabled type="number" class="form-control" wire:model="trading_acc_number">
                                 <span class="text-danger">
                                     @error('trading_acc_number')
                                     {{ $message }}
@@ -115,7 +115,7 @@
                                     <br>
                                     <span>លេខអត្ដសញ្ញាណវិនិយោគិន</span>
                                 </label>
-                                <input type="number" class="form-control" wire:model="investor_id">
+                                <input disabled type="number" class="form-control" wire:model="investor_id">
                                 <span class="text-danger">
                                     @error('investor_id')
                                     {{ $message }}
@@ -131,7 +131,7 @@
                                     <br>
                                     <span>ឈ្មោះក្រុមហ៊ុនមូលបត្រ</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="security_firm_name">
+                                <input disabled type="text" class="form-control" wire:model="security_firm_name">
                                 <span class="text-danger">
                                     @error('security_firm_name')
                                     {{ $message }}
@@ -147,7 +147,7 @@
                                     <br>
                                     <span>លេខទូរស័ព្ទ</span>
                                 </label>
-                                <input type="tel" class="form-control" wire:model="contact">
+                                <input disabled type="tel" class="form-control" wire:model="contact">
                                 <span class="text-danger">
                                     @error('contact')
                                     {{ $message }}
@@ -161,7 +161,7 @@
                                     <br>
                                     <span>អ៊ីម៉ែល</span>
                                 </label>
-                                <input type="email" class="form-control" wire:model="email">
+                                <input disabled type="email" class="form-control" wire:model="email">
                                 <span class="text-danger">
                                     @error('email')
                                     {{ $message }}
@@ -220,15 +220,15 @@
                                     <br>
                                     <span>ថ្លៃលក់ក្នុងមួយឯកតាភាគហ៊ុនបោះផ្សាយលក់</span>
                                 </label>
-                                @if ('KHR')
+                                @if ($currency == 'KHR')
                                 <div class="input-group mb-3">
-                                    <input disabled type="text" class="form-control" value="{{ $company->khr_price }}"
+                                    <input disabled type="number" class="form-control" value="{{ $company->khr_price }}"
                                         aria-describedby="currency1">
                                     <span class="input-group-text" id="currency1">៛</span>
                                 </div>
                                 @else
                                 <div class="input-group mb-3">
-                                    <input disabled type="text" class="form-control" value="{{ $company->usd_price }}"
+                                    <input disabled type="number" class="form-control" value="{{ $company->usd_price }}"
                                         aria-describedby="currency2">
                                     <span class="input-group-text" id="currency2">$</span>
                                 </div>
@@ -241,7 +241,7 @@
                                     <br>
                                     <span>ចំនួនភាគហ៊ុនបោះផ្សាយលក់សរុបដែលស្នើសុំធ្វើបរិវិសកម្ម</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="quantity">
+                                <input type="number" class="form-control" wire:model="quantity" placeholder="0">
                                 <span class="text-danger">
                                     @error('quantity')
                                     {{ $message }}
@@ -259,12 +259,12 @@
                                 </label>
                                 @if ($currency == 'KHR')
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" wire:model="amount" aria-describedby="KHR">
+                                    <input type="number" class="form-control" wire:model="amount" aria-describedby="KHR">
                                     <span class="input-group-text" id="KHR">៛</span>
                                 </div>
                                 @else
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" wire:model="amount" aria-describedby="USD">
+                                    <input type="number" class="form-control" wire:model="amount" aria-describedby="USD">
                                     <span class="input-group-text" id="USD">$</span>
                                 </div>
                                 @endif
@@ -281,7 +281,7 @@
                                     <br>
                                     <span>ចំនួនទឹកប្រាក់តម្កល់ជាក់ស្ដែងសម្រាប់ការស្នើសុំធ្វើបរិវិសកម្ម</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="actual_deposit">
+                                <input type="number" class="form-control" wire:model="actual_deposit">
                                 <span class="text-danger">
                                     @error('actual_deposit')
                                     {{ $message }}
@@ -417,7 +417,7 @@
                                     <br>
                                     <span>ឈ្មោះជាភាសារខ្មែរ</span>
                                 </label>
-                                <input type="text" class="form-control" wire:model="english_trading_name">
+                                <input disabled type="text" class="form-control" wire:model="english_trading_name">
                             </div>
                             <div class="form-group col flex-column d-flex gap-1">
                                 <label class="form-control-label">
@@ -426,7 +426,7 @@
                                     <br>
                                     <span>ហត្ថលេខា</span>
                                 </label>
-                                <input type="file" class="form-control" wire:model="file">
+                                <input disabled type="file" class="form-control" wire:model="file">
                             </div>
                         </div>
                     </div>

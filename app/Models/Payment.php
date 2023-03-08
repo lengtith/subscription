@@ -14,12 +14,17 @@ class Payment extends Model
         'company_id',
         'payment_method_id',
         'refund_method_id',
-        'refund_to_bank_acc_id',
+        'currency',
         'unit_price',
         'quantity',
         'amount',
         'autual_deposit',
-        'status'
+        'status',
+        'bank_name',
+        'bank_account_name',
+        'bank_account_number',
+        'bank_account_currency',
+        'file'
     ];
 
     public $bankAccount = RefundToBankAccount::class;
@@ -44,23 +49,4 @@ class Payment extends Model
     {
         return $this->belongsTo(RefundToBankAccount::class);
     }
-
-    public function getBankNameAttribute($bankAccount){
-        return $this->bankAccount['bank_name'];
-    }
-
-    public function getBankAccountNameAttribute()
-    {
-        return $this->bankAccount['bank_account_name'];
-    }
-    public function getBankAccountNumberAttribute()
-    {
-        return $this->bankAccount['bank_account_number'];
-    }
-    public function getBankAccountCurrencyAttribute()
-    {
-        return $this->bankAccount['bank_account_currency'];
-    }
-
-    protected $appends = ['bank_name','bank_account_name','bank_account_number','bank_account_currency'];
 }

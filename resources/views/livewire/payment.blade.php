@@ -20,160 +20,6 @@
 
                 {{--
                 //--------------------------------------------------------------
-                // Information Related to Investor
-                // ពត៌មានទាក់ទងនឹងវិនិយោគិន
-                //--------------------------------------------------------------
-                --}}
-
-                <div class="card p-0">
-                    <div class="h6 card-header text-uppercase">
-                        Information Related to Investor
-                        <br>
-                        <span>ពត៌មានទាក់ទងនឹងវិនិយោគិន</span>
-                    </div>
-                    <div class="card-body row d-flex gap-3">
-                        <div class="row justify-content-between text-left ">
-                            <div class="form-group col flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Investor Type
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>ប្រភេទវិនិយោគិន</span>
-                                </label>
-                                <div class="d-flex">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="investorType"
-                                            id="investorType1" value="individual" wire:model="investor_type">
-                                        <label class="form-check-label" for="investorType1">Individual</label>
-                                        <br>
-                                        <span>វិនិយោគិនជារូបវន្តបុគ្គល</span>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="investorType"
-                                            id="investorType2" value="legal_entity" wire:model="investor_type">
-                                        <label class="form-check-label" for="investorType2">Legal Entity</label>
-                                        <br>
-                                        <span>វិនិយោគិនជានីតិបុគ្គល</span>
-                                    </div>
-                                </div>
-                                <span class="text-danger">
-                                    @error('investor_type')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between text-left">
-                            <div class="form-group col-sm-6 flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Trading Account Name (Khmer)
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>ឈ្មោះគណនីជួញដូរ (ខ្មែរ)</span>
-                                </label>
-                                <input type="text" class="form-control" wire:model="khmer_trading_name">
-                                <span class="text-danger">
-                                    @error('khmer_trading_name')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                            <div class="form-group col-sm-6 flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Trading Account Name (English)
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>ឈ្មោះគណនីជួញដូរ (អង់គ្លេស)</span>
-                                </label>
-                                <input type="text" class="form-control" wire:model="english_trading_name">
-                                <span class="text-danger">
-                                    @error('english_trading_name')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between text-left">
-                            <div class="form-group col-sm-6 flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Trading Account No.
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>លេខគណនីជួញដូរ</span>
-                                </label>
-                                <input type="number" class="form-control" wire:model="trading_acc_number">
-                                <span class="text-danger">
-                                    @error('trading_acc_number')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                            <div class="form-group col-sm-6 flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Investor Identity Number
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>លេខអត្ដសញ្ញាណវិនិយោគិន</span>
-                                </label>
-                                <input type="number" class="form-control" wire:model="investor_id">
-                                <span class="text-danger">
-                                    @error('investor_id')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between text-left">
-                            <div class="form-group col flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Security Firm
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>ឈ្មោះក្រុមហ៊ុនមូលបត្រ</span>
-                                </label>
-                                <input type="text" class="form-control" wire:model="security_firm_name">
-                                <span class="text-danger">
-                                    @error('security_firm_name')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between text-left">
-                            <div class="form-group col-sm-6 flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Phone Number
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>លេខទូរស័ព្ទ</span>
-                                </label>
-                                <input type="tel" class="form-control" wire:model="contact">
-                                <span class="text-danger">
-                                    @error('contact')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                            <div class="form-group col-sm-6 flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Email Address
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>អ៊ីម៉ែល</span>
-                                </label>
-                                <input type="email" class="form-control" wire:model="email">
-                                <span class="text-danger">
-                                    @error('email')
-                                    {{ $message }}
-                                    @enderror
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{--
-                //--------------------------------------------------------------
                 // Subscription Offer For Investors
                 // វិនិយោគិនសុំធ្វើបរិវិសកម្ម
                 //--------------------------------------------------------------
@@ -220,7 +66,7 @@
                                     <br>
                                     <span>ថ្លៃលក់ក្នុងមួយឯកតាភាគហ៊ុនបោះផ្សាយលក់</span>
                                 </label>
-                                @if ('KHR')
+                                @if ($currency == 'KHR')
                                 <div class="input-group mb-3">
                                     <input disabled type="text" class="form-control" value="{{ $company->khr_price }}"
                                         aria-describedby="currency1">
@@ -397,36 +243,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card p-0">
-                    <div class="h6 card-header text-uppercase">
-                        Investor’s Signature/Signature of Authorized Persona and Seal (for legal entity)
-                        <br>
-                        <span>ពត៌មានទូទៅ</span>
-                    </div>
-                    <div class="card-body row d-flex gap-3">
-                        <div class="row justify-content-between text-left ">
-                            <div class="form-group col flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Investor’s Name
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>ឈ្មោះជាភាសារខ្មែរ</span>
-                                </label>
-                                <input type="text" class="form-control" wire:model="english_trading_name">
-                            </div>
-                            <div class="form-group col flex-column d-flex gap-1">
-                                <label class="form-control-label">
-                                    Investor’s Signature Attachment
-                                    <span class="text-danger"> *</span>
-                                    <br>
-                                    <span>ហត្ថលេខា</span>
-                                </label>
-                                <input type="file" class="form-control" wire:model="file">
                             </div>
                         </div>
                     </div>
