@@ -23,13 +23,14 @@ return new class extends Migration
             $table->float('unit_price');
             $table->float('quantity');
             $table->float('amount');
-            $table->float('autual_deposit');
+            $table->float('actual_deposit');
             $table->string('file');
+            $table->string('cheque_number')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('bank_account_name')->nullable();
             $table->string('bank_account_number')->nullable();
             $table->string('bank_account_currency')->nullable();
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

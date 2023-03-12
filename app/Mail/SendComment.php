@@ -9,18 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MyTestMail extends Mailable
+class SendComment extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -31,7 +31,7 @@ class MyTestMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'My Test Mail',
+            subject: 'Send Comment',
         );
     }
 
@@ -43,7 +43,7 @@ class MyTestMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'mail.my-test-mail',
+            view: 'mail.send-comment',
         );
     }
 

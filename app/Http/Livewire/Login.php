@@ -10,40 +10,44 @@ use Livewire\Component;
 
 class Login extends Component
 {
-
-    public $error = "";
     public $email = "";
     public $password = "";
 
     protected $rules = [
         'email' => 'required|email',
-        'password' => 'required'
+        'password' => 'required|min:8'
     ];
 
     public function handleSubmit()
     {
-        $user = Register::where('email', '=', $this->email)->first();
-        if ($user) {
-            if (Hash::check($this->password, $user->password)) {
-                session()->put('loginId', $user->id);
-                $subscriber_id = Subscriber::where('register_id', $user->id)->first();
-                if ($subscriber_id) {
-                    $subscription_id = SubscriptionId::where('subscriber_id', $subscriber_id->id)->first();
-                    if ($subscription_id) {
-                        return redirect('/form/subscription');
+
+        $register = Register::where('email', '=', $this->email)->first();
+        if ($register) {
+            if (Hash::check($this->password, $register->password)) {
+                session()->put('loginId', $register->id);
+
+                $subscriber = Subscriber::where('register_id', $register->id)->first();
+
+                if ($subscriber) {
+                    session()->put('subscriberId', $subscriber->id);
+                    if ($subscriber->status == 'edited') {
+                        return redirect()->route('subscription.edit', [
+                            'id' => $subscriber->id,
+                        ]);
                     } else {
-                        return redirect('/edit/subscription');
+                        return redirect('/form');
                     }
                 } else {
-                    return redirect('/');
+                    return redirect('/create');
                 }
             } else {
-                return $this->error = 'User not found';
+                return session()->flash('error', 'User not found');
             }
         } else {
-            return $this->error = 'Email & password not found';
+            return session()->flash('error', 'Email & password not found');
         }
     }
+
     public function render()
     {
         return view('livewire.login');

@@ -11,6 +11,7 @@ class Navbar extends Component
     {
         if (Session::has('loginId')) {
             session()->forget('loginId');
+            session()->forget('subscriberId');
             return redirect('/login');
         }
     }

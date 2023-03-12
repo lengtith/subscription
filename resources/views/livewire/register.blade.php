@@ -4,14 +4,21 @@
             <div class="card border-0">
                 <div class="card-body p-0">
                     <div class="row no-gutters">
-                        <div class="col-lg-6 d-none d-lg-inline-block">
-                            <div class="account-block rounded-right">
-                                <div class="overlay rounded-right"></div>
-                                <div class="account-testimonial">
-                                    <h4 class="text-white mb-4">This beautiful theme yours!</h4>
-                                    <p class="lead text-white">"Best investment i made for a long time. Can only
-                                        recommend it for other users."</p>
-                                    <p>- Admin User</p>
+                        <div class="col-lg-6 d-none d-lg-inline-block bg-yellow">
+                            <div class="d-flex justify-content-center align-item-center h-100">
+                                <div class="content-info">
+                                    <div class="pt-5">
+                                        <img class="rounded" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE3AbV0jDJimdNIBvUYMIsssTkXpZ6oZ5HBlJ9E5j0&s"
+                                            alt="Cinque Terre" height="50">
+                                    </div>
+
+                                    <div class="account-testimonial">
+                                        <h4 class="text-white mb-4">Subscription Operation</h4>
+                                        <h5 class="text-white mb-4">ដំណើរការធ្វើបរិវិសកម្ម</h5>
+                                        <p class="lead text-white">09-22 Mar 2023 / ០៩-២២ មិនា ២០២៣</p>
+                                        <img src="https://pelprek.sgp1.digitaloceanspaces.com/banner/18/156152298696483.png"
+                                            alt="Cinque Terre" height="80">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -26,11 +33,10 @@
                                 <p class="text-muted mt-2 mb-5">Enter your email address and password to access admin
                                     panel.</p>
 
-                                {{-- Error alert --}}
-                                @if ($error)
-                                <div class="alert alert-danger">
-                                    {{ $error }}
-                                </div>
+                                @if (Session::has('error'))
+                                <p class="alert alert-danger">
+                                    {{ Session::get('error') }}
+                                </p>
                                 @endif
 
                                 <form wire:submit.prevent="handleSubmit">
@@ -66,7 +72,13 @@
                                         </span>
                                     </div> --}}
 
-                                    <button type="submit" class="btn btn-theme mb-3 mt-3">Register</button>
+                                    <button type="submit" class="btn btn-theme mb-3 mt-3">
+                                        <div wire:loading wire:target="handleSubmit">
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                        </div>
+                                        Register
+                                    </button>
+
                                 </form>
                             </div>
                         </div>
@@ -88,36 +100,22 @@
 </div>
 
 <style>
-    .account-block {
-        padding: 0;
-        background-image: url(https://bootdey.com/img/Content/bg1.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 100%;
-        position: relative;
+    .bg-yellow {
+        background-color: #F8991B;
     }
 
-    .account-block .overlay {
-        -webkit-box-flex: 1;
-        -ms-flex: 1;
-        flex: 1;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-
-    .account-block .account-testimonial {
+    .content-info {
         text-align: center;
-        color: #fff;
-        position: absolute;
-        margin: 0 auto;
-        padding: 0 1.75rem;
-        bottom: 3rem;
-        left: 0;
-        right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 50px;
+        gap: 40px;
+    }
+
+    h4,h5,p{
+        font-family: 'Khmer OS Battambang', sans-serif;
     }
 
     .text-theme {

@@ -1,293 +1,361 @@
-<div class="container-fluid bg-light" id="content">
-    <div class="d-flex justify-content-between">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1DZcqBx2VL8ulCISHYJJZfpSnqkBg-1DTL4swRNxM-DcZ9jyBK4VRXD6mBj-CBgs-Bw&usqp=CAU"
-            alt="SBI Securities" width="200px" />
+<!DOCTYPE html>
+<html>
 
-        <div class="w-25 d-flex flex-column gap-1">
-            <div class="d-flex flex-column gap-0">
-                <p class="w-100 font-sm">
-                    លេខបរិវិសកម្ម៖
-                    <abbr class="font-sm" title="Subscription ID"></abbr>
-                </p>
-                <code class="text-primary font-sm">Subscription No.</code>
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            text-align: left;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .w-50 {
+            width: 50%;
+        }
+
+        .text-primary {
+            color: #0044ff
+        }
+
+        .bg-primary {
+            background-color: #0044ff
+        }
+
+        h5,
+        h6,
+        td,
+        th,
+        p,
+        span {
+            padding: 0px;
+            margin: 0px;
+            font-family: 'Khmer OS Battambang';
+        }
+
+        p {
+            line-height: 1.8;
+        }
+
+        ul,
+        ol,
+        li,
+            {
+            padding: 0px 10px;
+            margin: 0px;
+            font-size: 10px;
+        }
+
+        .font-xs {
+            font-size: 9px;
+            font-weight: 300;
+        }
+
+        .font-sm {
+            font-size: 10px;
+            font-weight: 300;
+        }
+
+        .font-md {
+            font-size: 12px;
+            font-weight: 300;
+        }
+
+        .font-lg {
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        .p-1 {
+            padding: 4px;
+        }
+
+        .pt-1 {
+            padding-top: 4px;
+        }
+
+        .pb-1 {
+            padding-bottom: 4px;
+        }
+
+        .pl-1 {
+            padding-left: 4px;
+        }
+
+        .pr-1 {
+            padding-right: 4px;
+        }
+
+        .py-1 {
+            padding-bottom: 4px;
+            padding-top: 4px;
+        }
+
+        .py-2 {
+            padding-bottom: 8px;
+            padding-top: 8px;
+        }
+
+        .px-1 {
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        .pt-1 {
+            padding-top: 4px;
+        }
+
+        .my-1 {
+            margin: 4px 0px;
+        }
+
+        .mb-1 {
+            margin-bottom: 4px;
+        }
+
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+
+        .by-0 {
+            border-top: 0px;
+            border-bottom: 0px;
+        }
+
+        .table {
+            display: table;
+            width: 100%;
+            border: 1px solid #999;
+        }
+
+        .table-row {
+            display: table-row;
+            width: 100%;
+            clear: both;
+        }
+
+        .table-col {
+            float: left;
+            display: table-column;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="w-100 justify d-inline">
+        <div style="width: 70%; float: left;">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE3AbV0jDJimdNIBvUYMIsssTkXpZ6oZ5HBlJ9E5j0&s"
+                alt="Cinque Terre" height="50">
+        </div>
+        <div style="width:30%; float: right;">
+            <p class="font-sm">លេខបរិវិសកម្ម៖</p>
+            <p class="font-sm text-primary">Subscription No.</p>
+            <p class="font-sm">កាលបរិច្ឆេទ៖ {{ $data['date'] }}</p>
+            <p class="font-sm text-primary">Date</p>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="w-100 text-center">
+        <h5 class="font-lg">ពាក្យស្នើសុំធ្វើបរិវិសកម្មមូលបត្រកម្មសិទ្ធិ</h5>
+        <h5 class="font-lg">APPLICATION FORM TO SUBSCRIBE IPO SHARES</h5>
+    </div>
+    <div class="w-100 text-center py-1 bg-primary">
+        <h6 class="font-md">ព័ត៌មានពាក់ព័ន្ធនឹងក្រុមបោះផ្សាយ ក្រុមហ៊ុនធានាទិញមូលបត្រ និងមូលបត្រកម្មសិទ្ធិ</h6>
+        <h6 class="font-md">INFORMATION RELATED TO ISSUER, UNDERWRITER AND EQUITY SECURITIES</h6>
+    </div>
+
+    <div class="table" style="border: 0px;">
+        <div class="table-row" style="border: 0px;">
+            <div class="table-col" style="width: 25%; border: 0px; line-height: 1.8;">
+                <p class="font-sm">ក្រុមហ៊ុនបោះផ្សាយ</p>
+                <span class="font-sm text-primary">ISSUER</span>
             </div>
-            <div class="d-flex flex-column gap-0">
-                <p class="w-100 font-sm">
-                    កាលបរិច្ឆេទ៖
-                    <abbr class="font-sm" title="Subscription ID"></abbr>
-                </p>
-                <code class="text-primary font-sm">Date</code>
+            <div class="table-col" style="border: 0px; line-height: 1.8;">
+                <p class="font-sm">ក្រុមហ៊ុន ខេម ជ្ជីអេសអេម ម.ក.</p>
+                <span class="font-sm text-primary">CAM GSM PLC.</span>
+            </div>
+        </div>
+        <div class="table-row" style="border: 0px;">
+            <div class="table-col" style="width: 25%; border: 0px; line-height: 1.8;">
+                <p class="font-sm">ក្រុមហ៊ុនធានាទិញមូលបត្រ</p>
+                <span class="font-sm text-primary">UNDERWRITER</span>
+            </div>
+            <div class="table-col" style="border: 0px; line-height: 1.8;">
+                <p class="font-sm">ក្រុមហ៊ុន អេសប៊ីអាយ រ៉ូយ៉ាល់ ស៊ីឃ្យួរឹធី</p>
+                <span class="font-sm text-primary">SBI Royal Securities Plc. ("SBIR")</span>
             </div>
         </div>
     </div>
 
-
-    <div class="text-center pt-3">
-        <h5 class="font-lg">ពាក្យស្នើសុំធ្វើបរិវិសកម្មមូលបត្រកម្មសិទ្ធិ</h5>
-        <h5 class="text-primary font-lg">APPLICATION FORM TO SUBSCRIBE IPO SHARES
-        </h5>
+    <div class="bg-primary p-1">
+        <p class="font-sm">ព័ត៌មានពាក់ព័ន្ធនឹងវិនិយោគិន / <span>INFORMATION
+                RELATED TO INVESTOR</span></p>
+    </div>
+    
+    <div class="table mb-2">
+        <div class="table-row">
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%;">
+                <span class="font-sm">
+                    <input type="checkbox" @if ($data['investor_type']=='individual' ) checked="checked" @endif>
+                    វិនិយោគិនជារូបវន្ដបុគ្គល <span class="font-sm text-primary">/ Individual</span>
+                </span>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1">
+                <span class="font-sm">
+                    <input type="checkbox" @if ($data['investor_type']=='legal_entity' ) checked="checked" @endif>
+                    វិនិយោគិនជានីតិបុគ្គល <span class="font-sm text-primary">/ Legal Entity</span>
+                </span>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
+                <p class="font-sm">ឈ្មោះគណនីជួញដូរ (ខ្មែរ)</p>
+                <span class="font-sm text-primary">Trading Account Name (Khmer)</span>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['khmer_trading_name'] }}</p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
+                <p class="font-sm">ឈ្មោះគណនីជួញដូរ (អង់គ្លេស)</p>
+                <span class="font-sm text-primary">Trading Account Name (English)</span>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['khmer_trading_name'] }}</p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
+                <p class="font-sm">លេខគណនីជួញដូរ</p>
+                <span class="font-sm text-primary">Trading Account No.</span>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['trading_acc_number'] }}</p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
+                <p class="font-sm">លេខអត្ដសញ្ញាណវិនិយោគិន</p>
+                <span class="font-sm text-primary">Investor Identity Number (ID No)</span>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['investor_id'] }}</p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
+                <p class="font-sm">លេខទូរស័ព្ទ</p>
+                <span class="font-sm text-primary">Contact No</span>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['contact'] }}</p>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
+                <p class="font-sm">អ៊ីម៉ែល</p>
+                <span class="font-sm text-primary">Email Address</span>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['email'] }}</p>
+            </div>
+        </div>
     </div>
 
-    <div class="text-center py-2 bg-warning">
-        <h6 class="font-md">
-            ព័ត៌មានពាក់ព័ន្ធនឹងក្រុមហ៊ុនបោះផ្សាយ​ ក្រុមហ៊ុនធានាទិញមូលបត្រ
-            និងមូលបត្រកម្មសិទ្ធិ
-        </h6>
-        <h6 class="text-primary font-md">
-            INFORMATION RELATED TO ISSUER, UNDERWRITER AND EQUITY SECURITIES
-        </h6>
+    <div class="bg-primary p-1">
+        <p class="font-sm">
+            វិនិយោគិនសុំធ្វើបរិវិសកម្ម /
+            <span>SUBSCRIPTION OFFER FOR INVESTORS</span>
+        </p>
     </div>
 
-    <table class="w-100">
-        <tr>
-            <td class="w-25">
-                <div class="d-flex flex-column gap-0">
-                    <p class="w-100 font-md">ក្រុមហ៊ុនបោះផ្សាយ</p>
-                    <code class="text-primary font-md">ISSUER:</code>
-                </div>
-            </td>
-            <td class="w-75">
-                <div class="d-flex flex-column gap-0">
-                    <p class="w-100 font-md">កុ្រមហ៊ុន ខេម​ ជ្ជីអេសអេម ម.ក.</p>
-                    <code class="text-primary font-md">CAM GSM PLC.</code>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="w-25">
-                <div class="d-flex flex-column gap-0">
-                    <p class="w-100 font-md">ក្រុមហ៊ុនធានាទិញមូលបត្រ</p>
-                    <code class="text-primary font-md">UNDERWRITER:</code>
-                </div>
-            </td>
-            <td class="w-75">
-                <div class="d-flex flex-column gap-0">
-                    <p class="w-100 font-md">កុ្រមហ៊ុន អេសប៊ីអាយ រ៉ូយ៉ាល់
-                        ស៊ីឃ្យួរឹធី</p>
-                    <code class="text-primary font-md">SBI Royal Securities Plc. (“SBIR”)</code>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-
-    <div class="py-1 bg-warning">
-        <h6 class="font-md">
-            ព័ត៌មានពាក់ព័ន្ធនឹងវិនិយោគិន
-            <span class="text-primary font-md"> / INFORMATION RELATED TO
-                INVESTOR</span>
-        </h6>
+    <div class="table mb-2">
+        <div class="table-row">
+            <div class="table-col p-1" style="width: 50%; line-height: 1.6; padding-right: 6px;">
+                <p class="font-sm">ថ្លៃលក់ក្នុងមួយឯកតាភាគហ៊ុនបោះផ្សាយលក់ (1)</p>
+                <span class="font-sm text-primary">Price Per Offer Share</span>
+            </div>
+            <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['unit_price'] }}</p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col p-1" style="width: 50%; line-height: 1.6; padding-right: 6px;">
+                <p class="font-sm">ចំនួនភាគហ៊ុនបោះផ្សាយលក់សរុបដែលស្នើសុំធ្វើបរិវិសកម្ម (2)</p>
+                <span class="font-sm text-primary">Total Number of Offer Shares for Subscription</span>
+            </div>
+            <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['quantity'] }}</p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col p-1" style="width: 50%; line-height: 1.6; padding-right: 6px;">
+                <p class="font-sm">ចំនួនទឹកប្រាក់សរុបដែលត្រូវទូទាត់សម្រាប់ការស្នើសុំធ្វើបរិវិសកម្ម (1)x(2)</p>
+                <span class="font-sm text-primary">Total Value For Subscription</span>
+            </div>
+            <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['amount'] }}</p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col p-1" style="width: 50%; line-height: 1.6; padding-right: 6px;">
+                <p class="font-sm">ចំនួនទឹកប្រាក់តម្កល់ជាក់ស្ដែងសម្រាប់ការស្នើសុំធ្វើបរិវិសកម្ម</p>
+                <span class="font-sm text-primary">Actual Deposit In Subscription</span>
+            </div>
+            <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
+                <p class="font-sm">{{ $data['actual_deposit'] }}</p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 1 ) checked="checked" @endif>
+                    វិក្ក័យបត្រដាក់ប្រាក់
+                </span>
+                <p class="font-sm">Deposit Slip</p>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 2 ) checked="checked" @endif>
+                    វិក្ក័យបត្រផ្ទេរប្រាក់
+                </span>
+                <p class="font-sm">Bank transfer reference</p>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 3 ) checked="checked" @endif>
+                    មូលប្បទានបត្រលេខ
+                </span>
+                <p class="font-sm">Cheque No {{ $data['cheque_number'] }}</p>
+            </div>
+            <div class="table-col pt-1 pb-1 pl-1" style="line-height: 1.6;">
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 4 ) checked="checked" @endif>
+                    ផ្សេងទៀត
+                </span>
+                <p class="font-sm">Other</p>
+            </div>
+        </div>
     </div>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <td class="w-25">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something" />
-                        <label class="form-check-label font-sm" for="check2">Option
-                            2</label>
-                    </div>
-                </td>
-                <td colspan="3">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something" />
-                        <label class="form-check-label font-sm" for="check2">Option
-                            2</label>
-                    </div>
-                </td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">ឈ្មោះគណនីជួញដូរ (ខ្មែរ)</p>
-                        <code class="text-primary font-sm">Trading Account Name (Khmer)</code>
-                    </div>
-                </td>
-                <td colspan="3"></td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">ឈ្មោះគណនីជួញដូរ (អង់គ្លេស)</p>
-                        <code class="text-primary font-sm">Trading Account Name (English)</code>
-                    </div>
-                </td>
-                <td colspan="3"></td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w- font-sm">លេខគណនីជួញដូរ</p>
-                        <code class="text-primary font-sm">Trading Account NO</code>
-                    </div>
-                </td>
-                <td colspan="3"></td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">លេខអត្ដសញ្ញាណវិនិយោគិន</p>
-                        <code class="text-primary font-sm">Investor Identity Number (ID No)</code>
-                    </div>
-                </td>
-                <td colspan="3"></td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">ឈ្មោះក្រុមហ៊ុនមូលបត្រ</p>
-                        <code class="text-primary font-sm">Securities Firm</code>
-                    </div>
-                </td>
-                <td colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="w-25">
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">លេខទូរស័ព្ទ</p>
-                        <p class="text-primary font-sm">Phone Number</p>
-                    </div>
-                </td>
-                <td class="w-25"></td>
-                <td class="w-25">
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">អ៊ីម៉ែល</p>
-                        <p class="text-primary font-sm">Email Address</p>
-                    </div>
-                </td>
-                <td class="w-25"></td>
-            </tr>
-        </tbody>
-    </table>
-
-
-    <div class="py-1 bg-warning">
-        <h6 class="font-md">
-            វិនិយោគិនសុំធ្វើបរិវិសកម្ម
-            <span class="text-primary font-md"> / SUBSCRIPTION OFFER FOR
-                INVESTORS</span>
-        </h6>
+    <div class="bg-primary p-1">
+        <p class="font-sm">
+            ព័ត៌មានពាក់ព័ន្ធនឹងការផ្ទេរប្រាក់ /
+            <span>REFUND INFORMATION</span>
+        </p>
     </div>
-    <table class="table table-bordered">
-        <tbody>
-            <tr>
-                <td colspan="2">
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">
-                            ថ្លៃលក់ក្នុងមួយឯកតាភាគហ៊ុនបោះផ្សាយលក់
-                            <span class="text-primary">(1)</span>
-                        </p>
-                        <code class="text-primary font-sm">Price Per Offer Share</code>
-                    </div>
-                </td>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">
-                            ចំនួនភាគហ៊ុនបោះផ្សារលក់សរុបដែលស្នើសុំធ្វើបរិវិសកម្ម<span class="text-primary">(2)</span>
-                        </p>
-                        <code class="text-primary font-sm">Total Number of Offer Shares for Subscription
-            </code>
-                    </div>
-                </td>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">
-                            ចំនួនទឹកប្រាក់សរុបដែលត្រូវទូទាត់សម្រាប់ការស្នើសុំធ្វើបរិវិសកម្ម<span
-                                class="text-primary">(1) x (2)</span>
-                        </p>
-                        <code class="text-primary font-sm">Total Value For Subscription
-            </code>
-                    </div>
-                </td>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">
-                            ចំនួនទឹកប្រាក់តម្កល់ជាក់ស្ដែងសម្រាប់ការស្នើសុំធ្វើបរិវិសកម្ម<span class="text-primary">(1) x
-                                (2)</span>
-                        </p>
-                        <code class="text-primary font-sm">Actual Deposit In Subscription
-            </code>
-                    </div>
-                </td>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="d-flex flex-column gap-0">
-                        <p class="w-100 font-sm">ឈ្មោះក្រុមហ៊ុនមូលបត្រ</p>
-                        <code class="text-primary font-sm">Securities Firm</code>
-                    </div>
-                </td>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="w-25">
-                    <div class="d-flex flex-column gap-0">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2"
-                                value="something" />
-                            <label class="form-check-label font-sm" for="check2">វិក្ក័យបត្រដាក់ប្រាក់</label>
-                        </div>
-                        <p class="text-primary font-sm">Deposit Slip</p>
-                    </div>
-                </td>
-                <td class="w-25">
-                    <div class="d-flex flex-column gap-0">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2"
-                                value="something" />
-                            <label class="form-check-label font-sm" for="check2">វិក្ក័យបត្រផ្ទេរប្រាក់</label>
-                        </div>
-                        <p class="text-primary font-sm">Bank transfer reference</p>
-                    </div>
-                </td>
-                <td class="w-25">
-                    <div class="d-flex flex-column gap-0">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2"
-                                value="something" />
-                            <label class="form-check-label font-sm" for="check2">
-                                វិក្ក័យបត្រផ្ទេរប្រាក់
-                                <span class="text-primary font-sm">/Cheque No.
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                </td>
-                <td class="w-25">
-                    <div class="d-flex flex-column gap-0">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2"
-                                value="something" />
-                            <label class="form-check-label font-sm" for="check2">ផ្សេងទៀត</label>
-                        </div>
-                        <p class="text-primary font-sm">Others</p>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-
-    <div class="py-1 bg-warning">
-        <h6 class="font-md">
-            ព័ត៌មានពាក់ព័ន្ធនឹងការផ្ទេរប្រាក់កក់
-            <span class="text-primary font-md"> / REFUND INFORMATION</span>
-        </h6>
-    </div>
-    <p class="font-sm">
+    <p class="font-xs">
         ករណីខ្ញុំមិនទទួលបានភាគហ៊ុនបោះផ្សាយលក់ទៅតាមការធ្វើបរិវិសកម្ម
         ខ្ញុំមានបំណងទទួលប្រាក់កក់បរិវិសកម្មដែលនៅសល់
         (ក្រោយពីការដកចេញនូវរាល់ការចំណាយប្រសិន​បើមាន)
@@ -300,108 +368,84 @@
             the following means:
         </span>
     </p>
-    <table class="table table-bordered">
-        <tbody>
-            <tr>
-                <td class="w-10">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something" />
-                    </div>
-                </td>
-                <td class="w-80">
-                    <p class="w-100 font-sm">
-                        ផ្ទេរត្រលប់ទៅគណនីជួញដូរខាងលើ
-                        <span class="text-primary">
-                            / Refund to the above trading account NO</span>
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td class="w-10">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something" />
-                    </div>
-                </td>
-                <td class="w-80">
-                    <p class="w-100 font-sm">
-                        ដកជាសាច់ប្រាក់នៅធនាគារដែលបានកំណត់
-                        <span class="text-primary">
-                            / Refund by cash at the deposit bank</span>
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td class="w-10">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something" />
-                    </div>
-                </td>
-                <td class="w-80">
-                    <ul>
-                        <li>
-                            <p class="w-100 font-sm">
-                                ផ្ទេរទៅគណនីធនាគារខាងក្រោម
-                                <span class="text-primary">
-                                    / Refund to the below bank account</span>
-                            </p>
-                        </li>
-                        <li>
-                            <p class="w-100 font-sm">
-                                ឈ្មោះធនាគារ
-                                <span class="text-primary"> / Bank Name:</span>
-                            </p>
-                        </li>
-                        <li>
-                            <p class="w-100 font-sm">
-                                ឈ្មោះគណនី
-                                <span class="text-primary"> / Account Name:</span>
-                            </p>
-                        </li>
-                        <li>
-                            <p class="w-100 font-sm">
-                                លេខគណនី
-                                <span class="text-primary"> / Account NO:</span>
-                            </p>
-                        </li>
-                        <li>
-                            <p class="w-100 font-sm">
-                                ប្រភេទរូបិយប័ណ្ណ
-                                <span class="text-primary"> / Currency Type:</span>
-                            </p>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p class="font-sm">
+
+    {{-- CUSTOM TABLE --}}
+
+    <div class="table">
+        <div class="table-row">
+            <div class="table-col p-1" style="width: 5%">
+                <input type="checkbox" @if ($data['payment_method_id'] == 1 ) checked="checked" @endif>
+            </div>
+            <div class="table-col" style="padding: 1.5px 4px;">
+                <p class="font-xs">
+                    ផ្ទេរត្រលប់ទៅគណនីជួញដូរខាងលើ
+                    <span class="text-primary">
+                        / Refund to the above trading account NO</span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col p-1" style="width: 5%">
+                <input type="checkbox" @if ($data['payment_method_id'] == 2 ) checked="checked" @endif>
+            </div>
+            <div class="table-col" style="padding: 1.5px 4px;">
+                <p class="font-xs">
+                    ដកជាសាច់ប្រាក់នៅធនាគារដែលបានកំណត់
+                    <span class="text-primary">
+                        / Refund by cash at the deposit bank</span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col p-1" style="width: 5%; border-bottom: 0px;">
+                <input type="checkbox" @if ($data['payment_method_id'] == 3 ) checked="checked" @endif>
+            </div>
+            <div class="table-col" style="padding: 1.5px 4px;">
+                <ul>
+                    <li>
+                        <p class="font-xs">
+                            ដកជាសាច់ប្រាក់នៅធនាគារដែលបានកំណត់
+                            <span class="text-primary">
+                                / Refund by cash at the deposit bank</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p class="font-xs">
+                            ឈ្មោះធនាគារ
+                            <span class="text-primary"> / Bank Name: {{ $data['bank_name'] }}</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p class="font-xs">
+                            ឈ្មោះគណនី
+                            <span class="text-primary"> / Account Name: {{ $data['bank_account_name'] }}</span>
+                        </p>
+                    <li>
+                        <p class="font-xs">
+                            លេខគណនី
+                            <span class="text-primary"> / Account NO: {{ $data['bank_account_number'] }}</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p class="font-xs">
+                            ប្រភេទរូបិយប័ណ្ណ
+                            <span class="text-primary"> / Currency Type: {{ $data['bank_account_currency'] }}</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {{-- End Custom Table --}}
+
+    <p class="font-xs">
         (ក្រោយការដកចេញចំណាយពាក់ព័ន្ធសម្រាប់ការផ្ទេរប្រសិនបើមាន
         <span class="text-primary">
             / After deduction of related charges for such transfer, if any</span>)
     </p>
 
-    <div class="border-top">
-        <div class="d-flex justify-content-end align-items-center gap-3">
-            <p class="font-xs">
-                ពាក្យស្នើសុំធ្វើបរិវិសកម្មមូលបត្រកម្មសិទ្ធិ
-                <span class="text-primary"> / Subscription Form for IPO</span>
-            </p>
-            <div style="
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          padding: 0px;
-          gap: 10px;
-
-          position: relative;
-          width: 32px;
-          height: 32px;
-        " class="bg-primary text-light">
-                1
-            </div>
-        </div>
-    </div>
+    <pagebreak />
 
     <p class="font-sm">
         <strong>សម្គាល់៖ </strong>
@@ -413,118 +457,121 @@
             unsuccessful investor must be the same person. Joint account is not
             allowed and will not be accepted.</span>
     </p>
-    <table class="table table-bordered">
-        <tbody>
-            <tr>
-                <td>
-                    <p class="font-sm">
-                        ហត្ថលេខារបស់វិនិយោគិន/ហត្ថលេខារបស់អ្នកតំណាង និងត្រា
-                        (សម្រាប់នីតិបុគ្គល)
-                    </p>
-                    <code class="text-primary font-sm">
-            Investor's Signature/Signature of Authorized Person and Seal (for legal entity)</code>
-                </td>
-                <td>
-                    <p class="font-sm">
-                        ភ្នាក់ងារក្រុមហ៊ុនមូលបត្រ
-                    </p>
-                    <code class="text-primary font-sm">
-            Securities Representative</code>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="height: 150px;" class="d-flex align-items-start flex-column">
-                        <p class="mt-auto font-sm">
-                            ឈ្មោះ
-                            <span class="text-primary">
-                                /Name:</span>
-                        </p>
-                    </div>
-                </td>
-                <td>
-                    <div style="height: 150px;" class="d-flex align-items-start flex-column">
-                        <p class="mt-auto font-sm">
-                            ឈ្មោះ
-                            <span class="text-primary">
-                                /Name:</span>
-                        </p>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 
-    <p class="font-sm">
+    {{-- CUSTOM TABLE --}}
+
+    <div class="table">
+        <div class="table-row">
+            <div class="table-col text-center" style="width: 60%">
+                <p class="font-xs">
+                    ហត្ថលេខារបស់វិនិយោគិន/ហត្ថលេខារបស់អ្នកតំណាង និងត្រា (សម្រាប់នីតិបុគ្គល)
+                    <br>
+                    <span class="text-primary">
+                        Investor's Signature/Signature of Authorized Person and Seal (for legal entity)</span>
+                </p>
+            </div>
+            <div class="table-col text-center">
+                <p class="font-xs">
+                    ភ្នាក់ងារក្រុមហ៊ុនមូលបត្រ
+                    <br>
+                    <span class="text-primary">Securities Representative</span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col" style="width: 60%">
+                <div style="height: 100px;"></div>
+                <p class="font-xs">
+                    ឈ្មោះ /
+                    <span class="text-primary">
+                        Name: {{ $data['english_trading_name'] }}</span>
+                </p>
+            </div>
+            <div class="table-col">
+                <div style="height: 100px;"></div>
+                <p class="font-xs">
+                    ឈ្មោះ /
+                    <span class="text-primary">
+                        Name</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {{-- End Custom Table --}}
+
+    <p class="font-xs pt-1">
         គណនីសម្រាប់ដាក់ទឹកប្រាក់តម្កល់នៅធនាគារអេស៊ីលីដា
+        <br>
+        <span class="text-primary">
+            The accounts for the deposit at ACLEDA Bank (SWIFT Code: ACLBKHPP)</span>
     </p>
 
-    <p class="font-sm text-primary">
-        The accounts for the deposit at ACLEDA Bank (SWIFT Code: ACLBKHPP)</p>
-    <table class="table table-bordered">
-        <tbody>
-            <tr>
-                <td>
-                    <p class="font-sm">
-                        ហត្ថលេខារបស់វិនិយោគិន/ហត្ថលេខារបស់អ្នកតំណាង និងត្រា
-                        (សម្រាប់នីតិបុគ្គល)
-                    </p>
-                    <code class="text-primary font-sm">
-                        Account Number for Deposit
-                    </code>
-                </td>
-                <td>
-                    <p class="font-sm">
-                        ភ្នាក់ងារក្រុមហ៊ុនមូលបត្រ
-                    </p>
-                    <code class="text-primary font-sm">
-                        Account Name for Deposit</code>
-                </td>
-                <td>
-                    <p class="font-sm">
-                        រូបិយប័ណ្ណ
-                        <span class="text-primary">
-                            Currency</span>
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="font-sm">
-                        00010010074966
-                    </p>
-                </td>
-                <td>
-                    <p class="font-sm">
-                        CAM GSM PLC. - Subscription Account
-                    </p>
-                </td>
-                <td>
-                    <p class="font-sm">
-                        ប្រាក់រៀល KHR
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="font-sm">
-                        00010010074966
-                    </p>
-                </td>
-                <td>
-                    <p class="font-sm">
-                        CAM GSM PLC. - Subscription Account
-                    </p>
-                </td>
-                <td>
-                    <p class="font-sm">
-                        ប្រាក់ដុល្លារអាមេរិក USD
-                    </p>
+    {{-- CUSTOM TABLE --}}
 
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table">
+        <div class="table-row">
+            <div class="table-col text-center" style="width: 30%;">
+                <p class="font-xs">
+                    លេខគណនីសម្រាប់ដាក់ទឹកប្រាក់តម្កល់
+                    <br>
+                    <span class="text-primary">
+                        Account Number for Deposit</span>
+                </p>
+            </div>
+            <div class="table-col text-center" style="width: 40%;">
+                <p class="font-xs">
+                    ឈ្មោះគណនីសម្រាប់ដាក់ទឹកប្រាក់តម្កល់
+                    <br>
+                    <span class="text-primary">Account Name for Deposit</span>
+                </p>
+            </div>
+            <div class="table-col text-center">
+                <p class="font-xs">
+                    រូបិយប័ណ្ណ
+                    <br>
+                    <span class="text-primary">Currency</span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col text-center" style="width: 30%;">
+                <p class="font-md">
+                    00010010074966
+                </p>
+            </div>
+            <div class="table-col text-center" style="width: 40%;">
+                <p class="font-md">
+                    CAM GSM PLC. - Subscription Account
+                </p>
+            </div>
+            <div class="table-col text-center">
+                <p class="font-md">
+                    ប្រាក់រៀល <span class="text-primary">KHR</span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col text-center" style="width: 30%;">
+                <p class="font-md">
+                    00010010074955
+                </p>
+            </div>
+            <div class="table-col text-center" style="width: 40%;">
+                <p class="font-md">
+                    CAM GSM PLC. - Subscription Account
+                </p>
+            </div>
+            <div class="table-col text-center">
+                <p class="font-md">
+                    ប្រាក់ដុល្លារអាមេរិក <span class="text-primary">USD</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {{-- End Custom Table --}}
+
     <p class="font-sm">
         លោកអ្ន​ក​ គួរអាន និងយល់ពីខ្លឹមសារ នៃឯកសារផ្តល់ព័ត៌មានរបស់ក្រុមហ៊ុនបោះផ្សាយ
         មុនពេលដាក់ពាក្យស្នើសុំធ្វើបរិវិសកម្មមូលបត្រកម្មសិទ្ធិ។
@@ -633,66 +680,66 @@
         </span>
     </p>
 
-    <div class="border p-3">
-        <table>
-            <tr>
-                <td class="d-flex justify-content-start" style="width: 50px;">
-                    <p class="font-sm">&#x2731;</p>
-                </td>
-                <td>
-                    <p class="font-sm">
-                        ក្រុមហ៊ុនធានាទិញមូលបត្រ ឬតំណាងភ្នាក់ងារលក់
-                        ត្រូវពន្យល់វិនិយោគិនអំពីខ្លឹមសារនៃសេវាបរិវិសកម្មដែលមានចែងដូចខាងក្រោមនេះ។
-                        <span class="text-primary font-sm">
-                            The Underwriter or the authorized selling agents shall
-                            explain to the undersigned
-                            Investor
-                            the
-                            terms of the Subscription Service prescribed hereunder.
-                        </span>
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td class="d-flex justify-content-start" style="width: 50px;">
-                    <p class="font-sm">&#x2731;<span>&#x2731;</span>
-                    </p>
-                </td>
-                <td>
-                    <p class="font-sm">
-                        វិនិយោគិនទទួលខុសត្រូវលើលទ្ធផល
-                        និងរាល់ហេតុការណ៍ទាំងឡាយដែលកើតឡើង
-                        ឬដែលអាចនឹងកើតឡើងពាក់ព័ន្ធនឹងការធ្វើបរិវិសកម្មរបស់ក្រុមហ៊ុនបោះផ្សាយ
-                        ហើយក្រុមហ៊ុនធានាទិញមូលបត្រ
-                        និង/ឬតំណាងភ្នាក់ងារលក់ មិនទទួលខុសត្រូវលើលទ្ធផល
-                        និងរាល់ហេតុការណ៍ទាំងនោះទេ។
-                        <span class="text-primary font-sm">
-                            The undersigned Investor hereby assumes full
-                            responsibility for the outcome and all the
-                            matters
-                            that arise or eventuate in connection the Subscription
-                            process of the Issuer and the
-                            Underwriter
-                            and/or authorized selling agents do not and shall not
-                            take any responsibility with
-                            respect
-                            to
-                            such outcome or matters.
-                        </span>
-                    </p>
-                </td>
-            </tr>
-        </table>
+    {{-- CUSTOM TABLE --}}
+
+    <div class="table p-1">
+        <div class="table-row">
+            <div class="table-col" style="width: 5%; border:0px; padding-left: 8px;">
+                <p>*</p>
+            </div>
+            <div class="table-col" style="border: 0px;">
+                <p class="font-sm">
+                    ក្រុមហ៊ុនធានាទិញមូលបត្រ ឬតំណាងភ្នាក់ងារលក់
+                    ត្រូវពន្យល់វិនិយោគិនអំពីខ្លឹមសារនៃសេវាបរិវិសកម្មដែលមានចែងដូចខាងក្រោមនេះ។
+                    <span class="text-primary font-sm">
+                        The Underwriter or the authorized selling agents shall
+                        explain to the undersigned
+                        Investor
+                        the
+                        terms of the Subscription Service prescribed hereunder.
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-col" style="width: 5%; border:0px; padding-left: 8px;">
+                <p>**</p>
+            </div>
+            <div class="table-col" style="border: 0px;">
+                <p class="font-sm">
+                    វិនិយោគិនទទួលខុសត្រូវលើលទ្ធផល
+                    និងរាល់ហេតុការណ៍ទាំងឡាយដែលកើតឡើង
+                    ឬដែលអាចនឹងកើតឡើងពាក់ព័ន្ធនឹងការធ្វើបរិវិសកម្មរបស់ក្រុមហ៊ុនបោះផ្សាយ
+                    ហើយក្រុមហ៊ុនធានាទិញមូលបត្រ
+                    និង/ឬតំណាងភ្នាក់ងារលក់ មិនទទួលខុសត្រូវលើលទ្ធផល
+                    និងរាល់ហេតុការណ៍ទាំងនោះទេ។
+                    <span class="text-primary font-sm">
+                        The undersigned Investor hereby assumes full
+                        responsibility for the outcome and all the
+                        matters
+                        that arise or eventuate in connection the Subscription
+                        process of the Issuer and the
+                        Underwriter
+                        and/or authorized selling agents do not and shall not
+                        take any responsibility with
+                        respect
+                        to
+                        such outcome or matters.
+                    </span>
+                </p>
+            </div>
+        </div>
     </div>
 
-    <div class="text-center py-2 bg-warning">
-        <h6 class="font-md">
-            សេវាបរិវិសកម្ម
-        </h6>
-        <h6 class="text-primary font-md text-uppercase">
-            Subscription Service
-        </h6>
+    {{-- End Custom Table --}}
+
+    <pagebreak />
+
+    <div class="w-100 text-center">
+        <h6 class="font-md">សេវាបរិវិសកម្ម</h6>
+        <h6 class="font-md">SUBSCRIPTION SERVICE</h6>
     </div>
+
     <p class="font-sm">
         វិនិយោគិន និង ក្រុមហ៊ុនធានាទិញមូលបត្រ បានអាន
         និងយល់ព្រមលើលក្ខខណ្ឌនៃសេវាបរិវិសកម្មដូចខាងក្រោម
@@ -706,12 +753,12 @@
 
     <ol>
         <li>
-            <strong class="font-sm">
+            <p class="font-sm bg-primary px-1">
                 លក្ខខណ្ឌទូទៅ
                 <span class="text-primary font-sm">
                     / GENERAL CONDITIONS
                 </span>
-            </strong>
+            </p>
             <ol>
                 <li>
                     <p class="font-sm">
@@ -844,7 +891,7 @@
             </ol>
         </li>
         <li>
-            <p class="font-sm">
+            <p class="font-sm bg-primary px-1">
                 ការធ្វើបរិវិសកម្ម
                 <span class="text-primary font-sm">
                     / SUBSCRIPTION
@@ -976,7 +1023,7 @@
             </ol>
         </li>
         <li>
-            <p class="font-sm">
+            <p class="font-sm bg-primary px-1">
                 ការបែងចែកមូលបត្រកម្មសិទ្ធិ
                 <span class="text-primary font-sm">
                     / ALLOTMENT
@@ -1012,7 +1059,7 @@
             </ol>
         </li>
         <li>
-            <p class="font-sm">
+            <p class="font-sm bg-primary px-1">
                 ការផ្ទេរប្រាក់
                 <span class="text-primary font-sm">
                     / REFUND
@@ -1089,7 +1136,7 @@
             </ol>
         </li>
         <li>
-            <p class="font-sm">
+            <p class="font-sm bg-primary px-1">
                 អំណាចនៃត្រារបស់ ក្រុមហ៊ុនធានាទិញមូលបត្រ
                 និងទម្រង់ហត្ថលេខារបស់ភ្នាក់ងាររបស់ក្រុមហ៊ុនធានាទិញមូលបត្រ
                 <span class="text-primary font-sm">
@@ -1141,7 +1188,7 @@
             </ol>
         </li>
         <li>
-            <p class="font-sm">
+            <p class="font-sm bg-primary px-1">
                 ផ្សេងៗ
                 <span class="text-primary font-sm">
                     / MISCELLANEOUS
@@ -1182,5 +1229,12 @@
             </ol>
         </li>
     </ol>
+    
+    <pagebreak />
+    
+    {{ $data['file'] }}
+    {{-- <img src="{{ asset('/storage/'.$data['file']) }}" width="100%" /> --}}
 
-</div>
+</body>
+
+</html>

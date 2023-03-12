@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('contact');
             $table->string('email');
             $table->string('legal_entity_signature')->nullable();
-            $table->string('subscriber_status')->default(1);
+            $table->string('status')->default('new');
             $table->text('comment')->nullable();
             $table->string('user_id')->nullable();
             $table->timestamps();

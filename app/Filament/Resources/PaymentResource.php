@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PaymentResource\Pages;
+use App\Filament\Resources\PaymentResource\Pages\CreatePayment;
 use App\Filament\Resources\PaymentResource\RelationManagers;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
@@ -11,15 +12,23 @@ use App\Models\RefundMethod;
 use App\Models\Subscriber;
 use Faker\Provider\ar_EG\Text;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Pages\Page;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\TemporaryUploadedFile;
@@ -38,27 +47,33 @@ class PaymentResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('subscriber_id')
-                ->options(Subscriber::all()->pluck('english_trading_name', 'id'))
-                ->searchable(),
-                TextInput::make('unit_price'),
-                TextInput::make('quantity'),
-                Radio::make('payment_method_id')
-                ->options(PaymentMethod::all()->pluck('name', 'id')),
-                Radio::make('refund_method_id')
-                ->options(RefundMethod::all()->pluck('name', 'id')),
-                TextInput::make('bank_name'),
-                TextInput::make('bank_account_name'),
-                TextInput::make('bank_account_number'),
-                TextInput::make('bank_account_currency'),
-                TextInput::make('autual_deposit')->numeric(),
-                FileUpload::make('file')
-                ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                    $fileName = $file->hashName();
-                    $name = explode('.',$fileName);
-                    return (string) str('images/payment_image/'.$name[0].'png'); 
-                })
-                ->label('Image'),
+                Grid::make(3)->schema([
+                    Grid::make()->schema([
+                        Card::make()->schema([
+                            Select::make('subscriber_id')
+                                ->options(Subscriber::all()->pluck('english_trading_name', 'id'))
+                                ->searchable()->required(),
+                            TextInput::make('unit_price')->label('Price per Share')->required(),
+                            TextInput::make('quantity')->label('Amount Share')->required(),
+                            Radio::make('payment_method_id')->label('Payment Method')
+                                ->options(PaymentMethod::all()->pluck('name', 'id'))->required(),
+                            Radio::make('refund_method_id')->label('Refund Method')
+                                ->options(RefundMethod::all()->pluck('name', 'id'))->required(),
+                            TextInput::make('bank_name'),
+                            TextInput::make('bank_account_name'),
+                            TextInput::make('bank_account_number'),
+                            TextInput::make('bank_account_currency'),
+                            TextInput::make('actual_deposit')->numeric(),
+                        ]),
+                        Section::make('Image')->schema([
+                            FileUpload::make('file')->label('Image')
+                                ->image()->enableOpen()->enableDownload()->required(),
+                        ]),
+                    ])->columnSpan(2),
+                    Section::make('Status')->schema([
+                        Toggle::make('status'),
+                    ])->columnSpan(1)->hidden(fn (Page $livewire) => ($livewire instanceof CreatePayment))
+                ]),
             ]);
     }
 
@@ -66,18 +81,55 @@ class PaymentResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('subscriber.english_trading_name'),
-                TextColumn::make('unit_price'),
-                TextColumn::make('quantity'),
-                TextColumn::make('payment_method_id'),
-                TextColumn::make('refund_method_id'),
-                TextColumn::make('status'),
+                TextColumn::make('subscriber.khmer_trading_name')->searchable()->label('Khmer Name'),
+                TextColumn::make('subscriber.english_trading_name')->searchable()->label('English Name'),
+                TextColumn::make('unit_price')->label('Price per Share'),
+                TextColumn::make('quantity')->label('Amount Share'),
+                TextColumn::make('amount')->label('Total Amount'),
+                BadgeColumn::make('currency')
+                    ->colors([
+                        'danger' => static fn ($state): bool => $state === 'USD',
+                        'success' => static fn ($state): bool => $state === 'KHR',
+                    ]),
+                BadgeColumn::make('status')
+                    ->colors([
+                        'danger' => static fn ($state): bool => $state === 0,
+                        'success' => static fn ($state): bool => $state === 1,
+                    ])
+                    ->enum([
+                        0 => 'Inactive',
+                        1 => 'Actived',
+                    ]),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options([
+                        'new' => 'New',
+                        'edited' => 'Edited',
+                        'rejected' => 'Rejected',
+                        'approved' => 'Approved',
+                    ]),
+
+                Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from'),
+                        Forms\Components\DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Pdf')->icon('heroicon-o-document-download')->url(fn (Payment $record) => route('pdf.download', $record))->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

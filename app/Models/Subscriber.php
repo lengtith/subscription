@@ -20,7 +20,7 @@ class Subscriber extends Model
         'contact',
         'email',
         'legal_entity_signature',
-        'subscriber_status',
+        'status',
         'comment',
         'user_id',
     ];
@@ -29,13 +29,20 @@ class Subscriber extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
     public function subscription_ids()
     {
         return $this->hasMany(SubscriptionId::class);
     }
+
     public function register()
     {
         return $this->belongsTo(Register::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     // public function getFullNameAttribute()

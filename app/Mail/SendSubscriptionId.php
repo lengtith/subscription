@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class completeRegistration extends Mailable
+class SendSubscriptionId extends Mailable
 {
     use Queueable, SerializesModels;
     public $data;
@@ -32,7 +32,7 @@ class completeRegistration extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Complete Registration',
+            subject: 'Send Subscription Id',
         );
     }
 
@@ -44,7 +44,7 @@ class completeRegistration extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mail.my-test-mail',
+            view: 'mail.send-subscription-id',
         );
     }
 

@@ -4,14 +4,22 @@
             <div class="card border-0">
                 <div class="card-body p-0">
                     <div class="row no-gutters">
-                        <div class="col-lg-6 d-none d-lg-inline-block">
-                            <div class="account-block rounded-right">
-                                <div class="overlay rounded-right"></div>
-                                <div class="account-testimonial">
-                                    <h4 class="text-white mb-4">This beautiful theme yours!</h4>
-                                    <p class="lead text-white">"Best investment i made for a long time. Can only
-                                        recommend it for other users."</p>
-                                    <p>- Admin User</p>
+                        <div class="col-lg-6 d-none d-lg-inline-block bg-yellow">
+                            <div class="d-flex justify-content-center align-item-center h-100">
+                                <div class="content-info">
+                                    <div class="pt-5">
+                                        <img class="rounded"
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE3AbV0jDJimdNIBvUYMIsssTkXpZ6oZ5HBlJ9E5j0&s"
+                                            alt="Cinque Terre" height="50">
+                                    </div>
+
+                                    <div class="account-testimonial">
+                                        <h4 class="text-white mb-4">Subscription Operation</h4>
+                                        <h5 class="text-white mb-4">ដំណើរការធ្វើបរិវិសកម្ម</h5>
+                                        <p class="lead text-white">09-22 Mar 2023 / ០៩-២២ មិនា ២០២៣</p>
+                                        <img src="https://pelprek.sgp1.digitaloceanspaces.com/banner/18/156152298696483.png"
+                                            alt="Cinque Terre" height="80">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -25,15 +33,11 @@
                                 <h6 class="h5 mb-0">Welcome!</h6>
                                 <p class="text-muted mt-2 mb-5">Enter your email address and password to access admin
                                     panel.</p>
-                                @if (Session::has('success'))
-                                <p class="alert alert-success">
-                                    {{ Session::get('success') }}
-                                </p>
-                                @endif
-                                {{-- Error alert --}}
-                                @if ($error)
+
+
+                                @if (Session::has('error'))
                                 <p class="alert alert-danger">
-                                    {{ $error }}
+                                    {{ Session::get('error') }}
                                 </p>
                                 @endif
 
@@ -50,8 +54,8 @@
                                     </div>
 
                                     <div class="form-group mb-3 mt-3">
-                                        <input type="password" class="form-control py-3"
-                                            wire:model="password" placeholder="Password" required>
+                                        <input type="password" class="form-control py-3" wire:model="password"
+                                            placeholder="Password" required>
                                         <span class="text-danger">
                                             @error('password')
                                             {{ $message }}
@@ -59,7 +63,12 @@
                                         </span>
                                     </div>
 
-                                    <button type="submit" class="btn btn-theme mb-3 mt-3">Login</button>
+                                    <button type="submit" class="btn btn-theme mb-3 mt-3">
+                                        <div wire:loading wire:target="handleSubmit">
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                        </div>
+                                        Login
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -81,6 +90,26 @@
 </div>
 
 <style>
+    .bg-yellow {
+        background-color: #F8991B;
+    }
+
+    .content-info {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 50px;
+        gap: 40px;
+    }
+
+    h4,
+    h5,
+    p {
+        font-family: 'Khmer OS Battambang', sans-serif;
+    }
+
     .account-block {
         padding: 0;
         background-image: url(https://bootdey.com/img/Content/bg1.jpg);

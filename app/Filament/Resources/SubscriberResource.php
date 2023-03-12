@@ -24,6 +24,8 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
@@ -51,10 +53,7 @@ class SubscriberResource extends Resource
                                     'individual' => 'Individual',
                                     'legal_entity' => ' Legal Entity',
                                 ])->columnSpan(2),
-                            Select::make('register_id')
-                                ->label('Register Name')
-                                ->options(Register::all()->pluck('name', 'id'))
-                                ->searchable(),
+                            TextInput::make('id')->label('ID')->disabled(),
                             TextInput::make('investor_id')->required()->numeric()->unique(ignoreRecord: true),
                             TextInput::make('trading_acc_number')->required()->numeric()->unique(ignoreRecord: true),
                             TextInput::make('khmer_trading_name')->required(),
@@ -73,12 +72,12 @@ class SubscriberResource extends Resource
                     Grid::make()->schema([
                         Section::make('Status')
                             ->schema([
-                                Radio::make('subscriber_status')
+                                Radio::make('status')
                                     ->options([
-                                        '1' => 'New',
-                                        '2' => 'Edited',
-                                        '3' => 'Rejected',
-                                        '4' => 'Approved',
+                                        'new' => 'New',
+                                        'edited' => 'Edited',
+                                        'rejected' => 'Rejected',
+                                        'approved' => 'Approved',
                                     ])->required(),
                                 Forms\Components\Placeholder::make('created_at')
                                     ->hidden(fn (Page $livewire) => ($livewire instanceof CreateSubscriber))
@@ -98,19 +97,42 @@ class SubscriberResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('register.name'),
-                TextColumn::make('english_trading_name'),
-                TextColumn::make('khmer_trading_name'),
-                BadgeColumn::make('subscriber_status')
+                TextColumn::make('english_trading_name')->searchable(),
+                TextColumn::make('khmer_trading_name')->searchable(),
+                TextColumn::make('email')->searchable(),
+                BadgeColumn::make('status')
                     ->colors([
-                        'warning' => static fn ($state): bool => $state === 'New',
-                        'primary' => static fn ($state): bool => $state === 'Edited',
-                        'danger' => static fn ($state): bool => $state === 'Rejected',
-                        'success' => static fn ($state): bool => $state === 'Approved',
+                        'warning' => static fn ($state): bool => $state === 'new',
+                        'primary' => static fn ($state): bool => $state === 'edited',
+                        'danger' => static fn ($state): bool => $state === 'rejected',
+                        'success' => static fn ($state): bool => $state === 'approved',
                     ]),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options([
+                        'new' => 'New',
+                        'edited' => 'Edited',
+                        'rejected' => 'Rejected',
+                        'approved' => 'Approved',
+                    ]),
+
+                Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from'),
+                        Forms\Components\DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

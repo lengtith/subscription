@@ -18,16 +18,15 @@ class Payment extends Model
         'unit_price',
         'quantity',
         'amount',
-        'autual_deposit',
+        'actual_deposit',
         'status',
+        'cheque_number',
         'bank_name',
         'bank_account_name',
         'bank_account_number',
         'bank_account_currency',
         'file'
     ];
-
-    public $bankAccount = RefundToBankAccount::class;
 
     public function subscriber()
     {
@@ -44,9 +43,5 @@ class Payment extends Model
     public function refund_method()
     {
         return $this->belongsTo(RefundMethod::class);
-    }
-    public function refund_to_bank_acc()
-    {
-        return $this->belongsTo(RefundToBankAccount::class);
     }
 }
