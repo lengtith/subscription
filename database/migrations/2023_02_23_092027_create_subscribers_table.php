@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('legal_entity_signature')->nullable();
             $table->string('status')->default('new');
             $table->text('comment')->nullable();
-            $table->string('user_id')->nullable();
+            $table->string('user_id')->constrained()->cascadeOnDelete()->nullable();
             $table->timestamps();
         });
     }

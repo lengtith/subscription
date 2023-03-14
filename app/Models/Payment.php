@@ -25,7 +25,8 @@ class Payment extends Model
         'bank_account_name',
         'bank_account_number',
         'bank_account_currency',
-        'file'
+        'file',
+        'user_id'
     ];
 
     public function subscriber()
@@ -43,5 +44,9 @@ class Payment extends Model
     public function refund_method()
     {
         return $this->belongsTo(RefundMethod::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

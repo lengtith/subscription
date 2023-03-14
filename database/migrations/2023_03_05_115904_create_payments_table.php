@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('bank_account_number')->nullable();
             $table->string('bank_account_currency')->nullable();
             $table->boolean('status')->default(false);
+            $table->string('user_id')->constrained()->cascadeOnDelete()->nullable();
             $table->timestamps();
         });
     }

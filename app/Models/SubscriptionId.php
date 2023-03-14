@@ -14,7 +14,8 @@ class SubscriptionId extends Model
         'company_id',
         'code',
         'status',
-        'is_sent'
+        'is_sent',
+        'user_id',
     ];
 
     public function subscriber(){
@@ -22,5 +23,8 @@ class SubscriptionId extends Model
     }
     public function company(){
         return $this->belongsTo(Company::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

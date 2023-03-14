@@ -37,7 +37,7 @@ class PaymentResource extends Resource
 {
     protected static ?string $model = Payment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     protected static ?string $navigationGroup = 'Main Menu';
 
@@ -52,22 +52,27 @@ class PaymentResource extends Resource
                         Card::make()->schema([
                             Select::make('subscriber_id')
                                 ->options(Subscriber::all()->pluck('english_trading_name', 'id'))
-                                ->searchable()->required(),
+                                ->searchable()->required()->disabled(),
+                            TextInput::make('currency')->label('Currency Type')->required(),
                             TextInput::make('unit_price')->label('Price per Share')->required(),
                             TextInput::make('quantity')->label('Amount Share')->required(),
+
+                            TextInput::make('actual_deposit')->numeric(),
+                        ])->columns(2),
+                        Section::make('Payment')->schema([
                             Radio::make('payment_method_id')->label('Payment Method')
                                 ->options(PaymentMethod::all()->pluck('name', 'id'))->required(),
-                            Radio::make('refund_method_id')->label('Refund Method')
-                                ->options(RefundMethod::all()->pluck('name', 'id'))->required(),
-                            TextInput::make('bank_name'),
-                            TextInput::make('bank_account_name'),
-                            TextInput::make('bank_account_number'),
-                            TextInput::make('bank_account_currency'),
-                            TextInput::make('actual_deposit')->numeric(),
-                        ]),
-                        Section::make('Image')->schema([
+                            TextInput::make('bank_name')->hidden(fn (Payment $record) => $record->payment_method_id == 3  ? false : true),
                             FileUpload::make('file')->label('Image')
                                 ->image()->enableOpen()->enableDownload()->required(),
+                        ]),
+                        Section::make('Refund')->schema([
+                            Radio::make('refund_method_id')->label('Refund Method')
+                                ->options(RefundMethod::all()->pluck('name', 'id'))->required(),
+                            TextInput::make('bank_name')->hidden(fn (Payment $record) => $record->refund_method_id == 3  ? false : true),
+                            TextInput::make('bank_account_name')->hidden(fn (Payment $record) => $record->refund_method_id == 3  ? false : true),
+                            TextInput::make('bank_account_number')->hidden(fn (Payment $record) => $record->refund_method_id == 3  ? false : true),
+                            TextInput::make('bank_account_currency')->hidden(fn (Payment $record) => $record->refund_method_id == 3  ? false : true),
                         ]),
                     ])->columnSpan(2),
                     Section::make('Status')->schema([

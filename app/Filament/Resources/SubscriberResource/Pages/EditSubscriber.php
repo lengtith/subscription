@@ -41,25 +41,12 @@ class EditSubscriber extends EditRecord
     {
         $record->update($data);
 
-        // $item = Subscriber::where('id', $data['id'])->update([
-        //     'investor_type' => $data['investor_type'],
-        //     'khmer_trading_name' => $data['khmer_trading_name'],
-        //     'english_trading_name' => $data['english_trading_name'],
-        //     'trading_acc_number' => $data['trading_acc_number'],
-        //     'investor_id' => $data['investor_id'],
-        //     'security_firm_name' => $data['security_firm_name'],
-        //     'contact' => $data['contact'],
-        //     'email' => $data['email'],
-        //     'legal_entity_signature' => $data['legal_entity_signature'],
-        //     'status' => $data['status'],
-        //     'user_id' => auth()->id(),
-        // ]);
-
         if ($data['comment']) {
             
             Comment::create([
                 'subscriber_id' => $data['id'],
                 'comment' => $data['comment'],
+                'user_id' => auth()->id(),
             ]);
 
             if ($data['status'] == 'edited' || $data['status'] == 'rejected') {

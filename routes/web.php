@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/complete_subscription', CompleteSubscription::class)->middleware('isLogin');
-Route::get('/complete_registration', CompleteRegister::class)->middleware('isLogin');
+Route::get('/complete_registration', CompleteRegister::class)->middleware('notLogin');
 
 Route::get('/register', Register::class)->middleware('notLogin');
 Route::get('/login', Login::class)->middleware('notLogin');

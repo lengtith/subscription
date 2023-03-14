@@ -46,7 +46,7 @@ class Register extends Component
                 return session()->flash('error', 'Something went wrong');
             }
         } catch (\Throwable $th) {
-            return session()->flash('error', 'Please try again');
+            return session()->flash('error', 'Mail server error');
         }
     }
 

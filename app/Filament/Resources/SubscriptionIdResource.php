@@ -30,7 +30,7 @@ class SubscriptionIdResource extends Resource
 {
     protected static ?string $model = SubscriptionId::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-identification';
 
     protected static ?string $navigationGroup = 'Main Menu';
 

@@ -1,25 +1,21 @@
 <div class="container mt-5 mb-5">
-    @if ()
-        
-    @else
-        
-    @endif
+
     <form class="w-75 m-auto">
         <div class="d-flex flex-column">
             <div class="p-0">
                 <h4 class="font-weight-bold text-theme">Subscription Request</h4>
             </div>
-    
+
             <hr class="line">
             <div class="card-body d-flex flex-column gap-4 p-0">
-    
+
                 {{--
                 //--------------------------------------------------------------
                 // Information Related to Investor
                 // ពត៌មានទាក់ទងនឹងវិនិយោគិន
                 //--------------------------------------------------------------
                 --}}
-    
+
                 <div class="card p-0">
                     <div class="h6 card-header text-uppercase">
                         Information Related to Investor
@@ -37,15 +33,15 @@
                                 </label>
                                 <div class="d-flex">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="investorType" id="investorType1"
-                                            value="individual" wire:model="investor_type">
+                                        <input class="form-check-input" type="radio" name="investorType"
+                                            id="investorType1" value="individual" wire:model="investor_type">
                                         <label class="form-check-label" for="investorType1">Individual</label>
                                         <br>
                                         <span>វិនិយោគិនជារូបវន្តបុគ្គល</span>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="investorType" id="investorType2"
-                                            value="legal_entity" wire:model="investor_type">
+                                        <input class="form-check-input" type="radio" name="investorType"
+                                            id="investorType2" value="legal_entity" wire:model="investor_type">
                                         <label class="form-check-label" for="investorType2">Legal Entity</label>
                                         <br>
                                         <span>វិនិយោគិនជានីតិបុគ្គល</span>
@@ -166,14 +162,14 @@
                         </div>
                     </div>
                 </div>
-    
+
                 {{--
                 //--------------------------------------------------------------
                 // Subscription Offer For Investors
                 // វិនិយោគិនសុំធ្វើបរិវិសកម្ម
                 //--------------------------------------------------------------
                 --}}
-    
+
                 <div class="card p-0">
                     <div class="h6 card-header text-uppercase">
                         Subscription Offer For Investors
@@ -304,8 +300,8 @@
                                 </span>
                             </div>
                         </div>
-    
-    
+
+
                         <div class="row justify-content-between text-left ">
                             <div class="form-group col flex-column d-flex gap-1">
                                 <label class="form-control-label">
@@ -333,13 +329,14 @@
 
                                     @if ($payment_method == 3)
                                     <div class="form-group">
-                                        <input type="text" class="form-control" wire:model="cheque_number" placeholder="Cheque Number">
+                                        <input type="text" class="form-control" wire:model="cheque_number"
+                                            placeholder="Cheque Number">
                                     </div>
                                     @endif
 
                                     <div class="mb-3">
                                         <input type="file" class="form-control" wire:model="payment_attach">
-    
+
                                         <span class="text-danger">
                                             @error('payment_attach')
                                             {{ $message }}
@@ -350,9 +347,9 @@
                             </div>
                         </div>
                     </div>
-    
+
                 </div>
-    
+
                 {{--
                 //--------------------------------------------------------------
                 // Refund Information
@@ -366,7 +363,7 @@
                         <span>ព័ត៌មានពាក់ព័ន្ធនឹងការផ្ទេរប្រាក់</span>
                     </div>
                     <div class="card-body row d-flex gap-3">
-    
+
                         <div class="row justify-content-between text-left ">
                             <div class="form-group col flex-column d-flex gap-1">
                                 <div class="d-flex flex-column gap-2">
@@ -374,7 +371,8 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" value="{{ $method->id }}"
                                             wire:model="refund_method" id="{{ $method->name }}">
-                                        <label class="form-check-label" for="{{ $method->name }}">{{$method->name}}</label>
+                                        <label class="form-check-label"
+                                            for="{{ $method->name }}">{{$method->name}}</label>
                                         <br>
                                         <span>{{ $method->description }}</span>
                                     </div>
@@ -384,7 +382,7 @@
                                         {{ $message }}
                                         @enderror
                                     </span>
-    
+
                                     <div id="bankForm">
                                         <div class="p-4 rounded-1 d-flex flex-column gap-2">
                                             <div class="form-group row">
@@ -414,7 +412,8 @@
                                                     <span> / លេខគណនី</span>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" wire:model="bank_acc_number">
+                                                    <input type="text" class="form-control"
+                                                        wire:model="bank_acc_number">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -425,7 +424,8 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" wire:model="bank_acc_currency">
+                                                    <input type="text" class="form-control"
+                                                        wire:model="bank_acc_currency">
                                                 </div>
                                             </div>
                                         </div>
@@ -435,7 +435,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="card p-0">
                     <div class="h6 card-header text-uppercase">
                         Investor’s Signature/Signature of Authorized Persona and Seal (for legal entity)
@@ -468,12 +468,36 @@
             </div>
         </div>
         <hr>
-        <button wire:click.prevent="handleSubmit" class="btn btn-primary"><div wire:loading wire:target="handleSubmit">
-            <i class="fas fa-spinner fa-spin"></i>
-        </div>Submit</button>
-        <button class="btn btn-success">Preview</button>
+        <button wire:click.prevent="handleSubmit" class="btn btn-primary">
+            <div wire:loading wire:target="handleSubmit">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>Submit
+        </button>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Preview
+        </button>
         <button class="btn btn-light">Cancel</button>
     </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <style>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->char('code')->unique();
             $table->boolean('status')->default(false);
             $table->boolean('is_sent')->default(false);
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->nullable();
             $table->timestamps();
         });
     }

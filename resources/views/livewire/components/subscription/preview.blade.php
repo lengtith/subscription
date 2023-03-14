@@ -213,7 +213,7 @@
             <div class="table-col pt-1 pb-1 pl-1" style="width: 25%;">
                 <span class="font-sm">
                     <input type="checkbox" @if ($data['investor_type']=='individual' ) checked="checked" @endif>
-                    វិនិយោគិនជារូបវន្ដបុគ្គល <span class="font-sm text-primary">/ Individual</span>
+                    វិនិយោគិនជារូបវន្ដបុគ្គល <span class="font-sm text-primary">/ Individual </span>
                 </span>
             </div>
             <div class="table-col pt-1 pb-1 pl-1">
@@ -1233,7 +1233,7 @@
     <pagebreak />
     
     {{ $data['file'] }}
-    {{-- <img src="{{ asset('/storage/'.$data['file']) }}" width="100%" /> --}}
+    {{-- <img src="{{ asset('/storage/tYfKBRGeJNpHNXAL9Xi7myG8Ev2hMbHrkqAK7n18.jpg') }}" width="100%" /> --}}
 
 </body>
 

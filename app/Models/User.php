@@ -48,4 +48,24 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasRole(['Admin','Writer','Moderator',]);
     }
+    
+    public function subscribers()
+    {
+        return $this->hasMany(Subscriber::class);
+    }
+    
+    public function subscription_ids()
+    {
+        return $this->hasMany(SubscriptionId::class);
+    }
+    
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

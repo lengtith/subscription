@@ -14,6 +14,13 @@ class CreateSubscriptionId extends CreateRecord
 {
     protected static string $resource = SubscriptionIdResource::class;
 
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['user_id'] = auth()->id();
+
+        return $data;
+    }
+
     protected function handleRecordCreation(array $data): Model
     {
         if ($data['status'] == true) {

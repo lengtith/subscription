@@ -24,7 +24,7 @@ class RegisterResource extends Resource
 {
     protected static ?string $model = Register::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-user-add';
 
     protected static ?string $navigationGroup = 'Main Menu';
 

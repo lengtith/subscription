@@ -12,10 +12,15 @@ class Comment extends Model
     protected $fillable = [
         'comment',
         'subscriber_id',
+        'user_id',
     ];
 
     public function subscriber()
     {
         return $this->belongsTo(Subscriber::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

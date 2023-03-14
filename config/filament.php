@@ -141,7 +141,7 @@ return [
         'path' => app_path('Filament/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
-            Widgets\FilamentInfoWidget::class,
+            // Widgets\FilamentInfoWidget::class,
         ],
     ],
 
@@ -170,7 +170,7 @@ return [
     |
     */
 
-    'dark_mode' => true,
+    'dark_mode' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -237,7 +237,7 @@ return [
             'have_inline_labels' => false,
         ],
         'footer' => [
-            'should_show_logo' => true,
+            'should_show_logo' => false,
         ],
         'max_content_width' => null,
         'notifications' => [
