@@ -40,6 +40,7 @@ class Edit extends Component
     public $security_firm_name;
     public $contact;
     public $file;
+    public $legal_entity_signature;
     public $subscriber_status;
     public $comment;
     public $user_id;
@@ -84,7 +85,7 @@ class Edit extends Component
         $this->validate();
         $record = Subscriber::where('register_id', Session::get('loginId'))->first();
 
-        if ($this->file != '') {
+        if ($this->file) {
             try {
                 $record->update([
                     'register_id' => Session::get('loginId'),
@@ -97,6 +98,7 @@ class Edit extends Component
                     'contact' => $this->contact,
                     'email' => $this->email,
                     'legal_entity_signature' => $this->file->store('', 'public'),
+                    'status' => 'new',
                 ]);
                 return redirect('/complete_subscription');
             } catch (Exception $e) {
@@ -114,6 +116,8 @@ class Edit extends Component
                     'security_firm_name' => $this->security_firm_name,
                     'contact' => $this->contact,
                     'email' => $this->email,
+                    'legal_entity_signature' => $this->legal_entity_signature,
+                    'status' => 'new',
                 ]);
 
                 return redirect('/complete_subscription');
@@ -157,7 +161,7 @@ class Edit extends Component
                 $this->security_firm_name = $subscriberItem->security_firm_name;
                 $this->contact = $subscriberItem->contact;
                 $this->email = $subscriberItem->email;
-                $this->file = $subscriberItem->legal_entity_signature;
+                $this->legal_entity_signature = $subscriberItem->legal_entity_signature;
 
                 $this->currency = $paymentItem->currency;
                 $this->unit_price = $paymentItem->company->khr_price;

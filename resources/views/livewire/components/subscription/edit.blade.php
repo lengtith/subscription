@@ -457,6 +457,7 @@
                                     <br>
                                     <span>ហត្ថលេខា</span>
                                 </label>
+                                <img src="{{ asset('storage/'.$legal_entity_signature) }}" alt="" srcset="" height="40px" width="100%">
                                 <input type="file" class="form-control" wire:model="file">
                             </div>
                         </div>

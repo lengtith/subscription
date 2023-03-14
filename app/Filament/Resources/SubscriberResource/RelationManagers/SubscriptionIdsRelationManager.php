@@ -2,7 +2,17 @@
 
 namespace App\Filament\Resources\SubscriberResource\RelationManagers;
 
+use App\Filament\Resources\SubscriptionIdResource\Pages\CreateSubscriptionId;
+use App\Models\Company;
+use App\Models\Subscriber;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Pages\Page;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
@@ -20,9 +30,23 @@ class SubscriptionIdsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('code')
-                    ->required()
-                    ->maxLength(255),
+                Grid::make(3)->schema([
+                    Card::make()->schema([
+
+                        Select::make('subscriber_id')
+                            ->label('Subscriber Name')
+                            ->options(Subscriber::all()->pluck('english_trading_name', 'id'))
+                            ->searchable(),
+                        Select::make('company_id')
+                            ->label('Company Name')
+                            ->options(Company::all()->pluck('name', 'id'))
+                            ->searchable(),
+                        TextInput::make('code')->unique(),
+                    ])->columnSpan(2),
+                    Section::make('Status')->schema([
+                        Toggle::make('status')
+                    ])->columnSpan(1),
+                ]),
             ]);
     }
 
