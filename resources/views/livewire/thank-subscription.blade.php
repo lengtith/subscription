@@ -16,7 +16,6 @@
         <h2 class="card-title text-center">We recomment you to edit some point!</h2>
         <p class="card-text text-center">We're on processing. You'll receive approved email within 24 hours.</p>
         <button class="btn btn-primary" wire:click="handleEdit">Go to edit</button>
-        <a class="btn btn-primary" href="{{ route('home') }}">Preview Document</a>
     </div>
 </div>
 @endif
