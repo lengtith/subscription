@@ -30,7 +30,7 @@ class Create extends Component
      * @var Subscriber
      */
     public $email;
-    public $investor_type;
+    public $investor_type = 'individual';
     public $khmer_trading_name;
     public $english_trading_name;
     public $investor_id;
@@ -51,8 +51,8 @@ class Create extends Component
     public $quantity;
     public $amount;
     public $actual_deposit;
-    public $payment_method;
-    public $refund_method;
+    public $payment_method = 1;
+    public $refund_method = 1;
     public $payment_attach;
     public $cheque_number;
     public $bank_name;
@@ -100,7 +100,7 @@ class Create extends Component
 
                     if ($this->currency == 'KHR') {
                         try {
-                            Payment::create([
+                            $payment = Payment::create([
                                 'subscriber_id' => $data->id,
                                 'currency' => $this->currency,
                                 'unit_price' => $this->company->khr_price,
@@ -116,12 +116,13 @@ class Create extends Component
                                 'bank_account_currency' => $this->bank_acc_currency,
                                 'file' => $this->payment_attach->store('', 'public'),
                             ]);
+                            return redirect('/complete_subscription');
                         } catch (Exception $e) {
                             session()->flash('error', $e->getMessage());
                         }
                     } else {
                         try {
-                            Payment::create([
+                            $payment = Payment::create([
                                 'subscriber_id' => $data->id,
                                 'currency' => $this->currency,
                                 'unit_price' => $this->company->usd_price,
@@ -137,13 +138,11 @@ class Create extends Component
                                 'bank_account_currency' => $this->bank_acc_currency,
                                 'file' => $this->payment_attach->store('', 'public'),
                             ]);
+                            return redirect('/complete_subscription');
                         } catch (Exception $e) {
                             session()->flash('error', $e->getMessage());
                         }
                     }
-
-                    session()->put('subscriberId', $data->id);
-                    return redirect('/complete_subscription');
                 } else {
                     session()->flash('error', 'Something went wrong');
                 }
@@ -167,7 +166,7 @@ class Create extends Component
 
                     if ($this->currency == 'KHR') {
                         try {
-                            Payment::create([
+                            $payment = Payment::create([
                                 'subscriber_id' => $data->id,
                                 'currency' => $this->currency,
                                 'unit_price' => $this->company->khr_price,
@@ -183,13 +182,13 @@ class Create extends Component
                                 'bank_account_currency' => $this->bank_acc_currency,
                                 'file' => $this->payment_attach->store('', 'public'),
                             ]);
-                            $this->resetForm();
+                            return redirect('/complete_subscription');
                         } catch (Exception $e) {
                             session()->flash('error', $e->getMessage());
                         }
                     } else {
                         try {
-                            Payment::create([
+                            $payment = Payment::create([
                                 'subscriber_id' => $data->id,
                                 'currency' => $this->currency,
                                 'unit_price' => $this->company->usd_price,
@@ -205,13 +204,11 @@ class Create extends Component
                                 'bank_account_currency' => $this->bank_acc_currency,
                                 'file' => $this->payment_attach->store('', 'public'),
                             ]);
-                            $this->resetForm();
+                            return redirect('/complete_subscription');
                         } catch (Exception $e) {
                             session()->flash('error', $e->getMessage());
                         }
                     }
-                    
-                    session()->put('subscriberId', $data->id);
                     return redirect('/complete_subscription');
                 } else {
                     session()->flash('error', 'Something went wrong');
@@ -222,9 +219,35 @@ class Create extends Component
         }
     }
 
+    public function clearForm()
+    {
+        $this->investor_type = 'individual';
+        $this->khmer_trading_name = "";
+        $this->english_trading_name = "";
+        $this->investor_id = null;
+        $this->trading_acc_number = null;
+        $this->security_firm_name = "";
+        $this->contact = "";
+        $this->email = "";
+        $this->file = "";
+        $this->currency = 'KHR';
+        $this->quantity = null;
+        $this->actual_deposit = "";
+        $this->payment_method = 1;
+        $this->refund_method = 1;
+        $this->payment_attach = "";
+        $this->cheque_number = null;
+        $this->bank_name = null;
+        $this->bank_acc_name = null;
+        $this->bank_acc_number = null;
+        $this->bank_acc_currency = null;
+    }
+
     public function mount()
     {
-        if (Session::has('subscriberId')) {
+        $registerId = Session::get('loginId');
+        $subscriber = Subscriber::where('register_id',$registerId);
+        if ($subscriber) {
             return redirect('/complete_subscription');
         }
     }
@@ -235,6 +258,6 @@ class Create extends Component
         $this->payment_method_tbl = PaymentMethod::all();
         $this->refund_method_tbl = RefundMethod::all();
 
-        return view('livewire.components.subscription.create');
+        return view('livewire.components.subscription.create')->layout('layouts.app', ['pageTitle' => 'Create subscription']);
     }
 }

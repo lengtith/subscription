@@ -239,7 +239,7 @@ return [
         'footer' => [
             'should_show_logo' => false,
         ],
-        'max_content_width' => null,
+        'max_content_width' => true,
         'notifications' => [
             'vertical_alignment' => 'top',
             'alignment' => 'right',
@@ -263,7 +263,7 @@ return [
     |
     */
 
-    'favicon' => null,
+    'favicon' => 'https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f4a2.svg',
 
     /*
     |--------------------------------------------------------------------------

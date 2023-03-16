@@ -4,8 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubscriberResource\Pages;
 use App\Filament\Resources\SubscriberResource\Pages\CreateSubscriber;
+use App\Filament\Resources\SubscriberResource\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\SubscriberResource\RelationManagers\PaymentsRelationManager;
 use App\Filament\Resources\SubscriberResource\RelationManagers\SubscriptionIdsRelationManager;
-use App\Models\Register;
 use App\Models\Subscriber;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
@@ -14,7 +15,6 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
@@ -27,9 +27,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
-use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class SubscriberResource extends Resource
 {
@@ -147,6 +145,8 @@ class SubscriberResource extends Resource
     {
         return [
             SubscriptionIdsRelationManager::class,
+            PaymentsRelationManager::class,
+            CommentsRelationManager::class,
         ];
     }
 
@@ -157,5 +157,11 @@ class SubscriberResource extends Resource
             'create' => Pages\CreateSubscriber::route('/create'),
             'edit' => Pages\EditSubscriber::route('/{record}/edit'),
         ];
+    }
+
+    
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status','new')->count();
     }
 }

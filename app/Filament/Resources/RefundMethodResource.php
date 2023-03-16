@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RefundMethodResource\Pages;
 use App\Filament\Resources\RefundMethodResource\Pages\ManageRefundMethods;
-use App\Filament\Resources\RefundMethodResource\RelationManagers;
 use App\Models\RefundMethod;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
@@ -20,8 +19,6 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RefundMethodResource extends Resource
 {
@@ -43,13 +40,13 @@ class RefundMethodResource extends Resource
                     Section::make('Status')
                         ->schema([
                             Toggle::make('status')
-                            ->label('Actived'),
+                                ->label('Actived'),
                             Forms\Components\Placeholder::make('created_at')
-                            ->hidden(fn (Page $livewire) => ($livewire instanceof ManageRefundMethods))
-                            ->label('Created at')
-                            ->content(fn (RefundMethod $record): ?string => $record->created_at?->diffForHumans()),
+                                ->hidden(fn (Page $livewire) => ($livewire instanceof ManageRefundMethods))
+                                ->label('Created at')
+                                ->content(fn (RefundMethod $record): ?string => $record->created_at?->diffForHumans()),
                         ])->columnSpan(1)
-                ])
+                ]),
             ]);
     }
 
@@ -59,14 +56,14 @@ class RefundMethodResource extends Resource
             ->columns([
                 TextColumn::make('name'),
                 BadgeColumn::make('status')
-                ->enum([
-                    1 => 'Actived',
-                    0 => 'Inactive',
-                ])
-                ->colors([
-                    'success' => static fn ($state): bool => $state === 1,
-                    'danger' => static fn ($state): bool => $state === 0,
-                ]),
+                    ->enum([
+                        1 => 'Actived',
+                        0 => 'Inactive',
+                    ])
+                    ->colors([
+                        'success' => static fn ($state): bool => $state === 1,
+                        'danger' => static fn ($state): bool => $state === 0,
+                    ]),
             ])
             ->filters([
                 //
@@ -79,11 +76,11 @@ class RefundMethodResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ManageRefundMethods::route('/'),
         ];
-    }    
+    }
 }

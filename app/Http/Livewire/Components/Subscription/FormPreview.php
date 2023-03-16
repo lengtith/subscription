@@ -8,18 +8,23 @@ use Livewire\Component;
 
 use \Mpdf\Mpdf as PDF;
 
-class Preview extends Component
+class FormPreview extends Component
 {
+
     public $payment;
     public $subscriber;
 
     public function mount($id)
     {
+
         if ($id) {
             $this->payment = Payment::findOrFail($id);
             $this->subscriber = Subscriber::findOrFail($this->payment->subscriber_id);
         }
+    }
 
+    public function render()
+    {
         $data = ([
             'investor_type' => $this->subscriber->investor_type,
             'khmer_trading_name' => $this->subscriber->khmer_trading_name,
@@ -46,10 +51,6 @@ class Preview extends Component
             'date' => $this->payment->created_at,
         ]);
 
-        // Setup a filename 
-        $documentFileName =  date('Y-m-d') . '-' . $this->subscriber->english_trading_name;
-
-        // Create the mPDF document
         $document = new PDF([
             'mode' => 'utf-8',
             'format' => 'A4',
@@ -58,33 +59,30 @@ class Preview extends Component
             'margin_bottom' => '10',
             'margin_footer' => '2',
         ]);
-
-        // Set some header informations for output
-        $header = [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $documentFileName . '"'
-        ];
+        
+        // $header = [
+        //     'Content-Type' => 'application/pdf',
+        //     'Content-Disposition' => 'inline; filename="' . $documentFileName . '"'
+        // ];
+        
         $footer = '
         <table>
-            <tr>
-                <td style="text-align: right; font-size:9px; padding-right:4px; border-top: 1px solid #333;">ពាក្យស្នើសុំធ្វើបរិវិសកម្មមូលបត្រកម្មសិទ្ធិ
-                    <span class="text-primary"> / Subscription Form for IPO</span>
-                </td>
-                <td style="width: 32px; height:32px; text-align: center; border:1px solid #333;">
-                {PAGENO}
-                </td>
-            </tr>
+        <tr>
+        <td style="text-align: right; font-size:9px; padding-right:4px; border-top: 1px solid #333;">ពាក្យស្នើសុំធ្វើបរិវិសកម្មមូលបត្រកម្មសិទ្ធិ
+        <span class="text-primary"> / Subscription Form for IPO</span>
+        </td>
+        <td style="width: 32px; height:32px; text-align: center; border:1px solid #333;">
+        {PAGENO}
+        </td>
+        </tr>
         </table>
         ';
-
+        
+        $documentFileName = $documentFileName =  date('Y-m-d') . '-' . $this->subscriber->english_trading_name;
         $document->SetHTMLFooter($footer);
-        $view = view('livewire.components.subscription.form-preview', compact('data'));
         $document->setTitle($documentFileName);
+        $view = view('livewire.components.subscription.form-preview', compact('data'));
         $document->WriteHTML($view);
-        $document->Output($documentFileName, 'I');
-    }
-    public function render()
-    {
-        return view('livewire.components.subscription.preview');
+        return $document->Output($documentFileName, 'I');
     }
 }

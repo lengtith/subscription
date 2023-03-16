@@ -1,5 +1,5 @@
 <header class="masthead text-white text-center" style="height: calc(100vh - 56px)">
-    {{-- <div class="overlay"></div> --}}
+    
     <div class="container">
         <div class="row">
             <div class="col-xl-9 mx-auto">

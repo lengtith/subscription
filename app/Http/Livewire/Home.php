@@ -6,27 +6,22 @@ use App\Models\Subscriber;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
-class Index extends Component
+class Home extends Component
 {
     public function create()
     {
-        $registerId = Session::get('subscriberId');
+        $registerId = Session::get('loginId');
         $subscriber = Subscriber::where('register_id', $registerId)->first();
 
         if ($subscriber) {
-            if ($subscriber->status == 'edited') {
-                return redirect()->route('subscription.edit', [
-                    'id' => $subscriber->id,
-                ]);
-            } else {
-                return redirect('/form');
-            }
+            return redirect('/complete_subscription');
         } else {
             return redirect('/create');
         }
     }
+    
     public function render()
     {
-        return view('livewire.index');
+        return view('livewire.home')->layout('layouts.app', ['pageTitle' => 'Welcome to SBI Subscription']);
     }
 }

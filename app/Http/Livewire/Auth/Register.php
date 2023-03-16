@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
-
+namespace App\Http\Livewire\Auth;
 
 use App\Mail\SendPassword;
 use App\Models\Register as ModelsRegister;
@@ -57,6 +56,6 @@ class Register extends Component
 
     public function render()
     {
-        return view('livewire.register');
+        return view('livewire.auth.register')->layout('layouts.app', ['pageTitle' => 'Register']);
     }
 }

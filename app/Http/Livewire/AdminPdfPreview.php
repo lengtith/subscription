@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components\Subscription;
+namespace App\Http\Livewire;
 
 use App\Models\Payment;
 use App\Models\Subscriber;
@@ -8,7 +8,7 @@ use Livewire\Component;
 
 use \Mpdf\Mpdf as PDF;
 
-class Preview extends Component
+class AdminPdfPreview extends Component
 {
     public $payment;
     public $subscriber;
@@ -19,7 +19,9 @@ class Preview extends Component
             $this->payment = Payment::findOrFail($id);
             $this->subscriber = Subscriber::findOrFail($this->payment->subscriber_id);
         }
-
+    }
+    public function render()
+    {
         $data = ([
             'investor_type' => $this->subscriber->investor_type,
             'khmer_trading_name' => $this->subscriber->khmer_trading_name,
@@ -44,12 +46,9 @@ class Preview extends Component
             'bank_account_currency' => $this->payment->bank_account_currency,
             'file' => $this->payment->file,
             'date' => $this->payment->created_at,
+            'user_id' => 'Vichet Tep'
         ]);
 
-        // Setup a filename 
-        $documentFileName =  date('Y-m-d') . '-' . $this->subscriber->english_trading_name;
-
-        // Create the mPDF document
         $document = new PDF([
             'mode' => 'utf-8',
             'format' => 'A4',
@@ -59,11 +58,10 @@ class Preview extends Component
             'margin_footer' => '2',
         ]);
 
-        // Set some header informations for output
-        $header = [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $documentFileName . '"'
-        ];
+        // $header = [
+        //     'Content-Type' => 'application/pdf',
+        //     'Content-Disposition' => 'inline; filename="' . $documentFileName . '"'
+        // ];
         $footer = '
         <table>
             <tr>
@@ -77,14 +75,11 @@ class Preview extends Component
         </table>
         ';
 
+        $documentFileName = $documentFileName =  date('Y-m-d') . '-' . $this->subscriber->english_trading_name;
         $document->SetHTMLFooter($footer);
-        $view = view('livewire.components.subscription.form-preview', compact('data'));
         $document->setTitle($documentFileName);
+        $view = view('livewire.admin-pdf-preview', compact('data'));
         $document->WriteHTML($view);
-        $document->Output($documentFileName, 'I');
-    }
-    public function render()
-    {
-        return view('livewire.components.subscription.preview');
+        return $document->Output($documentFileName, 'I');
     }
 }

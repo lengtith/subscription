@@ -4,12 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubscriptionIdResource\Pages;
 use App\Filament\Resources\SubscriptionIdResource\Pages\CreateSubscriptionId;
-use App\Filament\Resources\SubscriptionIdResource\RelationManagers;
-use App\Filament\Resources\SubscriptionIdResource\RelationManagers\SubscribersRelationManager;
 use App\Models\Company;
 use App\Models\Subscriber;
 use App\Models\SubscriptionId;
-use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
@@ -23,8 +20,6 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubscriptionIdResource extends Resource
 {
@@ -53,6 +48,9 @@ class SubscriptionIdResource extends Resource
                             ->searchable(),
                         TextInput::make('code')->unique(),
                     ])->columnSpan(2),
+                    Section::make('Send Subscription ID')->schema([
+                        Toggle::make('is_sent')
+                    ])->columnSpan(1),
                     Section::make('Status')->schema([
                         Toggle::make('status')
                     ])->hidden(fn (Page $livewire) => ($livewire instanceof CreateSubscriptionId))->columnSpan(1),
@@ -85,6 +83,7 @@ class SubscriptionIdResource extends Resource
                         0 => 'Inactive',
                         1 => 'Actived',
                     ]),
+                TextColumn::make('user.name')->label('Created by'),
             ])
             ->filters([
                 //

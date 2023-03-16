@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RegisterResource\Pages;
 use App\Filament\Resources\RegisterResource\Pages\CreateRegister;
-use App\Filament\Resources\RegisterResource\RelationManagers;
 use App\Models\Register;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
@@ -15,10 +14,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RegisterResource extends Resource
 {
@@ -87,5 +83,6 @@ class RegisterResource extends Resource
             'create' => Pages\CreateRegister::route('/create'),
             'edit' => Pages\EditRegister::route('/{record}/edit'),
         ];
-    }    
+    }
+    
 }

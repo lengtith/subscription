@@ -5,6 +5,7 @@ namespace App\Filament\Resources\SubscriberResource\RelationManagers;
 use App\Filament\Resources\SubscriptionIdResource\Pages\CreateSubscriptionId;
 use App\Models\Company;
 use App\Models\Subscriber;
+use App\Models\SubscriptionId;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
@@ -19,6 +20,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
 
 class SubscriptionIdsRelationManager extends RelationManager
 {
@@ -54,6 +56,8 @@ class SubscriptionIdsRelationManager extends RelationManager
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('subscriber.english_trading_name'),
+                Tables\Columns\TextColumn::make('company.name'),
                 Tables\Columns\TextColumn::make('code'),
                 Tables\Columns\TextColumn::make('created_at'),
             ])
@@ -61,11 +65,19 @@ class SubscriptionIdsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->using(function (array $data): Model {
+                    $item = ([
+                        'subscriber_id' => $data['subscriber_id'],
+                        'company_id' => $data['company_id'],
+                        'code' => $data['code'],
+                        'status' => $data['status'],
+                        'user_id' => auth()->id(),
+                    ]);
+                    return SubscriptionId::create($item);
+                }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

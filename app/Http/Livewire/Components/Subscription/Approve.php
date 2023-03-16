@@ -7,8 +7,6 @@ use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\RefundMethod;
 use App\Models\Subscriber;
-use Exception;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -17,6 +15,7 @@ class Approve extends Component
 {
     use WithFileUploads;
     public $error;
+    public $subscriber;
 
 
     /**
@@ -39,7 +38,7 @@ class Approve extends Component
     public $trading_acc_number;
     public $security_firm_name;
     public $contact;
-    public $file;
+    public $signature;
     public $subscriber_status;
     public $comment;
     public $user_id;
@@ -52,8 +51,8 @@ class Approve extends Component
     public $quantity;
     public $amount;
     public $actual_deposit;
-    public $payment_method;
-    public $refund_method;
+    public $payment_method = 1;
+    public $refund_method = 1;
     public $payment_attach;
     public $cheque_number;
     public $bank_name;
@@ -71,13 +70,13 @@ class Approve extends Component
 
     public function handleSubmit()
     {
-        $subscriberId = Session::get('subscriberId');
+
         $this->validate();
 
         if ($this->currency == 'KHR') {
             try {
                 Payment::create([
-                    'subscriber_id' => $subscriberId,
+                    'subscriber_id' => $this->subscriber->id,
                     'currency' => $this->currency,
                     'unit_price' => $this->company->khr_price,
                     'quantity' => $this->quantity,
@@ -100,7 +99,7 @@ class Approve extends Component
         } else {
             try {
                 Payment::create([
-                    'subscriber_id' => $subscriberId,
+                    'subscriber_id' => $this->subscriber->id,
                     'currency' => $this->currency,
                     'unit_price' => $this->company->usd_price,
                     'quantity' => $this->quantity,
@@ -123,24 +122,34 @@ class Approve extends Component
         }
     }
 
-    public function handlePreview()
+    public function clearForm()
     {
-
-        // $data = ([
-        //     'name' => 'test',
-        // ]);
-
-        // return redirect()->to('https://www.example.com')->with('_blank');
-        // return redirect()->route('preview', [
-        //     'data' => $data,
-        // ]);
+        $this->investor_type = 'individual';
+        $this->currency = 'KHR';
+        $this->quantity = null;
+        $this->actual_deposit = "";
+        $this->payment_method = 1;
+        $this->refund_method = 1;
+        $this->payment_attach = "";
+        $this->cheque_number = null;
+        $this->bank_name = null;
+        $this->bank_acc_name = null;
+        $this->bank_acc_number = null;
+        $this->bank_acc_currency = null;
     }
 
     public function mount()
     {
-        if (Session::has('subscriberId')) {
-            $subscriberId = Session::get('subscriberId');
-            $subscriberItem = Subscriber::where('id', $subscriberId)->first();
+        if (Session::has('loginId')) {
+            $this->subscriber = Subscriber::where('register_id', Session::get('loginId'))->first();
+            if ($this->subscriber->status != 'approved') {
+                return redirect('/complete_subscription');
+            }
+        }
+
+        if (Session::has('loginId')) {
+            $registerId = Session::get('loginId');
+            $subscriberItem = Subscriber::where('register_id', $registerId)->first();
             if ($subscriberItem->status == 'approved') {
                 $this->investor_type = $subscriberItem->investor_type;
                 $this->khmer_trading_name = $subscriberItem->khmer_trading_name;
@@ -150,7 +159,7 @@ class Approve extends Component
                 $this->security_firm_name = $subscriberItem->security_firm_name;
                 $this->contact = $subscriberItem->contact;
                 $this->email = $subscriberItem->email;
-                $this->file = $subscriberItem->legal_entity_signature;
+                $this->signature = $subscriberItem->legal_entity_signature;
             }
         }
     }
@@ -161,6 +170,6 @@ class Approve extends Component
         $this->payment_method_tbl = PaymentMethod::all();
         $this->refund_method_tbl = RefundMethod::all();
 
-        return view('livewire.components.subscription.approve');
+        return view('livewire.components.subscription.approve')->layout('layouts.app', ['pageTitle' => 'Subscription form']);
     }
 }

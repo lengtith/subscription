@@ -23,7 +23,7 @@ class CreateSubscriptionId extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        if ($data['status'] == true) {
+        if ($data['is_sent'] == true) {
             $subscriber = Subscriber::findOrFail($data['subscriber_id']);
             $mail = ([
                 'name' => $subscriber['name'],

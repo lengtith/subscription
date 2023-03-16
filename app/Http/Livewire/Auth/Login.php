@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Auth;
 
+use Livewire\Component;
 use App\Models\Register;
 use App\Models\Subscriber;
-use App\Models\SubscriptionId;
 use Illuminate\Support\Facades\Hash;
-use Livewire\Component;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class Login extends Component
 {
@@ -18,8 +18,14 @@ class Login extends Component
         'password' => 'required|min:8'
     ];
 
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
     public function handleSubmit()
     {
+        $this->validate();
 
         $register = Register::where('email', '=', $this->email)->first();
         if ($register) {
@@ -29,13 +35,11 @@ class Login extends Component
                 $subscriber = Subscriber::where('register_id', $register->id)->first();
 
                 if ($subscriber) {
-                    session()->put('subscriberId', $subscriber->id);
-                    if ($subscriber->status == 'edited') {
-                        return redirect()->route('subscription.edit', [
-                            'id' => $subscriber->id,
-                        ]);
-                    } else {
+
+                    if ($subscriber->status == 'approved') {
                         return redirect('/form');
+                    } else {
+                        return redirect('/complete_subscription');
                     }
                 } else {
                     return redirect('/create');
@@ -50,6 +54,6 @@ class Login extends Component
 
     public function render()
     {
-        return view('livewire.login');
+        return view('livewire.auth.login')->layout('layouts.app', ['pageTitle' => 'Login']);
     }
 }

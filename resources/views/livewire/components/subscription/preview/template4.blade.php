@@ -1,9 +1,8 @@
+<!DOCTYPE html>
+<html>
 
-<div>
-    
-</div>
-
-{{-- <style>
+<head>
+    <style>
         * {
             box-sizing: border-box;
         }
@@ -156,7 +155,9 @@
             border: 1px solid #ccc;
         }
     </style>
+</head>
 
+<body>
     <div class="w-100 justify d-inline">
         <div style="width: 70%; float: left;">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE3AbV0jDJimdNIBvUYMIsssTkXpZ6oZ5HBlJ9E5j0&s"
@@ -165,7 +166,7 @@
         <div style="width:30%; float: right;">
             <p class="font-sm">លេខបរិវិសកម្ម៖ </p>
             <p class="font-sm text-primary">Subscription No.</p>
-            <p class="font-sm">កាលបរិច្ឆេទ៖ {{ $data['date'] }}</p>
+            <p class="font-sm">កាលបរិច្ឆេទ៖ </p>
             <p class="font-sm text-primary">Date</p>
         </div>
         <div style="clear: both"></div>
@@ -206,7 +207,7 @@
         <p class="font-sm">ព័ត៌មានពាក់ព័ន្ធនឹងវិនិយោគិន / <span>INFORMATION
                 RELATED TO INVESTOR</span></p>
     </div>
-
+    
     <div class="table mb-2">
         <div class="table-row">
             <div class="table-col pt-1 pb-1 pl-1" style="width: 25%;">
@@ -308,7 +309,7 @@
                 <span class="font-sm text-primary">Total Value For Subscription</span>
             </div>
             <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
-                <p class="font-sm">{{ $data['amount'] }}</p>
+                <p class="font-sm">{{ $data['unit_price']*$data['quantity'] }}</p>
             </div>
         </div>
         <div class="table-row">
@@ -322,29 +323,25 @@
         </div>
         <div class="table-row">
             <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
-                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id']==1 ) checked="checked"
-                        @endif>
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 1 ) checked="checked" @endif>
                     វិក្ក័យបត្រដាក់ប្រាក់
                 </span>
                 <p class="font-sm">Deposit Slip</p>
             </div>
             <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
-                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id']==2 ) checked="checked"
-                        @endif>
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 2 ) checked="checked" @endif>
                     វិក្ក័យបត្រផ្ទេរប្រាក់
                 </span>
                 <p class="font-sm">Bank transfer reference</p>
             </div>
             <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
-                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id']==3 ) checked="checked"
-                        @endif>
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 3 ) checked="checked" @endif>
                     មូលប្បទានបត្រលេខ
                 </span>
-                <p class="font-sm">Cheque No {{ $data['cheque_number'] }}</p>
+                <p class="font-sm">Cheque No </p>
             </div>
             <div class="table-col pt-1 pb-1 pl-1" style="line-height: 1.6;">
-                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id']==4 ) checked="checked"
-                        @endif>
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 4 ) checked="checked" @endif>
                     ផ្សេងទៀត
                 </span>
                 <p class="font-sm">Other</p>
@@ -370,14 +367,14 @@
             into the Issuer's Account during the subscription process by one of
             the following means:
         </span>
-    </p> --}}
+    </p>
 
     {{-- CUSTOM TABLE --}}
 
-    {{-- <div class="table">
+    <div class="table">
         <div class="table-row">
             <div class="table-col p-1" style="width: 5%">
-                <input type="checkbox" @if ($data['payment_method_id']==1 ) checked="checked" @endif>
+                <input type="checkbox" @if ($data['payment_method_id'] == 1 ) checked="checked" @endif>
             </div>
             <div class="table-col" style="padding: 1.5px 4px;">
                 <p class="font-xs">
@@ -389,7 +386,7 @@
         </div>
         <div class="table-row">
             <div class="table-col p-1" style="width: 5%">
-                <input type="checkbox" @if ($data['payment_method_id']==2 ) checked="checked" @endif>
+                <input type="checkbox" @if ($data['payment_method_id'] == 2 ) checked="checked" @endif>
             </div>
             <div class="table-col" style="padding: 1.5px 4px;">
                 <p class="font-xs">
@@ -401,7 +398,7 @@
         </div>
         <div class="table-row">
             <div class="table-col p-1" style="width: 5%; border-bottom: 0px;">
-                <input type="checkbox" @if ($data['payment_method_id']==3 ) checked="checked" @endif>
+                <input type="checkbox" @if ($data['payment_method_id'] == 3 ) checked="checked" @endif>
             </div>
             <div class="table-col" style="padding: 1.5px 4px;">
                 <ul>
@@ -415,34 +412,34 @@
                     <li>
                         <p class="font-xs">
                             ឈ្មោះធនាគារ
-                            <span class="text-primary"> / Bank Name: {{ $data['bank_name'] }}</span>
+                            <span class="text-primary"> / Bank Name: </span>
                         </p>
                     </li>
                     <li>
                         <p class="font-xs">
                             ឈ្មោះគណនី
-                            <span class="text-primary"> / Account Name: {{ $data['bank_account_name'] }}</span>
+                            <span class="text-primary"> / Account Name: </span>
                         </p>
                     <li>
                         <p class="font-xs">
                             លេខគណនី
-                            <span class="text-primary"> / Account NO: {{ $data['bank_account_number'] }}</span>
+                            <span class="text-primary"> / Account NO: </span>
                         </p>
                     </li>
                     <li>
                         <p class="font-xs">
                             ប្រភេទរូបិយប័ណ្ណ
-                            <span class="text-primary"> / Currency Type: {{ $data['bank_account_currency'] }}</span>
+                            <span class="text-primary"> / Currency Type: </span>
                         </p>
                     </li>
                 </ul>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     {{-- End Custom Table --}}
 
-    {{-- <p class="font-xs">
+    <p class="font-xs">
         (ក្រោយការដកចេញចំណាយពាក់ព័ន្ធសម្រាប់ការផ្ទេរប្រសិនបើមាន
         <span class="text-primary">
             / After deduction of related charges for such transfer, if any</span>)
@@ -459,11 +456,11 @@
             Please note that when making the refund, the account owner and
             unsuccessful investor must be the same person. Joint account is not
             allowed and will not be accepted.</span>
-    </p> --}}
+    </p>
 
     {{-- CUSTOM TABLE --}}
 
-    {{-- <div class="table">
+    <div class="table">
         <div class="table-row">
             <div class="table-col text-center" style="width: 60%">
                 <p class="font-xs">
@@ -499,20 +496,20 @@
                 </p>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     {{-- End Custom Table --}}
 
-    {{-- <p class="font-xs pt-1">
+    <p class="font-xs pt-1">
         គណនីសម្រាប់ដាក់ទឹកប្រាក់តម្កល់នៅធនាគារអេស៊ីលីដា
         <br>
         <span class="text-primary">
             The accounts for the deposit at ACLEDA Bank (SWIFT Code: ACLBKHPP)</span>
-    </p> --}}
+    </p>
 
     {{-- CUSTOM TABLE --}}
 
-    {{-- <div class="table">
+    <div class="table">
         <div class="table-row">
             <div class="table-col text-center" style="width: 30%;">
                 <p class="font-xs">
@@ -571,11 +568,11 @@
                 </p>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     {{-- End Custom Table --}}
 
-    {{-- <p class="font-sm">
+    <p class="font-sm">
         លោកអ្ន​ក​ គួរអាន និងយល់ពីខ្លឹមសារ នៃឯកសារផ្តល់ព័ត៌មានរបស់ក្រុមហ៊ុនបោះផ្សាយ
         មុនពេលដាក់ពាក្យស្នើសុំធ្វើបរិវិសកម្មមូលបត្រកម្មសិទ្ធិ។
         ប្រសិនបើលោកអ្នកមានចម្ងល់ ឬមន្ទិលសង្ស័យ
@@ -631,9 +628,9 @@
                 </span>
             </p>
         </li>
-    </ol> --}}
+    </ol>
 
-    {{-- <p class="font-sm">
+    <p class="font-sm">
         ការធ្វើបរិវិសកម្ម និងការទូទាត់ដែលធ្វើឡើងដោយអ្នកធ្វើបរិវិសកម្ម
         ត្រូវតែស្របទៅតាមលក្ខខណ្ឌដែលមានចែងក្នុងឯកសារផ្តល់ព័ត៌មាន។
         ខ្ញុំ/យើងខ្ញុំយល់ព្រម និងទទួលស្គាល់ថា
@@ -681,11 +678,11 @@
             the Disclosure Document before applying such Offer Shares, and have not
             relied on any third party.
         </span>
-    </p> --}}
+    </p>
 
     {{-- CUSTOM TABLE --}}
 
-    {{-- <div class="table p-1">
+    <div class="table p-1">
         <div class="table-row">
             <div class="table-col" style="width: 5%; border:0px; padding-left: 8px;">
                 <p>*</p>
@@ -732,11 +729,11 @@
                 </p>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     {{-- End Custom Table --}}
 
-    {{-- <pagebreak />
+    <pagebreak />
 
     <div class="w-100 text-center">
         <h6 class="font-md">សេវាបរិវិសកម្ម</h6>
@@ -1233,8 +1230,6 @@
         </li>
     </ol>
 
-    <pagebreak /> --}}
+</body>
 
-    {{-- {{ $data['file'] }} --}}
-    {{-- <img src="{{ asset('/storage/tYfKBRGeJNpHNXAL9Xi7myG8Ev2hMbHrkqAK7n18.jpg') }}" width="100%" /> --}}
-
+</html>

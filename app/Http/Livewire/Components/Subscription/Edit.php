@@ -39,7 +39,7 @@ class Edit extends Component
     public $trading_acc_number;
     public $security_firm_name;
     public $contact;
-    public $file;
+    public $signature;
     public $legal_entity_signature;
     public $subscriber_status;
     public $comment;
@@ -85,7 +85,7 @@ class Edit extends Component
         $this->validate();
         $record = Subscriber::where('register_id', Session::get('loginId'))->first();
 
-        if ($this->file) {
+        if ($this->signature) {
             try {
                 $record->update([
                     'register_id' => Session::get('loginId'),
@@ -97,7 +97,7 @@ class Edit extends Component
                     'security_firm_name' => $this->security_firm_name,
                     'contact' => $this->contact,
                     'email' => $this->email,
-                    'legal_entity_signature' => $this->file->store('', 'public'),
+                    'legal_entity_signature' => $this->signature->store('', 'public'),
                     'status' => 'new',
                 ]);
                 return redirect('/complete_subscription');
@@ -119,7 +119,6 @@ class Edit extends Component
                     'legal_entity_signature' => $this->legal_entity_signature,
                     'status' => 'new',
                 ]);
-
                 return redirect('/complete_subscription');
             } catch (Exception $e) {
                 session()->flash('error', $e->getMessage());
@@ -144,14 +143,18 @@ class Edit extends Component
 
     public function mount()
     {
-        // if (Session::has('subscriberId')) {
-        //     $subscriber = Session::get('subscriberId');
-        //     return $this->subscriberItem = Subscriber::where('id', $subscriber)->first();
-        // }
-        if (Session::has('subscriberId')) {
-            $subscriberId = Session::get('subscriberId');
-            $subscriberItem = Subscriber::where('id', $subscriberId)->first();
-            $paymentItem = Payment::where('subscriber_id', $subscriberId)->first();
+
+        $registerId = Session::get('loginId');
+        $subscriber = Subscriber::where('register_id', $registerId)->first();
+        if ($subscriber->status == 'new') {
+            return redirect('/complete_subscription');
+        }
+
+        if (Session::has('loginId')) {
+            $registerId = Session::get('loginId');
+            $subscriberItem = Subscriber::where('register_id', $registerId)->first();
+            $paymentItem = Payment::where('subscriber_id', $subscriberItem->id)->first();
+
             if ($subscriberItem->status == 'edited') {
                 $this->investor_type = $subscriberItem->investor_type;
                 $this->khmer_trading_name = $subscriberItem->khmer_trading_name;
@@ -161,7 +164,7 @@ class Edit extends Component
                 $this->security_firm_name = $subscriberItem->security_firm_name;
                 $this->contact = $subscriberItem->contact;
                 $this->email = $subscriberItem->email;
-                $this->legal_entity_signature = $subscriberItem->legal_entity_signature;
+                $this->signature = $subscriberItem->legal_entity_signature;
 
                 $this->currency = $paymentItem->currency;
                 $this->unit_price = $paymentItem->company->khr_price;
@@ -180,6 +183,19 @@ class Edit extends Component
         }
     }
 
+    public function clearForm()
+    {
+        $this->investor_type = 'individual';
+        $this->khmer_trading_name = "";
+        $this->english_trading_name = "";
+        $this->investor_id = null;
+        $this->trading_acc_number = null;
+        $this->security_firm_name = "";
+        $this->contact = "";
+        $this->email = "";
+        $this->signature = "";
+    }
+
     public function render()
     {
         $this->company = Company::latest()->first();
@@ -187,14 +203,10 @@ class Edit extends Component
         $this->refund_method_tbl = RefundMethod::all();
         $this->payment_tbl = Payment::latest()->first();
 
-        // $record = Subscriber::where('register_id', Session::get('loginId'))->first();
-        // if ($record) {
-        //     return $this->subscriberItem = Subscriber::findOrFail($record->id);
-        // }
         if (Session::has('subscriberId')) {
             $subscriber = Session::get('subscriberId');
             $this->subscriberItem = Subscriber::where('id', $subscriber)->first();
         }
-        return view('livewire.components.subscription.edit');
+        return view('livewire.components.subscription.edit')->layout('layouts.app', ['pageTitle' => 'Edit subscription']);
     }
 }
