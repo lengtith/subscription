@@ -246,7 +246,7 @@ class Create extends Component
     public function mount()
     {
         $registerId = Session::get('loginId');
-        $subscriber = Subscriber::where('register_id',$registerId);
+        $subscriber = Subscriber::where('register_id', $registerId)->first();
         if ($subscriber) {
             return redirect('/complete_subscription');
         }

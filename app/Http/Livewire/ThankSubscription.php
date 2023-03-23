@@ -35,7 +35,7 @@ class ThankSubscription extends Component
     {
         if (Session::has('loginId')) {
             $this->subscriber = Subscriber::where('register_id', Session::get('loginId'))->first();
-
+            
             $this->payment = Payment::where('subscriber_id', $this->subscriber->id)->first();
         }
     }

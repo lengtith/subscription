@@ -29,7 +29,7 @@ class Login extends Component
 
                 $subscriber = Subscriber::where('register_id', $register->id)->first();
 
-                if ($subscriber) {
+                if ($subscriber != null) {
 
                     if ($subscriber->status == 'approved') {
                         return redirect('/form');
