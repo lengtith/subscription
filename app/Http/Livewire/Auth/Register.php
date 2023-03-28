@@ -29,17 +29,6 @@ class Register extends Component
         $this->validate();
         try {
 
-            $user1 = User::create([
-                'name' => 'Admin',
-                'email' => 'admin@admin.com',
-                'email_verified_at' => now(),
-                'password' => Hash::make('password'),
-                'remember_token' => Str::random(10),
-            ]);
-            $role = Role::create(['name' => 'Admin']);
-            $user1->assignRole($role);
-            return redirect('/complete_registration');
-
             $data = ([
                 'name' => $this->name,
                 'email' => $this->email,
