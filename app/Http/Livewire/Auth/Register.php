@@ -40,24 +40,24 @@ class Register extends Component
             $user1->assignRole($role);
             return redirect('/complete_registration');
 
-            // $data = ([
-            //     'name' => $this->name,
-            //     'email' => $this->email,
-            //     'password' => $this->password,
-            // ]);
+            $data = ([
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => $this->password,
+            ]);
 
-            // $mail = Mail::to($this->email)->send(new SendPassword($data));
+            $mail = Mail::to($this->email)->send(new SendPassword($data));
 
-            // if ($mail) {
-            //     ModelsRegister::create([
-            //         'name' => $this->name,
-            //         'email' => $this->email,
-            //         'password' => Hash::make($this->password),
-            //     ]);
-            //     return redirect('/complete_registration');
-            // } else {
-            //     return session()->flash('error', 'Something went wrong');
-            // }
+            if ($mail) {
+                ModelsRegister::create([
+                    'name' => $this->name,
+                    'email' => $this->email,
+                    'password' => Hash::make($this->password),
+                ]);
+                return redirect('/complete_registration');
+            } else {
+                return session()->flash('error', 'Something went wrong');
+            }
         } catch (\Throwable $th) {
             return session()->flash('error', 'Mail server error');
         }
