@@ -15,7 +15,8 @@ class RefundMethod extends Model
         'status'
     ];
 
-    public function payments(){
+    public function payments()
+    {
         return $this->hasMany(Payment::class);
     }
 }

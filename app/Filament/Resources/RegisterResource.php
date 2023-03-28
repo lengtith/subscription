@@ -84,5 +84,10 @@ class RegisterResource extends Resource
             'edit' => Pages\EditRegister::route('/{record}/edit'),
         ];
     }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('is_subscribed', false)->count();
+    }
     
 }

@@ -1,5 +1,18 @@
 <div class="container mt-5 mb-5">
 
+    @if (empty($company))
+    <div class="d-flex align-items-center justify-content-center" style="height: calc(100vh - 56px)">
+        <div class="d-flex flex-column align-items-center justify-content-center gap-4">
+            <h2 class="card-title text-center">Subscription has been closed!</h2>
+            <p class="card-text text-center">We'll info you when subscription open.</p>
+        </div>
+    </div>
+    @else
+    @if (Session::has('error'))
+    <p class="alert alert-danger">
+        {{ Session::get('error') }}
+    </p>
+    @endif
     <form class="was-validated">
         <div class="row g-3">
 
@@ -147,12 +160,12 @@
 
                         @if ($currency == 'KHR')
                         <div class="input-group mb-3">
-                            <label class="form-control"> {{ $company->khr_price }} </label>
+                            <label class="form-control"> {{ $company == '' ? 0 : $company->khr_price }} </label>
                             <span class="input-group-text">KHR</span>
                         </div>
                         @else
                         <div class="input-group mb-3">
-                            <label class="form-control"> {{ $company->usd_price }} </label>
+                            <label class="form-control"> {{ $company == '' ? 0 : $company->usd_price }} </label>
                             <span class="input-group-text">USD</span>
                         </div>
                         @endif
@@ -193,12 +206,14 @@
 
                         @if ($currency == 'KHR')
                         <div class="input-group mb-3">
-                            <label class="form-control"> {{ $company->khr_price * $quantity }} </label>
+                            <label class="form-control"> {{ $company == '' ? 0 : $company->khr_price * $quantity }}
+                            </label>
                             <span class="input-group-text">KHR</span>
                         </div>
                         @else
                         <div class="input-group mb-3">
-                            <label class="form-control"> {{ $company->usd_price * $quantity }} </label>
+                            <label class="form-control"> {{ $company == '' ? 0 : $company->usd_price * $quantity }}
+                            </label>
                             <span class="input-group-text">USD</span>
                         </div>
                         @endif
@@ -294,6 +309,8 @@
                         </div>
                         @endforeach
                     </div>
+
+
                     @if ($refund_method == 3)
                     <div class="col-md-6">
                         <label class="form-label">Bank Name (ឈ្មោះធនាគារ)</label>
@@ -319,7 +336,7 @@
                     <div class="col-md-6">
                         <label class="form-label">Bank Account Currency (ប្រភេទរូបិយបណ្ណ)</label>
                         <select class="form-select" wire:model="bank_acc_currency" required>
-                            <option>Select</option>
+                            <option value="">Select</option>
                             <option value="KHR">KHR</option>
                             <option value="USD">USD</option>
                         </select>
@@ -340,6 +357,7 @@
         </button>
         <button type="reset" wire:click="clearForm" class="btn btn-light">Cancel</button>
     </form>
+    @endif
 
 </div>
 

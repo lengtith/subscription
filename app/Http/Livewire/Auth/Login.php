@@ -6,7 +6,6 @@ use Livewire\Component;
 use App\Models\Register;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Hash;
-use Artesaos\SEOTools\Facades\SEOTools;
 
 class Login extends Component
 {

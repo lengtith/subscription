@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components\Subscription;
+namespace App\Http\Livewire\Pages\Subscription;
 
 use App\Models\Payment;
 use App\Models\Subscriber;
@@ -8,7 +8,7 @@ use Livewire\Component;
 
 use \Mpdf\Mpdf as PDF;
 
-class FormPreview extends Component
+class Preview extends Component
 {
 
     public $payment;
@@ -81,7 +81,7 @@ class FormPreview extends Component
         $documentFileName = $documentFileName =  date('Y-m-d') . '-' . $this->subscriber->english_trading_name;
         $document->SetHTMLFooter($footer);
         $document->setTitle($documentFileName);
-        $view = view('livewire.components.subscription.form-preview', compact('data'));
+        $view = view('livewire.pages.subscription.preview', compact('data'));
         $document->WriteHTML($view);
         return $document->Output($documentFileName, 'I');
     }

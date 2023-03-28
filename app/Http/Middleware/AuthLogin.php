@@ -16,8 +16,9 @@ class AuthLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Session()->has('loginId') && (url('/login') == $request->url() || url('/register') == $request->url())) {
-            return back();
+        
+        if (!Session()->has('loginId')) {
+            return redirect('/login');
         }
         
         return $next($request);

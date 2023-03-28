@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components\Subscription;
+namespace App\Http\Livewire\Pages\Subscription;
 
 use App\Models\Company;
 use App\Models\Payment;
@@ -254,10 +254,10 @@ class Create extends Component
 
     public function render()
     {
-        $this->company = Company::latest()->first();
+        $this->company = Company::whereDate('close_date', '>=', now()->format('Y-m-d'))->latest()->first();
         $this->payment_method_tbl = PaymentMethod::all();
         $this->refund_method_tbl = RefundMethod::all();
 
-        return view('livewire.components.subscription.create')->layout('layouts.app', ['pageTitle' => 'Create subscription']);
+        return view('livewire.pages.subscription.create')->layout('layouts.app', ['pageTitle' => 'Create subscription']);
     }
 }

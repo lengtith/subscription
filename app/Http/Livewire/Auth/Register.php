@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class Register extends Component
 {
@@ -26,6 +28,17 @@ class Register extends Component
     {
         $this->validate();
         try {
+
+            $user1 = User::create([
+                'name' => 'Admin',
+                'email' => 'admin@admin.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+                'remember_token' => Str::random(10),
+            ]);
+            $role = Role::create(['name' => 'Admin']);
+            $user1->assignRole($role);
+
             $data = ([
                 'name' => $this->name,
                 'email' => $this->email,

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components\Subscription;
+namespace App\Http\Livewire\Pages\Subscription;
 
 use App\Models\Company;
 use App\Models\Payment;
@@ -170,6 +170,6 @@ class Approve extends Component
         $this->payment_method_tbl = PaymentMethod::all();
         $this->refund_method_tbl = RefundMethod::all();
 
-        return view('livewire.components.subscription.approve')->layout('layouts.app', ['pageTitle' => 'Subscription form']);
+        return view('livewire.pages.subscription.approve')->layout('layouts.app', ['pageTitle' => 'Subscription form']);
     }
 }

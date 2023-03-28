@@ -78,6 +78,9 @@
 </div>
 
 <style>
+    #main-wrapper{
+        overflow: hidden;
+    }
     .bg-yellow {
         background-color: #F8991B;
     }

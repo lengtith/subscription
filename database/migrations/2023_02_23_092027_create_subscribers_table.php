@@ -15,8 +15,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('subscribers', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('register_id')->constrained()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('register_id')->constrained();
             $table->string('investor_type');
             $table->string('khmer_trading_name');
             $table->string('english_trading_name');
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('legal_entity_signature')->nullable();
             $table->string('status')->default('new');
             $table->text('comment')->nullable();
-            $table->string('user_id')->constrained()->cascadeOnDelete()->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

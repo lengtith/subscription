@@ -27,6 +27,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class SubscriberResource extends Resource
@@ -38,6 +39,8 @@ class SubscriberResource extends Resource
     protected static ?string $navigationGroup = 'Main Menu';
 
     protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'english_trading_name';
 
     public static function form(Form $form): Form
     {
@@ -100,8 +103,7 @@ class SubscriberResource extends Resource
                 TextColumn::make('email')->searchable(),
                 BadgeColumn::make('status')
                     ->colors([
-                        'warning' => static fn ($state): bool => $state === 'new',
-                        'primary' => static fn ($state): bool => $state === 'edited',
+                        'warning' => static fn ($state): bool => $state === 'edited',
                         'danger' => static fn ($state): bool => $state === 'rejected',
                         'success' => static fn ($state): bool => $state === 'approved',
                     ]),
@@ -159,9 +161,27 @@ class SubscriberResource extends Resource
         ];
     }
 
-    
+
     protected static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('status','new')->count();
+        return static::getModel()::where('status', 'new')->count();
+    }
+
+    protected static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['register']);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['khmer_trading_name', 'english_trading_name', 'register.name'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Author' => $record->register->name,
+            'Email' => $record->register->email,
+        ];
     }
 }

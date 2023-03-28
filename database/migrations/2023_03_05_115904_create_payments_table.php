@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('subscriber_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('subscriber_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('company_id')->constrained()->cascadeOnDelete();
             $table->foreignId('payment_method_id')->constrained()->cascadeOnDelete();
             $table->foreignId('refund_method_id')->constrained()->cascadeOnDelete();
             $table->string('currency');
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('bank_account_number')->nullable();
             $table->string('bank_account_currency')->nullable();
             $table->boolean('status')->default(false);
-            $table->string('user_id')->constrained()->cascadeOnDelete()->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

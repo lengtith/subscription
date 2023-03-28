@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components\Subscription;
+namespace App\Http\Livewire\Pages\Subscription;
 
 use App\Models\Company;
 use App\Models\Payment;
@@ -207,6 +207,6 @@ class Edit extends Component
             $subscriber = Session::get('subscriberId');
             $this->subscriberItem = Subscriber::where('id', $subscriber)->first();
         }
-        return view('livewire.components.subscription.edit')->layout('layouts.app', ['pageTitle' => 'Edit subscription']);
+        return view('livewire.pages.subscription.edit')->layout('layouts.app', ['pageTitle' => 'Edit subscription']);
     }
 }

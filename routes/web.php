@@ -3,15 +3,10 @@
 use App\Http\Livewire\AdminPdfPreview;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Login;
-use App\Http\Livewire\Components\Subscription\Approve;
-use App\Http\Livewire\Components\Subscription\Create;
-use App\Http\Livewire\Components\Subscription\Edit;
-use App\Http\Livewire\Components\Subscription\FormPreview;
-use App\Http\Livewire\Components\Subscription\Preview;
-use App\Http\Livewire\Components\Subscription\Preview\Template1;
-use App\Http\Livewire\Components\Subscription\Preview\Template2;
-use App\Http\Livewire\Components\Subscription\Preview\Template3;
-use App\Http\Livewire\Components\Subscription\Preview\Template4;
+use App\Http\Livewire\Pages\Subscription\Create;
+use App\Http\Livewire\Pages\Subscription\Edit;
+use App\Http\Livewire\Pages\Subscription\Approve;
+use App\Http\Livewire\Pages\Subscription\Preview;
 use App\Http\Livewire\Home;
 use App\Http\Livewire\ThankRegistration;
 use App\Http\Livewire\ThankSubscription;
@@ -38,6 +33,6 @@ Route::get('/', Home::class)->middleware('isLogin')->name('home');
 Route::get('/create', Create::class)->name('create')->middleware('isLogin');
 Route::get('/edit/{id}', Edit::class)->name('subscription.edit')->middleware('isLogin');
 Route::get('/form', Approve::class)->middleware('isLogin');
-Route::get('/preview/{id}', FormPreview::class)->name('form.preview');
+Route::get('/preview/{id}', Preview::class)->name('form.preview');
 Route::get('/pdf/{id}', AdminPdfPreview::class)->name('pdf.preview');
 
