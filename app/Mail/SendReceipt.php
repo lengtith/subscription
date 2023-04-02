@@ -59,24 +59,18 @@ class SendReceipt extends Mailable
         $document = new PDF([
             'mode' => 'utf-8',
             'format' => 'A4',
-            'margin_header' => '3',
-            'margin_top' => '20',
-            'margin_bottom' => '20',
-            'margin_footer' => '2',
+            'margin_header' => '0',
+            'margin_top' => '10',
+            'margin_bottom' => '10',
+            'margin_footer' => '0',
         ]);
 
-        $document->WriteHTML('<h1 style="font-family:KhmerOS">ចេក</h1>');
-        $documentFileName = 'test.pdf';
-        // Storage::disk('public')->put($documentFileName, $document->Output($documentFileName, "S"));
+        $view = view('mail.send-receipt');
+        $document->WriteHTML($view);
+        $documentFileName = 'SBI-Subscription Receipt.pdf';
 
-
-
-        // return $this->attach(storage_path('app/public/test.pdf'));
         return [
-            // Attachment::fromPath(storage_path('app/public/test.pdf'))
-            //         ->as('test.pdf')
-            //         ->withMime('application/pdf'),
-            Attachment::fromData(fn () => $document->Output($documentFileName, "S"), 'test.pdf')
+            Attachment::fromData(fn () => $document->Output($documentFileName, "S"), $documentFileName)
                 ->withMime('application/pdf')
         ];
     }

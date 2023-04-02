@@ -32,12 +32,15 @@ class PaymentMethodResource extends Resource
                 Grid::make(3)->schema([
                     Card::make()->schema([
                         TextInput::make('name')->required(),
-                        Textarea::make('description'),
+                        Textarea::make('description')->label('Khmer Text'),
+                        Toggle::make('has_input')
+                                ->label('Input required'),
                     ])->columnSpan(2),
                     Section::make('Status')
                         ->schema([
                             Toggle::make('status')
-                                ->label('Actived'),
+                                ->label('Actived')
+                                ->default(true),
                         ])->columnSpan(1)
                 ])
             ]);

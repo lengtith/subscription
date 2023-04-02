@@ -15,43 +15,28 @@ class Payment extends Model
     protected $keyType = 'uuid';
 
     protected $fillable = [
-        'subscriber_id',
-        'company_id',
-        'payment_method_id',
-        'refund_method_id',
-        'currency',
-        'unit_price',
-        'quantity',
+        'purchase_id',
         'amount',
-        'actual_deposit',
         'status',
-        'cheque_number',
-        'bank_name',
-        'bank_account_name',
-        'bank_account_number',
-        'bank_account_currency',
-        'file',
         'user_id'
     ];
 
-    public function subscriber()
+    public function purchase()
     {
-        return $this->belongsTo(Subscriber::class);
+        return $this->belongsTo(Purchase::class);
     }
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
-    public function payment_method()
-    {
-        return $this->belongsTo(PaymentMethod::class);
-    }
-    public function refund_method()
-    {
-        return $this->belongsTo(RefundMethod::class);
-    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    // public function getSubscriberAttribute()
+    // {
+    //     $purchase = Purchase::where('id', $this->purchase_id)->first();
+    //     $subscriber = Subscriber::where('id', $purchase->subscriber_id)->first();
+    //     return $subscriber;
+    // }
+
+    // protected $appends = ['subscriber'];
 }

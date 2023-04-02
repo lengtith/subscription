@@ -24,15 +24,14 @@ class Subscriber extends Model
         'security_firm_name',
         'contact',
         'email',
-        'legal_entity_signature',
+        'signature_attach',
         'status',
-        'comment',
         'user_id',
     ];
 
-    public function payments()
+    public function purchases()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Purchase::class);
     }
 
     public function subscription_ids()
@@ -54,10 +53,8 @@ class Subscriber extends Model
         return $this->hasMany(Comment::class);
     }
 
-    // public function getFullNameAttribute()
-    // {
-    //     return $this->first_name . ' ' . $this->last_name;
-    // }
-
-    // protected $appends = ['full_name'];
+    public function payments()
+    {
+        return $this->hasManyThrough(Payment::class, Purchase::class);
+    }
 }

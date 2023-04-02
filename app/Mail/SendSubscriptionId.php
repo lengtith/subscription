@@ -32,7 +32,7 @@ class SendSubscriptionId extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Send Subscription Id',
+            subject: 'Form Submission Approval',
         );
     }
 

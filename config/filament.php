@@ -263,7 +263,7 @@ return [
     |
     */
 
-    'favicon' => 'https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f4a2.svg',
+    'favicon' => 'https://sbiroyal.com.kh/wp-content/uploads/2021/03/cropped-wqe-1.png',
 
     /*
     |--------------------------------------------------------------------------

@@ -55,10 +55,10 @@
         ul,
         ol,
         li,
-            {
-            padding: 0px 10px;
-            margin: 0px;
-            font-size: 10px;
+        {
+        padding: 0px 10px;
+        margin: 0px;
+        font-size: 10px;
         }
 
         .font-xs {
@@ -158,13 +158,13 @@
 </head>
 
 <body>
-    <div class="w-100 justify d-inline">
+    <div class="w-100">
         <div style="width: 70%; float: left;">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE3AbV0jDJimdNIBvUYMIsssTkXpZ6oZ5HBlJ9E5j0&s"
                 alt="Cinque Terre" height="50">
         </div>
         <div style="width:30%; float: right;">
-            <p class="font-sm">លេខបរិវិសកម្ម៖ </p>
+            <p class="font-sm">លេខបរិវិសកម្ម៖ {{ $data['subscription_id'] }}</p>
             <p class="font-sm text-primary">Subscription No.</p>
             <p class="font-sm">កាលបរិច្ឆេទ៖ {{ $data['date']->format("d-m-Y") }}</p>
             <p class="font-sm text-primary">Date</p>
@@ -207,7 +207,7 @@
         <p class="font-sm">ព័ត៌មានពាក់ព័ន្ធនឹងវិនិយោគិន / <span>INFORMATION
                 RELATED TO INVESTOR</span></p>
     </div>
-    
+
     <div class="table mb-2">
         <div class="table-row">
             <div class="table-col pt-1 pb-1 pl-1" style="width: 25%;">
@@ -291,7 +291,7 @@
                 <span class="font-sm text-primary">Price Per Offer Share</span>
             </div>
             <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
-                <p class="font-sm">{{ $data['unit_price'] }}</p>
+                <p class="font-sm">{{ $data['price_per_share'] }}</p>
             </div>
         </div>
         <div class="table-row">
@@ -300,7 +300,7 @@
                 <span class="font-sm text-primary">Total Number of Offer Shares for Subscription</span>
             </div>
             <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
-                <p class="font-sm">{{ $data['quantity'] }}</p>
+                <p class="font-sm">{{ $data['total_share'] }}</p>
             </div>
         </div>
         <div class="table-row">
@@ -309,7 +309,8 @@
                 <span class="font-sm text-primary">Total Value For Subscription</span>
             </div>
             <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
-                <p class="font-sm">{{ $data['amount'] }}</p>
+                <p class="font-sm">ឯកតាមូលបត្រកម្មសិទ្ធិ / Share :</p>
+                <p class="font-sm">{{ $data['price_per_share']*$data['total_share'] }}</p>
             </div>
         </div>
         <div class="table-row">
@@ -323,25 +324,29 @@
         </div>
         <div class="table-row">
             <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
-                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 1 ) checked="checked" @endif>
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id']==1 ) checked="checked"
+                        @endif>
                     វិក្ក័យបត្រដាក់ប្រាក់
                 </span>
                 <p class="font-sm">Deposit Slip</p>
             </div>
             <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
-                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 2 ) checked="checked" @endif>
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id']==2 ) checked="checked"
+                        @endif>
                     វិក្ក័យបត្រផ្ទេរប្រាក់
                 </span>
                 <p class="font-sm">Bank transfer reference</p>
             </div>
             <div class="table-col pt-1 pb-1 pl-1" style="width: 25%; line-height: 1.6;">
-                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 3 ) checked="checked" @endif>
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id']==3 ) checked="checked"
+                        @endif>
                     មូលប្បទានបត្រលេខ
                 </span>
                 <p class="font-sm">Cheque No {{ $data['cheque_number'] }}</p>
             </div>
             <div class="table-col pt-1 pb-1 pl-1" style="line-height: 1.6;">
-                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id'] == 4 ) checked="checked" @endif>
+                <span class="font-sm"><input type="checkbox" @if ($data['payment_method_id']==4 ) checked="checked"
+                        @endif>
                     ផ្សេងទៀត
                 </span>
                 <p class="font-sm">Other</p>
@@ -374,7 +379,7 @@
     <div class="table">
         <div class="table-row">
             <div class="table-col p-1" style="width: 5%">
-                <input type="checkbox" @if ($data['payment_method_id'] == 1 ) checked="checked" @endif>
+                <input type="checkbox" @if ($data['payment_method_id']==1 ) checked="checked" @endif>
             </div>
             <div class="table-col" style="padding: 1.5px 4px;">
                 <p class="font-xs">
@@ -386,7 +391,7 @@
         </div>
         <div class="table-row">
             <div class="table-col p-1" style="width: 5%">
-                <input type="checkbox" @if ($data['payment_method_id'] == 2 ) checked="checked" @endif>
+                <input type="checkbox" @if ($data['payment_method_id']==2 ) checked="checked" @endif>
             </div>
             <div class="table-col" style="padding: 1.5px 4px;">
                 <p class="font-xs">
@@ -398,7 +403,7 @@
         </div>
         <div class="table-row">
             <div class="table-col p-1" style="width: 5%; border-bottom: 0px;">
-                <input type="checkbox" @if ($data['payment_method_id'] == 3 ) checked="checked" @endif>
+                <input type="checkbox" @if ($data['payment_method_id']==3 ) checked="checked" @endif>
             </div>
             <div class="table-col" style="padding: 1.5px 4px;">
                 <ul>
@@ -1229,9 +1234,9 @@
             </ol>
         </li>
     </ol>
-    
+
     <pagebreak />
-    
+
     <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" width="100%" />
 
 </body>

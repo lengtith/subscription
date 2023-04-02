@@ -14,6 +14,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 
 class RegisterResource extends Resource
@@ -33,21 +34,21 @@ class RegisterResource extends Resource
                 Grid::make(3)->schema([
                     Card::make()->schema([
                         TextInput::make('name')
-                        ->required(),
+                            ->required(),
                         TextInput::make('email')
-                        ->required()->unique()
-                        ->placeholder('@gmail.com')
+                            ->required()->unique()
+                            ->placeholder('@gmail.com')
                     ])->columnSpan(2),
-                    Card::make() ->schema([
-                            Forms\Components\Placeholder::make('created_at')
+                    Card::make()->schema([
+                        Forms\Components\Placeholder::make('created_at')
                             ->hidden(fn (Page $livewire) => ($livewire instanceof CreateRegister))
                             ->label('Created at')
                             ->content(fn (Register $record): ?string => $record->created_at?->diffForHumans()),
-                        ])
+                    ])
                         ->hidden(fn (Page $livewire) => ($livewire instanceof CreateRegister))
                         ->columnSpan(1)
-                    ]),
-                ]);
+                ]),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -56,26 +57,36 @@ class RegisterResource extends Resource
             ->columns([
                 TextColumn::make('name'),
                 TextColumn::make('email'),
+                BadgeColumn::make('is_subscribed')
+                    ->colors([
+                        'warning' => static fn ($state): bool => $state === 0,
+                        'success' => static fn ($state): bool => $state === 1,
+                    ])
+                    ->enum([
+                        0 => 'New',
+                        1 => 'Subscribed',
+                    ]),
                 TextColumn::make('created_at')->date(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -89,5 +100,4 @@ class RegisterResource extends Resource
     {
         return static::getModel()::where('is_subscribed', false)->count();
     }
-    
 }

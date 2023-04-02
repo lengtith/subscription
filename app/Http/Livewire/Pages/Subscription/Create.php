@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Pages\Subscription;
 use App\Models\Company;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
+use App\Models\Purchase;
 use App\Models\RefundMethod;
+use App\Models\Register;
 use App\Models\Subscriber;
 use Exception;
 use Illuminate\Support\Facades\Session;
@@ -19,6 +21,7 @@ class Create extends Component
     /**
      * @var Table
      */
+    public $registerId;
     public $company;
     public $payment_method_tbl;
     public $refund_method_tbl;
@@ -37,19 +40,18 @@ class Create extends Component
     public $trading_acc_number;
     public $security_firm_name;
     public $contact;
-    public $file;
+    public $signature_attach;
     public $subscriber_status;
     public $comment;
     public $user_id;
     public $error;
 
     /**
-     * @var Payment
+     * @var Purchase
      */
-    public $currency = 'KHR';
-    public $unit_price;
-    public $quantity;
-    public $amount;
+    public $currency_type = 'KHR';
+    public $price_per_share;
+    public $total_share;
     public $actual_deposit;
     public $payment_method = 1;
     public $refund_method = 1;
@@ -59,6 +61,13 @@ class Create extends Component
     public $bank_acc_name;
     public $bank_acc_number;
     public $bank_acc_currency;
+    public $payment_method_has_input;
+    public $refund_method_has_input;
+
+    /**
+     * @var Payment
+     */
+    public $amount;
 
     protected $rules = [
         'investor_type' => 'required',
@@ -70,7 +79,7 @@ class Create extends Component
         'contact' => 'required',
         'email' => 'required|email',
 
-        'quantity' => 'required',
+        'total_share' => 'required',
         'actual_deposit' => 'required',
         'payment_method' => 'required',
         'refund_method' => 'required',
@@ -81,7 +90,7 @@ class Create extends Component
     {
         $this->validate();
 
-        if ($this->file != '') {
+        if ($this->signature_attach != '') {
             try {
                 $data = Subscriber::create([
                     'register_id' => Session::get('loginId'),
@@ -93,19 +102,18 @@ class Create extends Component
                     'security_firm_name' => $this->security_firm_name,
                     'contact' => $this->contact,
                     'email' => $this->email,
-                    'legal_entity_signature' => $this->file->store('', 'public'),
+                    'signature_attach' => $this->signature_attach->store('', 'public'),
                 ]);
 
                 if ($data) {
 
-                    if ($this->currency == 'KHR') {
+                    if ($this->currency_type == 'KHR') {
                         try {
-                            $payment = Payment::create([
+                            $purchase = Purchase::create([
                                 'subscriber_id' => $data->id,
-                                'currency' => $this->currency,
-                                'unit_price' => $this->company->khr_price,
-                                'quantity' => $this->quantity,
-                                'amount' => $this->company->khr_price * $this->quantity,
+                                'currency_type' => $this->currency_type,
+                                'price_per_share' => $this->company->khr_price,
+                                'total_share' => $this->total_share,
                                 'actual_deposit' => $this->actual_deposit,
                                 'company_id' => $this->company->id,
                                 'payment_method_id' => $this->payment_method,
@@ -114,20 +122,30 @@ class Create extends Component
                                 'bank_account_name' => $this->bank_acc_name,
                                 'bank_account_number' => $this->bank_acc_number,
                                 'bank_account_currency' => $this->bank_acc_currency,
-                                'file' => $this->payment_attach->store('', 'public'),
+                                'payment_attach' => $this->payment_attach->store('', 'public'),
                             ]);
-                            return redirect('/complete_subscription');
+
+                            if ($purchase) {
+                                Payment::create([
+                                    'purchase_id' => $purchase->id,
+                                    'amount' => $this->company->khr_price * $this->total_share,
+                                ]);
+
+                                Register::whereId($this->registerId)->update([
+                                    'is_subscribed' => true,
+                                ]);
+                                return redirect('/complete_subscription');
+                            }
                         } catch (Exception $e) {
                             session()->flash('error', $e->getMessage());
                         }
                     } else {
                         try {
-                            $payment = Payment::create([
+                            $purchase = Purchase::create([
                                 'subscriber_id' => $data->id,
-                                'currency' => $this->currency,
-                                'unit_price' => $this->company->usd_price,
-                                'quantity' => $this->quantity,
-                                'amount' => $this->company->usd_price * $this->quantity,
+                                'currency_type' => $this->currency_type,
+                                'price_per_share' => $this->company->usd_price,
+                                'total_share' => $this->total_share,
                                 'actual_deposit' => $this->actual_deposit,
                                 'company_id' => $this->company->id,
                                 'payment_method_id' => $this->payment_method,
@@ -136,9 +154,21 @@ class Create extends Component
                                 'bank_account_name' => $this->bank_acc_name,
                                 'bank_account_number' => $this->bank_acc_number,
                                 'bank_account_currency' => $this->bank_acc_currency,
-                                'file' => $this->payment_attach->store('', 'public'),
+                                'payment_attach' => $this->payment_attach->store('', 'public'),
                             ]);
-                            return redirect('/complete_subscription');
+
+                            if ($purchase) {
+                                Payment::create([
+                                    'purchase_id' => $purchase->id,
+                                    'amount' => $this->company->usd_price * $this->total_share,
+                                ]);
+
+                                Register::whereId($this->registerId)->update([
+                                    'is_subscribed' => true,
+                                ]);
+                                return redirect('/complete_subscription');
+                            }
+
                         } catch (Exception $e) {
                             session()->flash('error', $e->getMessage());
                         }
@@ -164,14 +194,13 @@ class Create extends Component
                 ]);
                 if ($data) {
 
-                    if ($this->currency == 'KHR') {
+                    if ($this->currency_type == 'KHR') {
                         try {
-                            $payment = Payment::create([
+                            $purchase = Purchase::create([
                                 'subscriber_id' => $data->id,
-                                'currency' => $this->currency,
-                                'unit_price' => $this->company->khr_price,
-                                'quantity' => $this->quantity,
-                                'amount' => $this->company->khr_price * $this->quantity,
+                                'currency_type' => $this->currency_type,
+                                'price_per_share' => $this->company->khr_price,
+                                'total_share' => $this->total_share,
                                 'actual_deposit' => $this->actual_deposit,
                                 'company_id' => $this->company->id,
                                 'payment_method_id' => $this->payment_method,
@@ -180,20 +209,32 @@ class Create extends Component
                                 'bank_account_name' => $this->bank_acc_name,
                                 'bank_account_number' => $this->bank_acc_number,
                                 'bank_account_currency' => $this->bank_acc_currency,
-                                'file' => $this->payment_attach->store('', 'public'),
+                                'payment_attach' => $this->payment_attach->store('', 'public'),
                             ]);
-                            return redirect('/complete_subscription');
+
+                            if ($purchase) {
+                                Payment::create([
+                                    'purchase_id' => $purchase->id,
+                                    'amount' => $this->company->khr_price * $this->total_share,
+                                ]);
+
+                                Register::whereId($this->registerId)->update([
+                                    'is_subscribed' => true,
+                                ]);
+                                return redirect('/complete_subscription');
+                            } else {
+                                session()->flash('error', 'Error while processing purchase');
+                            }
                         } catch (Exception $e) {
                             session()->flash('error', $e->getMessage());
                         }
                     } else {
                         try {
-                            $payment = Payment::create([
+                            $purchase = Purchase::create([
                                 'subscriber_id' => $data->id,
-                                'currency' => $this->currency,
-                                'unit_price' => $this->company->usd_price,
-                                'quantity' => $this->quantity,
-                                'amount' => $this->company->usd_price * $this->quantity,
+                                'currency_type' => $this->currency_type,
+                                'price_per_share' => $this->company->usd_price,
+                                'total_share' => $this->total_share,
                                 'actual_deposit' => $this->actual_deposit,
                                 'company_id' => $this->company->id,
                                 'payment_method_id' => $this->payment_method,
@@ -202,14 +243,25 @@ class Create extends Component
                                 'bank_account_name' => $this->bank_acc_name,
                                 'bank_account_number' => $this->bank_acc_number,
                                 'bank_account_currency' => $this->bank_acc_currency,
-                                'file' => $this->payment_attach->store('', 'public'),
+                                'payment_attach' => $this->payment_attach->store('', 'public'),
                             ]);
-                            return redirect('/complete_subscription');
+
+                            if ($purchase) {
+                                Payment::create([
+                                    'purchase_id' => $purchase->id,
+                                    'amount' => $this->company->usd_price * $this->total_share,
+                                ]);
+
+                                Register::whereId($this->registerId)->update([
+                                    'is_subscribed' => true,
+                                ]);
+                                return redirect('/complete_subscription');
+                            }
+
                         } catch (Exception $e) {
                             session()->flash('error', $e->getMessage());
                         }
                     }
-                    return redirect('/complete_subscription');
                 } else {
                     session()->flash('error', 'Something went wrong');
                 }
@@ -229,9 +281,9 @@ class Create extends Component
         $this->security_firm_name = "";
         $this->contact = "";
         $this->email = "";
-        $this->file = "";
-        $this->currency = 'KHR';
-        $this->quantity = null;
+        $this->signature_attach = "";
+        $this->currency_type = 'KHR';
+        $this->total_share = null;
         $this->actual_deposit = "";
         $this->payment_method = 1;
         $this->refund_method = 1;
@@ -245,10 +297,35 @@ class Create extends Component
 
     public function mount()
     {
-        $registerId = Session::get('loginId');
-        $subscriber = Subscriber::where('register_id', $registerId)->first();
+        $this->registerId = Session::get('loginId');
+        $subscriber = Subscriber::where('register_id', $this->registerId)->first();
         if ($subscriber) {
             return redirect('/complete_subscription');
+        }
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+        
+        $payment = PaymentMethod::where('id', $this->payment_method)->first();
+        $refund = RefundMethod::where('id', $this->refund_method)->first();
+
+        if ($payment->has_input == true) {
+            $this->payment_method_has_input = true;
+        } else {
+            $this->payment_method_has_input = false;
+            $this->cheque_number = null;
+        }
+
+        if ($refund->has_input == true) {
+            $this->refund_method_has_input = true;
+        } else {
+            $this->refund_method_has_input = false;
+            $this->bank_name = null;
+            $this->bank_acc_name = null;
+            $this->bank_acc_number = null;
+            $this->bank_acc_currency = null;
         }
     }
 

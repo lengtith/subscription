@@ -9,7 +9,7 @@ use Flowframe\Trend\TrendValue;
 
 class SubscribersChart extends LineChartWidget
 {
-    protected static ?string $heading = 'Chart';
+    protected static ?string $heading = 'Subscribers';
 
     protected static ?int $sort = 1;
     

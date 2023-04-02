@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Pages;
 
 use App\Models\Payment;
+use App\Models\Purchase;
 use App\Models\Subscriber;
+use App\Models\SubscriptionId;
+use App\Models\User;
 use Livewire\Component;
 
 use \Mpdf\Mpdf as PDF;
@@ -12,17 +15,26 @@ class AdminPdfPreview extends Component
 {
     public $payment;
     public $subscriber;
+    public $subscription_id = null;
+    public $user = null;
 
     public function mount($id)
     {
         if ($id) {
-            $this->payment = Payment::findOrFail($id);
+            $this->payment = Purchase::findOrFail($id);
             $this->subscriber = Subscriber::findOrFail($this->payment->subscriber_id);
+
+            $subscription_id = SubscriptionId::findOrFail($this->subscriber->id);
+            $subscription_id == (null) ? $this->subscription_id = null : $this->subscription_id = $subscription_id->code;
+
+            $user = User::findOrFail($this->subscriber->user_id);
+            $user = (null) ? $this->user = null : $this->user = $user->name ;
         }
     }
     public function render()
     {
         $data = ([
+            'subscription_id' => $this->subscription_id,
             'investor_type' => $this->subscriber->investor_type,
             'khmer_trading_name' => $this->subscriber->khmer_trading_name,
             'english_trading_name' => $this->subscriber->english_trading_name,
@@ -31,11 +43,10 @@ class AdminPdfPreview extends Component
             'security_firm_name' => $this->subscriber->security_firm_name,
             'contact' => $this->subscriber->contact,
             'email' => $this->subscriber->email,
-            'legal_entity_signature' => $this->subscriber->legal_entity_signature,
-            'currency' => $this->payment->currency,
-            'unit_price' => $this->payment->company->khr_price,
-            'quantity' => $this->payment->quantity,
-            'amount' => $this->payment->company->amount,
+            'signature_attach' => $this->subscriber->signature_attach,
+            'currency_type' => $this->payment->currency_type,
+            'price_per_share' => $this->payment->price_per_share,
+            'total_share' => $this->payment->total_share,
             'actual_deposit' => $this->payment->actual_deposit,
             'payment_method_id' => $this->payment->payment_method_id,
             'refund_method_id' => $this->payment->refund_method_id,
@@ -44,9 +55,9 @@ class AdminPdfPreview extends Component
             'bank_account_name' => $this->payment->bank_account_name,
             'bank_account_number' => $this->payment->bank_account_number,
             'bank_account_currency' => $this->payment->bank_account_currency,
-            'file' => $this->payment->file,
+            'payment_attach' => $this->payment->payment_attach,
             'date' => $this->payment->created_at,
-            'user_id' => 'Vichet Tep'
+            'user_id' => $this->user,
         ]);
 
         $document = new PDF([
@@ -58,10 +69,6 @@ class AdminPdfPreview extends Component
             'margin_footer' => '2',
         ]);
 
-        // $header = [
-        //     'Content-Type' => 'application/pdf',
-        //     'Content-Disposition' => 'inline; filename="' . $documentFileName . '"'
-        // ];
         $footer = '
         <table>
             <tr>
@@ -78,7 +85,7 @@ class AdminPdfPreview extends Component
         $documentFileName = $documentFileName =  date('Y-m-d') . '-' . $this->subscriber->english_trading_name;
         $document->SetHTMLFooter($footer);
         $document->setTitle($documentFileName);
-        $view = view('livewire.admin-pdf-preview', compact('data'));
+        $view = view('livewire.pages.admin-pdf-preview', compact('data'));
         $document->WriteHTML($view);
         return $document->Output($documentFileName, 'I');
     }

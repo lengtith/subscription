@@ -13,6 +13,7 @@ use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
@@ -54,7 +55,7 @@ class SubscriberResource extends Resource
                                     'individual' => 'Individual',
                                     'legal_entity' => ' Legal Entity',
                                 ])->columnSpan(2),
-                            TextInput::make('id')->label('ID')->disabled(),
+                            Hidden::make('id')->label('ID')->disabled()->columnSpan(2),
                             TextInput::make('investor_id')->required()->numeric()->unique(ignoreRecord: true),
                             TextInput::make('trading_acc_number')->required()->numeric()->unique(ignoreRecord: true),
                             TextInput::make('khmer_trading_name')->required(),
@@ -66,7 +67,7 @@ class SubscriberResource extends Resource
                         ])->columns(2),
                         Section::make('Image')
                             ->schema([
-                                FileUpload::make('legal_entity_signature')->label('Image')
+                                FileUpload::make('signature_attach')->label('Image')
                                     ->image()->enableOpen()->enableDownload(),
                             ]),
                     ])->columnSpan(2),
@@ -84,6 +85,10 @@ class SubscriberResource extends Resource
                                     ->hidden(fn (Page $livewire) => ($livewire instanceof CreateSubscriber))
                                     ->label('Created at')
                                     ->content(fn (Subscriber $record): ?string => $record->created_at?->diffForHumans()),
+                                Forms\Components\Placeholder::make('updated_at')
+                                    ->hidden(fn (Page $livewire) => ($livewire instanceof CreateSubscriber))
+                                    ->label('Updated at')
+                                    ->content(fn (Subscriber $record): ?string => $record->updated_at?->diffForHumans()),
                             ]),
                         Section::make('Comment')
                             ->schema([
@@ -101,13 +106,16 @@ class SubscriberResource extends Resource
                 TextColumn::make('english_trading_name')->searchable(),
                 TextColumn::make('khmer_trading_name')->searchable(),
                 TextColumn::make('email')->searchable(),
+
                 BadgeColumn::make('status')
                     ->colors([
+                        'secondary' => static fn ($state): bool => $state === 'new',
                         'warning' => static fn ($state): bool => $state === 'edited',
                         'danger' => static fn ($state): bool => $state === 'rejected',
                         'success' => static fn ($state): bool => $state === 'approved',
                     ]),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('status')
                     ->options([

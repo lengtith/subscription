@@ -12,6 +12,7 @@ class RefundMethod extends Model
     protected $fillable = [
         'name',
         'description',
+        'has_input',
         'status'
     ];
 

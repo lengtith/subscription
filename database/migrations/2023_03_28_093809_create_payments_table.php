@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subscription_ids', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('subscriber_id')->constrained();
-            $table->foreignUuid('company_id')->constrained()->cascadeOnDelete();
-            $table->char('code')->unique();
-            $table->boolean('status')->default(true);
-            $table->boolean('is_sent')->default(false);
+            $table->foreignUuid('purchase_id')->constrained()->cascadeOnDelete();
+            $table->float('amount');
+            $table->boolean('status')->default(false);
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscription_ids');
+        Schema::dropIfExists('payments');
     }
 };

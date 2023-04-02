@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Pages\Subscription;
 use App\Models\Company;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
+use App\Models\Purchase;
 use App\Models\RefundMethod;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Session;
@@ -26,11 +27,12 @@ class Approve extends Component
     public $refund_method_tbl;
     public $khr_price;
     public $usd_price;
+    public $payment_method_has_input;
+    public $refund_method_has_input;
 
     /**
      * @var Subscriber
      */
-    public $email;
     public $investor_type;
     public $khmer_trading_name;
     public $english_trading_name;
@@ -38,7 +40,8 @@ class Approve extends Component
     public $trading_acc_number;
     public $security_firm_name;
     public $contact;
-    public $signature;
+    public $email;
+    public $signature_attach;
     public $subscriber_status;
     public $comment;
     public $user_id;
@@ -46,9 +49,9 @@ class Approve extends Component
     /**
      * @var Payment
      */
-    public $currency = 'KHR';
-    public $unit_price;
-    public $quantity;
+    public $currency_type = 'KHR';
+    public $price_per_share;
+    public $total_share;
     public $amount;
     public $actual_deposit;
     public $payment_method = 1;
@@ -61,26 +64,21 @@ class Approve extends Component
     public $bank_acc_currency;
 
     protected $rules = [
-        'payment_method' => 'required',
-        'refund_method' => 'required',
-        'quantity' => 'required',
+        'total_share' => 'required',
         'actual_deposit' => 'required',
         'payment_attach' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ];
 
     public function handleSubmit()
     {
-
         $this->validate();
-
-        if ($this->currency == 'KHR') {
+        if ($this->currency_type == 'KHR') {
             try {
-                Payment::create([
+                $purchase = Purchase::create([
                     'subscriber_id' => $this->subscriber->id,
-                    'currency' => $this->currency,
-                    'unit_price' => $this->company->khr_price,
-                    'quantity' => $this->quantity,
-                    'amount' => $this->company->khr_price * $this->quantity,
+                    'currency_type' => $this->currency_type,
+                    'price_per_share' => $this->company->khr_price,
+                    'total_share' => $this->total_share,
                     'actual_deposit' => $this->actual_deposit,
                     'company_id' => $this->company->id,
                     'payment_method_id' => $this->payment_method,
@@ -90,20 +88,27 @@ class Approve extends Component
                     'bank_account_name' => $this->bank_acc_name,
                     'bank_account_number' => $this->bank_acc_number,
                     'bank_account_currency' => $this->bank_acc_currency,
-                    'file' => $this->payment_attach->store('', 'public'),
+                    'payment_attach' => $this->payment_attach->store('', 'public'),
                 ]);
-                return redirect('/complete_subscription');
+                if ($purchase) {
+                    Payment::create([
+                        'purchase_id' => $purchase->id,
+                        'amount' => $this->company->khr_price * $this->total_share,
+                    ]);
+                    return redirect('/complete_subscription');
+                } else {
+                    session()->flash('error', 'Error while processing purchase');
+                }
             } catch (\Throwable $th) {
                 session()->flash('error', $th);
             }
         } else {
             try {
-                Payment::create([
+                $purchase = Purchase::create([
                     'subscriber_id' => $this->subscriber->id,
-                    'currency' => $this->currency,
-                    'unit_price' => $this->company->usd_price,
-                    'quantity' => $this->quantity,
-                    'amount' => $this->company->usd_price * $this->quantity,
+                    'currency_type' => $this->currency_type,
+                    'price_per_share' => $this->company->usd_price,
+                    'total_share' => $this->total_share,
                     'actual_deposit' => $this->actual_deposit,
                     'company_id' => $this->company->id,
                     'payment_method_id' => $this->payment_method,
@@ -113,9 +118,17 @@ class Approve extends Component
                     'bank_account_name' => $this->bank_acc_name,
                     'bank_account_number' => $this->bank_acc_number,
                     'bank_account_currency' => $this->bank_acc_currency,
-                    'file' => $this->payment_attach->store('', 'public'),
+                    'payment_attach' => $this->payment_attach->store('', 'public'),
                 ]);
-                return redirect('/complete_subscription');
+                if ($purchase) {
+                    Payment::create([
+                        'purchase_id' => $purchase->id,
+                        'amount' => $this->company->usd_price * $this->total_share,
+                    ]);
+                    return redirect('/complete_subscription');
+                } else {
+                    session()->flash('error', 'Error while processing purchase');
+                }
             } catch (\Throwable $th) {
                 session()->flash('error', $th);
             }
@@ -125,8 +138,8 @@ class Approve extends Component
     public function clearForm()
     {
         $this->investor_type = 'individual';
-        $this->currency = 'KHR';
-        $this->quantity = null;
+        $this->currency_type = 'KHR';
+        $this->total_share = null;
         $this->actual_deposit = "";
         $this->payment_method = 1;
         $this->refund_method = 1;
@@ -136,6 +149,31 @@ class Approve extends Component
         $this->bank_acc_name = null;
         $this->bank_acc_number = null;
         $this->bank_acc_currency = null;
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+
+        $payment = PaymentMethod::where('id', $this->payment_method)->first();
+        $refund = RefundMethod::where('id', $this->refund_method)->first();
+
+        if ($payment->has_input == true) {
+            $this->payment_method_has_input = 1;
+        } else {
+            $this->payment_method_has_input = 0;
+            $this->cheque_number = null;
+        }
+
+        if ($refund->has_input == true) {
+            $this->refund_method_has_input = true;
+        } else {
+            $this->refund_method_has_input = false;
+            $this->bank_name = null;
+            $this->bank_acc_name = null;
+            $this->bank_acc_number = null;
+            $this->bank_acc_currency = null;
+        }
     }
 
     public function mount()
@@ -159,7 +197,7 @@ class Approve extends Component
                 $this->security_firm_name = $subscriberItem->security_firm_name;
                 $this->contact = $subscriberItem->contact;
                 $this->email = $subscriberItem->email;
-                $this->signature = $subscriberItem->legal_entity_signature;
+                $this->signature_attach = $subscriberItem->signature_attach;
             }
         }
     }

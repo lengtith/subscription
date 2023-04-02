@@ -46,17 +46,20 @@ class EditSubscriber extends EditRecord
             Comment::create([
                 'subscriber_id' => $data['id'],
                 'comment' => $data['comment'],
+                'subscriber_status' => $data['status'],
                 'user_id' => auth()->id(),
             ]);
-
+            
             if ($data['status'] == 'edited' || $data['status'] == 'rejected') {
                 $mail = ([
+                    'id' => $data['id'],
                     'name' => $data['english_trading_name'],
                     'email' => $data['email'],
                     'comment' => $data['comment'],
                 ]);
                 Mail::to($mail['email'])->send(new SendComment($mail));
             }
+
         }
 
         return $record;

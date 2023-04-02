@@ -40,7 +40,8 @@ class RefundMethodResource extends Resource
                     Section::make('Status')
                         ->schema([
                             Toggle::make('status')
-                                ->label('Actived'),
+                                ->label('Actived')
+                                ->default(true),
                             Forms\Components\Placeholder::make('created_at')
                                 ->hidden(fn (Page $livewire) => ($livewire instanceof ManageRefundMethods))
                                 ->label('Created at')

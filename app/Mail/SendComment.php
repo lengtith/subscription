@@ -31,7 +31,7 @@ class SendComment extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Send Comment',
+            subject: 'Resubmit Form Again',
         );
     }
 

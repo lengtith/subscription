@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Pages;
 
 use App\Models\Payment;
+use App\Models\Purchase;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
@@ -14,7 +15,7 @@ class ThankSubscription extends Component
 
     public function preview()
     {
-        $payment = Payment::where('subscriber_id', $this->subscriber->id)->first();
+        $payment = Purchase::where('subscriber_id', $this->subscriber->id)->first();
 
         return redirect()->route('preview', [
             'id' => $payment->id,
@@ -36,12 +37,12 @@ class ThankSubscription extends Component
         if (Session::has('loginId')) {
             $this->subscriber = Subscriber::where('register_id', Session::get('loginId'))->first();
             
-            $this->payment = Payment::where('subscriber_id', $this->subscriber->id)->first();
+            $this->payment = Purchase::where('subscriber_id', $this->subscriber->id)->first();
         }
     }
 
     public function render()
     {
-        return view('livewire.thank-subscription')->layout('layouts.app', ['pageTitle' => 'Completed']);
+        return view('livewire.pages.thank-subscription')->layout('layouts.app', ['pageTitle' => 'Completed']);
     }
 }

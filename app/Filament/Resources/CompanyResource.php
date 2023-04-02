@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CompanyResource\Pages;
 use App\Models\Company;
+use Carbon\Carbon;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
@@ -11,6 +12,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 
 class CompanyResource extends Resource
@@ -46,7 +48,24 @@ class CompanyResource extends Resource
                 TextColumn::make('usd_price'),
                 TextColumn::make('start_date'),
                 TextColumn::make('close_date'),
-                TextColumn::make('status'),
+                BadgeColumn::make('Status')
+                    ->getStateUsing(function (Company $record): ?string {
+                        $current_date = Carbon::now()->format('Y-m-d');
+                        if ($record->close_date < $current_date || $record->start_date > $current_date) {
+                            return "Inactived";
+                        } else {
+                            return "Actived";
+                        }
+                    })->color(
+                        function (Company $record): ?string {
+                            $current_date = Carbon::now()->format('Y-m-d');
+                            if ($record->close_date < $current_date || $record->start_date > $current_date) {
+                                return "danger";
+                            } else {
+                                return "success";
+                            }
+                        }
+                    ),
             ])
             ->filters([
                 //
@@ -59,13 +78,12 @@ class CompanyResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
-        return [
-        ];
+        return [];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -73,5 +91,5 @@ class CompanyResource extends Resource
             'create' => Pages\CreateCompany::route('/create'),
             'edit' => Pages\EditCompany::route('/{record}/edit'),
         ];
-    }    
+    }
 }

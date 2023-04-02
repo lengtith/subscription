@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
+            $table->boolean('has_input')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

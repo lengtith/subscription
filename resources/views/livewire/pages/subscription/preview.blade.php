@@ -285,7 +285,7 @@
             <span class="font-sm text-primary">Price Per Offer Share</span>
         </div>
         <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
-            <p class="font-sm">{{ $data['unit_price'] }}</p>
+            <p class="font-sm">{{ $data['price_per_share'] }}</p>
         </div>
     </div>
     <div class="table-row">
@@ -294,7 +294,8 @@
             <span class="font-sm text-primary">Total Number of Offer Shares for Subscription</span>
         </div>
         <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
-            <p class="font-sm">{{ $data['quantity'] }}</p>
+            <p class="font-sm">ឯកតាមូលបត្រកម្មសិទ្ធិ / Share :</p>
+            <p class="font-sm">{{ $data['total_share'] }}</p>
         </div>
     </div>
     <div class="table-row">
@@ -303,7 +304,7 @@
             <span class="font-sm text-primary">Total Value For Subscription</span>
         </div>
         <div class="table-col p-1" style="line-height: 1.6; border-bottom: 0px;">
-            <p class="font-sm">{{ $data['unit_price']*$data['quantity'] }}</p>
+            <p class="font-sm">{{ $data['price_per_share']*$data['total_share'] }}</p>
         </div>
     </div>
     <div class="table-row">

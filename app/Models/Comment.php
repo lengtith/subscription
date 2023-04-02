@@ -15,8 +15,9 @@ class Comment extends Model
     protected $keyType = 'uuid';
 
     protected $fillable = [
-        'comment',
         'subscriber_id',
+        'comment',
+        'subscriber_status',
         'user_id',
     ];
 

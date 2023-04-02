@@ -9,6 +9,7 @@ use App\Models\Subscriber;
 use App\Models\SubscriptionId;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -37,7 +38,6 @@ class SubscriptionIdResource extends Resource
             ->schema([
                 Grid::make(3)->schema([
                     Card::make()->schema([
-
                         Select::make('subscriber_id')
                             ->label('Subscriber Name')
                             ->options(Subscriber::all()->pluck('english_trading_name', 'id'))
@@ -48,12 +48,19 @@ class SubscriptionIdResource extends Resource
                             ->searchable(),
                         TextInput::make('code')->unique(),
                     ])->columnSpan(2),
-                    Section::make('Send Subscription ID')->schema([
-                        Toggle::make('is_sent')
-                    ])->columnSpan(1),
-                    Section::make('Status')->schema([
-                        Toggle::make('status')
-                    ])->hidden(fn (Page $livewire) => ($livewire instanceof CreateSubscriptionId))->columnSpan(1),
+                    Grid::make()->schema([
+                        Section::make('Send Subscription ID')->schema([
+                            Toggle::make('is_sent')
+                        ]),
+                        Section::make('Status')->schema([
+                            Toggle::make('status'),
+                            Placeholder::make('created_at')
+                                    ->hidden(fn (Page $livewire) => ($livewire instanceof CreateSubscriptionId))
+                                    ->label('Created at')
+                                    ->content(fn (SubscriptionId $record): ?string => $record->created_at?->diffForHumans()),
+                        ])->hidden(fn (Page $livewire) => ($livewire instanceof CreateSubscriptionId)),
+                    ])
+                    ->columnSpan(1),
                 ]),
             ]);
     }

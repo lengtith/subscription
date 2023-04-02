@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark no-preview">
     <div class="container">
         <a class="navbar-brand">SBI Subscription</a>
         <ul class="nav nav-pills justify-content-end">

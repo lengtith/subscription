@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Pages\Subscription;
 
+use App\Models\Comment;
 use App\Models\Company;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
+use App\Models\Purchase;
 use App\Models\RefundMethod;
 use App\Models\Subscriber;
 use Exception;
@@ -27,11 +29,12 @@ class Edit extends Component
     public $usd_price = 0;
     public $subscriberItem;
     public $paymentId;
+    public $payment_method_has_input;
+    public $refund_method_has_input;
 
     /**
      * @var Subscriber
      */
-    public $email;
     public $investor_type;
     public $khmer_trading_name;
     public $english_trading_name;
@@ -39,19 +42,19 @@ class Edit extends Component
     public $trading_acc_number;
     public $security_firm_name;
     public $contact;
-    public $signature;
-    public $legal_entity_signature;
+    public $email;
+    public $new_signature;
+    public $signature_attach;
     public $subscriber_status;
     public $comment;
     public $user_id;
-    public $error;
 
     /**
      * @var Payment
      */
-    public $currency = 'KHR';
-    public $unit_price;
-    public $quantity = 0;
+    public $currency_type = 'KHR';
+    public $price_per_share;
+    public $total_share = 0;
     public $amount;
     public $actual_deposit;
     public $payment_method;
@@ -72,12 +75,6 @@ class Edit extends Component
         'security_firm_name' => 'required|max:255',
         'contact' => 'required',
         'email' => 'required|email',
-
-        'currency' => 'required',
-        'unit_price' => 'required',
-        'quantity' => 'required',
-        'amount' => 'required',
-        'actual_deposit' => 'required'
     ];
 
     public function handleSubmit()
@@ -85,7 +82,7 @@ class Edit extends Component
         $this->validate();
         $record = Subscriber::where('register_id', Session::get('loginId'))->first();
 
-        if ($this->signature) {
+        if ($this->new_signature) {
             try {
                 $record->update([
                     'register_id' => Session::get('loginId'),
@@ -97,7 +94,7 @@ class Edit extends Component
                     'security_firm_name' => $this->security_firm_name,
                     'contact' => $this->contact,
                     'email' => $this->email,
-                    'legal_entity_signature' => $this->signature->store('', 'public'),
+                    'signature_attach' => $this->new_signature->store('', 'public'),
                     'status' => 'new',
                 ]);
                 return redirect('/complete_subscription');
@@ -116,7 +113,7 @@ class Edit extends Component
                     'security_firm_name' => $this->security_firm_name,
                     'contact' => $this->contact,
                     'email' => $this->email,
-                    'legal_entity_signature' => $this->legal_entity_signature,
+                    'signature_attach' => $this->signature_attach,
                     'status' => 'new',
                 ]);
                 return redirect('/complete_subscription');
@@ -141,6 +138,31 @@ class Edit extends Component
         ]);
     }
 
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+        
+        $payment = PaymentMethod::where('id', $this->payment_method)->first();
+        $refund = RefundMethod::where('id', $this->refund_method)->first();
+
+        if ($payment->has_input == true) {
+            $this->payment_method_has_input = true;
+        } else {
+            $this->payment_method_has_input = false;
+            $this->cheque_number = null;
+        }
+
+        if ($refund->has_input == true) {
+            $this->refund_method_has_input = true;
+        } else {
+            $this->refund_method_has_input = false;
+            $this->bank_name = null;
+            $this->bank_acc_name = null;
+            $this->bank_acc_number = null;
+            $this->bank_acc_currency = null;
+        }
+    }
+
     public function mount()
     {
 
@@ -150,10 +172,13 @@ class Edit extends Component
             return redirect('/complete_subscription');
         }
 
+        $commentItem = Comment::where('subscriber_id', $subscriber->id)->get();
+        $this->comment = $commentItem;
+
         if (Session::has('loginId')) {
-            $registerId = Session::get('loginId');
             $subscriberItem = Subscriber::where('register_id', $registerId)->first();
-            $paymentItem = Payment::where('subscriber_id', $subscriberItem->id)->first();
+            $purchaseItem = Purchase::where('subscriber_id', $subscriberItem->id)->first();
+            $paymentItem = Payment::where('purchase_id', $purchaseItem->id)->first();
 
             if ($subscriberItem->status == 'edited') {
                 $this->investor_type = $subscriberItem->investor_type;
@@ -164,21 +189,20 @@ class Edit extends Component
                 $this->security_firm_name = $subscriberItem->security_firm_name;
                 $this->contact = $subscriberItem->contact;
                 $this->email = $subscriberItem->email;
-                $this->signature = $subscriberItem->legal_entity_signature;
 
-                $this->currency = $paymentItem->currency;
-                $this->unit_price = $paymentItem->company->khr_price;
-                $this->quantity = $paymentItem->quantity;
+                $this->currency_type = $purchaseItem->currency_type;
+                $this->price_per_share = $purchaseItem->company->khr_price;
+                $this->total_share = $purchaseItem->total_share;
                 $this->amount = $paymentItem->amount;
-                $this->actual_deposit = $paymentItem->actual_deposit;
-                $this->payment_method = $paymentItem->payment_method_id;
-                $this->refund_method = $paymentItem->refund_method_id;
-                $this->cheque_number = $paymentItem->cheque_number;
-                $this->bank_name = $paymentItem->bank_name;
-                $this->bank_acc_name = $paymentItem->bank_account_name;
-                $this->bank_acc_number = $paymentItem->bank_account_number;
-                $this->bank_acc_currency = $paymentItem->bank_account_currency;
-                $this->payment_attach = $paymentItem->file;
+                $this->actual_deposit = $purchaseItem->actual_deposit;
+                $this->payment_method = $purchaseItem->payment_method_id;
+                $this->refund_method = $purchaseItem->refund_method_id;
+                $this->cheque_number = $purchaseItem->cheque_number;
+                $this->bank_name = $purchaseItem->bank_name;
+                $this->bank_acc_name = $purchaseItem->bank_account_name;
+                $this->bank_acc_number = $purchaseItem->bank_account_number;
+                $this->bank_acc_currency = $purchaseItem->bank_account_currency;
+                $this->payment_attach = $purchaseItem->payment_attach;
             }
         }
     }
@@ -193,7 +217,7 @@ class Edit extends Component
         $this->security_firm_name = "";
         $this->contact = "";
         $this->email = "";
-        $this->signature = "";
+        $this->new_signature = "";
     }
 
     public function render()
@@ -201,12 +225,7 @@ class Edit extends Component
         $this->company = Company::latest()->first();
         $this->payment_method_tbl = PaymentMethod::all();
         $this->refund_method_tbl = RefundMethod::all();
-        $this->payment_tbl = Payment::latest()->first();
 
-        if (Session::has('subscriberId')) {
-            $subscriber = Session::get('subscriberId');
-            $this->subscriberItem = Subscriber::where('id', $subscriber)->first();
-        }
         return view('livewire.pages.subscription.edit')->layout('layouts.app', ['pageTitle' => 'Edit subscription']);
     }
 }

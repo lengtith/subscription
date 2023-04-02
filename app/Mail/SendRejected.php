@@ -9,19 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SendPassword extends Mailable
+class SendRejected extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct()
     {
-        $this->data = $data;
+        //
     }
 
     /**
@@ -32,7 +31,7 @@ class SendPassword extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Congratulations Registration',
+            subject: 'Submission Failed',
         );
     }
 
@@ -44,7 +43,7 @@ class SendPassword extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mail.send-password',
+            view: 'mail.send-rejected',
         );
     }
 

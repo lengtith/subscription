@@ -25,9 +25,8 @@ return new class extends Migration
             $table->string('security_firm_name');
             $table->string('contact');
             $table->string('email');
-            $table->string('legal_entity_signature')->nullable();
+            $table->string('signature_attach')->nullable();
             $table->string('status')->default('new');
-            $table->text('comment')->nullable();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

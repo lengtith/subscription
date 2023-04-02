@@ -33,6 +33,7 @@
         max-width: 800px;
         background-color: #FFF;
         padding: 40px;
+        text-align: center;
     }
 
     .py {
@@ -41,17 +42,9 @@
 </style>
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Congratulations Registration</h5>
+        <h5 class="card-title">Submission Failed</h5>
         <p class="card-text">Dear {{ $data['name'] }},<br>
-            I am reaching out to thank you for registering to us. <br>
-            Please! kindly use your email and this generate password to submit application form.
-        </p>
-        <br>
-        <p>Here your password: <strong>{{ $data['password'] }}</strong></p>
-        <p>Link to submit the form:
-            <a href="http://localhost:8000/login">
-                <span>Subscription Form</span>
-            </a>
+            Thank you for taking the time to submit subscription form. We wanted to let you know that we cannot accept your form submission.
         </p>
         <br>
         <p>Best wishes,
