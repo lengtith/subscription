@@ -44,6 +44,11 @@ class PaymentResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    protected static function getNavigationLabel(): string
+    {
+        return static::$navigationLabel ?? __('filament::pages/payment.title');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

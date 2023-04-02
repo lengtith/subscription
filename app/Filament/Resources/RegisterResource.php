@@ -27,6 +27,11 @@ class RegisterResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static function getNavigationLabel(): string
+    {
+        return static::$navigationLabel ?? __('filament::pages/register.title');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -68,6 +73,7 @@ class RegisterResource extends Resource
                     ]),
                 TextColumn::make('created_at')->date(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])

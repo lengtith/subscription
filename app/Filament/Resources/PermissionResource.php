@@ -16,8 +16,15 @@ class PermissionResource extends Resource
     protected static ?string $model = Permission::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
+
     protected static ?string $navigationGroup = 'Settings';
+
     protected static ?int $navigationSort = 3;
+
+    protected static function getNavigationLabel(): string
+    {
+        return static::$navigationLabel ?? __('filament::pages/permission.title');
+    }
 
     public static function form(Form $form): Form
     {

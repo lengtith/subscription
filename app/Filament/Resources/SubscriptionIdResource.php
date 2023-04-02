@@ -32,6 +32,11 @@ class SubscriptionIdResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    protected static function getNavigationLabel(): string
+    {
+        return static::$navigationLabel ?? __('filament::pages/subscriptionId.title');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

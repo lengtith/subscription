@@ -43,6 +43,11 @@ class SubscriberResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'english_trading_name';
 
+    protected static function getNavigationLabel(): string
+    {
+        return static::$navigationLabel ?? __('filament::pages/subscriber.title');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

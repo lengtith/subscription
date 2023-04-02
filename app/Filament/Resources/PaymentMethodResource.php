@@ -25,6 +25,11 @@ class PaymentMethodResource extends Resource
 
     protected static ?string $navigationGroup = 'Configuration';
 
+    protected static function getNavigationLabel(): string
+    {
+        return static::$navigationLabel ?? __('filament::pages/paymentMethod.title');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

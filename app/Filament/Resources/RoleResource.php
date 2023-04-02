@@ -19,8 +19,15 @@ class RoleResource extends Resource
     protected static ?string $model = Role::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-finger-print';
+
     protected static ?string $navigationGroup = 'Settings';
+
     protected static ?int $navigationSort = 2;
+
+    protected static function getNavigationLabel(): string
+    {
+        return static::$navigationLabel ?? __('filament::pages/role.title');
+    }
 
     public static function form(Form $form): Form
     {

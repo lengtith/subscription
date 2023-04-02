@@ -23,6 +23,11 @@ class CompanyResource extends Resource
 
     protected static ?string $navigationGroup = 'Configuration';
 
+    protected static function getNavigationLabel(): string
+    {
+        return static::$navigationLabel ?? __('filament::pages/company.title');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -67,6 +72,7 @@ class CompanyResource extends Resource
                         }
                     ),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
